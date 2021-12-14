@@ -1,0 +1,7 @@
+*.swp
+node_modules
+.env
+build
+.DS_Store
+jsconfig.json
+tsconfig.json
