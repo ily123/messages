@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { User } = require('../db/models')
-const { jwtConfig: { secret, expiresIn }, environment } = require('../config')
+const { jwt: { secret, expiresIn }, environment } = require('../config')
 
 const setTokenCookie = (res, user) => {
   const token = jwt.sign(

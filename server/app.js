@@ -55,6 +55,7 @@ app.use((error, _req, res, _next) => {
   res.send({
     title: error.title || 'Server error',
     message: error.message,
+    errors: error.errors,
     stack: isProduction ? null : error.stack
   })
 })
