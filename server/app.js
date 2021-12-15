@@ -29,4 +29,12 @@ app.use(morgan('tiny'))
 // register routes
 app.use('/api', router)
 
+// add handler for requests to non-existent end points
+app.use((_req, _res, next) => {
+  const error = new Error('Requested resource could not be found.')
+  error.title = 'Resource Not Found'
+  error.errors = ['Error 404']
+  error.status = 404
+  next(error)
+})
 module.exports = app
