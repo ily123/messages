@@ -1,10 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const sessionRoutes = require('./session')
 
-router.get('/', (req, res) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken())
-  const msg = 'hello, this is a stub'
-  res.json({ msg })
-})
+router.use('session/', sessionRoutes)
 
 module.exports = router

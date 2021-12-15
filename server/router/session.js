@@ -1,10 +1,10 @@
 const router = require('express').Router()
 const asyncHandler = require('express-async-handler')
-const { User } = require('../../db/models')
-const { setTokenCookie, restoreUser } = require('../../utils/auth.js')
+const { User } = require('../db/models')
+const { setTokenCookie, restoreUser } = require('../utils/auth.js')
 
 const { check } = require('express-validator')
-const { handleValidationErrors } = require('../../utils/validation')
+const { handleValidationErrors } = require('../utils/validation')
 
 const validateLogin = [
   check('credential')
