@@ -47,7 +47,6 @@ router.post('/login', validateLogin, asyncHandler(async (req, res, next) => {
     err.errors = ['Provided credentials are invalid.']
     return next(err)
   }
-
   await setTokenCookie(res, user)
   return res.json({ user })
 }))
@@ -64,8 +63,7 @@ router.post('/signup', validateSignup, asyncHandler(async (req, res, next) => {
     user = await User.signup({ email, username, password })
   } catch {
     const err = new Error('Signup failed')
-    err.status = 401
-    err.title = 'Signup failed'
+    err.title = 'Signup failed when inserting into db'
     err.errors = ['Provided name or email already exist.']
     return next(err)
   }
