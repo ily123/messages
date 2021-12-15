@@ -1,3 +1,9 @@
+const result = require('dotenv').config()
+if (result.error) {
+  console.log('💔💔💔There is a problem with .env imports. See below.')
+  throw result.error
+}
+
 module.exports = {
   environment: process.env.NODE_ENV || 'development',
   port: process.env.PORT || 5000,
