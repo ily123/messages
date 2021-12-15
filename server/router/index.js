@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-const sessionRoutes = require('./session')
-router.use('/auth', sessionRoutes)
+const authRoutes = require('./auth')
+router.use('/auth', authRoutes)
 
 router.get('/', (req, res) => {
   res.cookie('XSRF-TOKEN', req.csrfToken())
