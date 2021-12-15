@@ -52,7 +52,7 @@ router.post('/login', validateLogin, asyncHandler(async (req, res, next) => {
   return res.json({ user })
 }))
 
-router.delete('/logout', (req, res) => {
+router.delete('/', (req, res) => {
   res.clearCookie('token')
   return res.json({ message: 'success' })
 })
@@ -73,7 +73,7 @@ router.post('/signup', validateSignup, asyncHandler(async (req, res, next) => {
   return res.json({ user })
 }))
 
-router.get('/session', restoreUser, (req, res) => {
+router.get('/', restoreUser, (req, res) => {
   const { user } = req
   if (!user) return res.json({})
   return res.json({ user: user.toSafeObject() })
