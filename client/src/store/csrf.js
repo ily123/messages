@@ -1,5 +1,10 @@
 import Cookies from 'js-cookie'
 
+// helper function to fetch XSRF token when in development
+export function restoreCSRF () {
+  return csrfFetch('api/csrf/restore')
+}
+
 // adds XSRF-Token cookie to header of every non-GET request
 // also, raises error if status code >= 400, kinda violating SRP here
 export async function csrfFetch (url, options = {}) {
