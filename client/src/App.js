@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './logo.svg'
+import './App.css'
 
-function App() {
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { restoreUser } from './store/session'
+
+function App () {
+  // fetch user info (will set user to null if not logged in)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(restoreUser())
+  }, [dispatch])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div style={{
+        backgroundColor: 'black',
+        padding: '100px',
+        color: 'white'
+      }}
+      >There is nothing here yet! 🐤
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
