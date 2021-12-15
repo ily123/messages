@@ -1,6 +1,5 @@
 const result = require('dotenv').config()
 if (result.error) {
-  console.log('💔💔💔There is a problem with .env imports. See below.')
   throw result.error
 }
 
@@ -12,5 +11,9 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN
   }
 }
