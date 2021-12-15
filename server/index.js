@@ -5,9 +5,12 @@ const csurf = require('csurf')
 const cors = require('cors')
 const helmet = require('helmet')
 const morgan = require('morgan')
+const router = require('./router')
 
+// create app object
 const app = express()
 
+// apply middle ware
 app.use(cookieParser())
 app.use(express.json())
 
@@ -21,12 +24,8 @@ app.use(csurf({
   }
 }))
 app.use(helmet({ contentSecurityPolicy: false }))
-
 app.use(morgan('tiny'))
 
-app.get('/api/', (req, res) => {
-  const msg = 'hello, this is a stub'
-  res.json({ msg })
-})
-
+// register routes
+app.use('/api', router)
 app.listen(5000, () => console.log('server started'))
