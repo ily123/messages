@@ -23,6 +23,7 @@
     "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "standard": "^16.0.4"
   }
 }
