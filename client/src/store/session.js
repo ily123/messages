@@ -53,7 +53,7 @@ export const signupUser = (email, username, password) => async dispatch => {
 
 export const logoutUser = () => async dispatch => {
   const options = { method: 'DELETE' }
-  const response = await csrfFetch('api/auth/logout', options)
+  const response = await csrfFetch('/api/auth', options)
   if (response.ok) {
     dispatch(destroyUser())
   }

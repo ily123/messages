@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux'
 import { restoreUser } from './store/session'
 
 import SignupForm from './components/SignUpForm'
+import LogOutButton from './components/LogOutButton'
+import LoginForm from './components/LoginForm'
 
 function App () {
   // fetch user info (will set user to null if not logged in)
@@ -23,6 +25,8 @@ function App () {
       >There is nothing here yet! 🐤
       </div>
       <SignupForm />
+      <LoginForm />
+      <LogOutButton />
     </div>
   )
 }
