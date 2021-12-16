@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'server'
   })
   Server.associate = function (models) {
-    Server.belongsTo(models.User, { foreignKey: 'owner_id' })
+    Server.belongsTo(models.User, { as: 'owner', foreignKey: 'owner_id' })
   }
   return Server
 }
