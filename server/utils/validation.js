@@ -4,12 +4,12 @@ const { validationResult } = require('express-validator')
 const handleValidationErrors = (req, res, next) => {
   const validationErrors = validationResult(req)
 
-  if (validationErrors.isEmpty()) next()
+  if (validationErrors.isEmpty()) return next()
 
   const errors = validationErrors
     .array()
     .map((error) => `${error.msg}`)
-  console.log('🏀 Hit request validator errors (happens before route is hit)')
+  console.log('🏀 There are request validator errors (happens before route is hit)')
   console.log(errors)
 
   const err = Error('Missing or innaccurate data sent with the request.')
