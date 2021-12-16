@@ -13,6 +13,7 @@ import configureStore from './store'
 // need to do a few things to make dev server/client work
 const store = configureStore()
 if (process.env.NODE_ENV !== 'production') {
+  console.log("requesting XSRF token")
   restoreCSRF() // get the XSRF token on every client start
   window.store = store // add store to window for Redux dev tools
 }

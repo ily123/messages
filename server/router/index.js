@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
 // So let's give front-end a route it can use to fetch the cookie.
 //   (on the front-end we'll have a wrapper function that gets the cookie)
 if (process.env.NODE_ENV !== 'production') {
-  router.get('/api/csrf/restore', (req, res) => {
+  router.get('/csrf/restore', (req, res) => {
     res.cookie('XSRF-TOKEN', req.csrfToken())
     return res.json({})
   })
