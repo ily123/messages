@@ -50,6 +50,14 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function (models) {
     User.hasMany(models.Server, { as: 'owner', foreignKey: 'owner_id' })
+    User.belongsToMany(
+      models.Server,
+      {
+        as: 'member',
+        foreignKey: 'user_id',
+        through: models.UserToServer
+      }
+    )
   }
 
   User.prototype.toSafeObject = function () {

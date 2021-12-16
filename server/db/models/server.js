@@ -19,6 +19,14 @@ module.exports = (sequelize, DataTypes) => {
   })
   Server.associate = function (models) {
     Server.belongsTo(models.User, { as: 'owner', foreignKey: 'owner_id' })
+    Server.belongsToMany(
+      models.User,
+      {
+        as: 'member',
+        foreignKey: 'server_id',
+        through: models.UserToServer
+      }
+    )
   }
   return Server
 }
