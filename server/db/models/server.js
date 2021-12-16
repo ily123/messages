@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'server'
   })
   Server.associate = function (models) {
-    // associations can be defined here
+    Server.belongsTo(models.User, { foreignKey: 'owner_id' })
   }
   return Server
 }
