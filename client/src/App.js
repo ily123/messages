@@ -2,7 +2,7 @@ import './App.css'
 
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { restoreUser } from './store/session'
 
 import SignupForm from './components/SignUpForm'
@@ -19,7 +19,7 @@ function App () {
   return (
     <div className='App'>
       <BrowserRouter>
-        <Switch>
+        <Routes>
           <Route path='/' exact>
             <div style={{
               backgroundColor: 'black',
@@ -32,8 +32,8 @@ function App () {
             <LoginForm />
             <LogOutButton />
           </Route>
-          <Route />
-        </Switch>
+          <Route path='/main' exact />
+        </Routes>
       </BrowserRouter>
     </div>
   )
