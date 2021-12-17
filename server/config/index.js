@@ -1,7 +1,7 @@
-const result = require('dotenv').config()
-if (result.error) {
-  throw result.error
-}
+// const result = require('dotenv').config()
+// if (result.error) {
+//  throw result.error
+// }
 
 module.exports = {
   environment: process.env.NODE_ENV || 'development',
