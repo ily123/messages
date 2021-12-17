@@ -2,6 +2,7 @@ import './App.css'
 
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { restoreUser } from './store/session'
 
 import SignupForm from './components/SignUpForm'
@@ -17,16 +18,23 @@ function App () {
 
   return (
     <div className='App'>
-      <div style={{
-        backgroundColor: 'black',
-        padding: '100px',
-        color: 'white'
-      }}
-      >There is nothing here yet! 🐤
-      </div>
-      <SignupForm />
-      <LoginForm />
-      <LogOutButton />
+      <BrowserRouter>
+        <Switch>
+          <Route path='/' exact>
+            <div style={{
+              backgroundColor: 'black',
+              padding: '100px',
+              color: 'white'
+            }}
+            >There is nothing here yet! 🐤
+            </div>
+            <SignupForm />
+            <LoginForm />
+            <LogOutButton />
+          </Route>
+          <Route />
+        </Switch>
+      </BrowserRouter>
     </div>
   )
 }
