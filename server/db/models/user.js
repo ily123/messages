@@ -58,6 +58,13 @@ module.exports = (sequelize, DataTypes) => {
         through: models.UserToServer
       }
     )
+    User.belongsToMany(
+      models.Channel,
+      {
+        foreignKey: 'user_id',
+        through: models.UserToChannel
+      }
+    )
   }
 
   User.prototype.toSafeObject = function () {

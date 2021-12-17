@@ -65,6 +65,7 @@ const testChannelModel = async () => {
   })
   console.log('-----🔥channel -> server 🔥-----')
   console.log(channel.toJSON())
+
   const server = await Server.findOne({
     where: { id: 1 },
     include: {
@@ -73,6 +74,35 @@ const testChannelModel = async () => {
   })
   console.log('-----🔥server -> channel🔥-----')
   console.log(server.toJSON())
+
+  const user = await User.findOne({
+    where: { id: 1 },
+    include: {
+      model: Channel
+    }
+  })
+  console.log('-----🔥user -> channel🔥-----')
+  console.log(user.toJSON())
+
+  let channel_ = await Channel.findOne({
+    where: { id: 1 },
+    include: {
+      model: User
+    }
+  })
+  console.log('-----🔥channel -> user🔥-----')
+  console.log(channel_.toJSON())
+
+  channel_ = await Channel.findOne({
+    include: [{
+      model: User
+    }, {
+      model: Server,
+      where: { id: 2 }
+    }]
+  })
+  console.log('-----🔥channel -> server (1) -> user🔥-----')
+  console.log(channel_.toJSON())
 }
 
 testUser()
