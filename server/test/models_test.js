@@ -1,4 +1,4 @@
-const { User, Server, Channel } = require('../db/models')
+const { User, Server, Channel, Message } = require('../db/models')
 console.log(User)
 
 // fetch all users and print their names
@@ -101,8 +101,14 @@ const testChannelModel = async () => {
       where: { id: 2 }
     }]
   })
-  console.log('-----🔥channel -> server (1) -> user🔥-----')
+  console.log('-----🔥channel -> server (2) -> user🔥-----')
   console.log(channel_.toJSON())
+}
+
+const testMessage = async () => {
+  const msg = await Message.findAll({ where: { channel_id: 1 } })
+  console.log('-----🔥message🔥-----')
+  console.log(msg.map(m => m.toJSON()))
 }
 
 testUser()
@@ -111,3 +117,4 @@ testEagerLoadingOfOwnedServersWithUser()
 testEagerLoadingOfServersAsMemberUser()
 testEagerLoadingOfMemberUsesOnServerModel()
 testChannelModel()
+testMessage()
