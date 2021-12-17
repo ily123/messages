@@ -6,12 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "npm --prefix server install server && npm --prefix client install client",
-    "heroku-postbuild": "npm run build --prefix frontend",
-    "dev:backend": "npm install --prefix backend start",
-    "dev:frontend": "npm install --prefix frontend start",
-    "sequelize": "npm run --prefix backend sequelize",
-    "sequelize-cli": "npm run --prefix backend sequelize-cli",
-    "start": "npm start --prefix backend"
+    "heroku-postbuild": "npm run build --prefix client",
+    "dev:server": "npm install --prefix server start",
+    "dev:client": "npm install --prefix client start",
+    "sequelize": "npm run --prefix server sequelize",
+    "sequelize-cli": "npm run --prefix server sequelize-cli",
+    "start": "npm start --prefix server"
   },
   "repository": {
     "type": "git",
