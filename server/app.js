@@ -28,7 +28,7 @@ app.use(helmet({ contentSecurityPolicy: false }))
 app.use(morgan('tiny'))
 
 // register routes
-app.use('/api', router)
+app.use(router)
 
 // add handler for requests to non-existent end points
 app.use((_req, _res, next) => {

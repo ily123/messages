@@ -1,0 +1,27 @@
+{
+  "name": "messages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm --prefix server install server && npm --prefix client install client",
+    "heroku-postbuild": "npm run build --prefix client",
+    "dev:server": "npm install --prefix server start",
+    "dev:client": "npm install --prefix client start",
+    "sequelize": "npm run --prefix server sequelize",
+    "sequelize-cli": "npm run --prefix server sequelize-cli",
+    "start": "npm start --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ily123/messages.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ily123/messages/issues"
+  },
+  "homepage": "https://github.com/ily123/messages#readme"
+}

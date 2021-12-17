@@ -3,7 +3,7 @@ const router = express.Router()
 
 const authRoutes = require('./auth')
 
-router.use('/auth', authRoutes)
+router.use('/api/auth', authRoutes)
 
 // This part is a bit tricky
 // If the app is running in production do the following:
@@ -41,7 +41,7 @@ if (process.env.NODE_ENV === 'production') {
 // So let's give front-end a route it can use to fetch the cookie.
 //   (on the front-end we'll have a wrapper function that gets the cookie)
 if (process.env.NODE_ENV !== 'production') {
-  router.get('/csrf/restore', (req, res) => {
+  router.get('/api/csrf/restore', (req, res) => {
     res.cookie('XSRF-TOKEN', req.csrfToken())
     return res.json({})
   })
