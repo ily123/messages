@@ -1,4 +1,4 @@
-const { User, Server } = require('../db/models')
+const { User, Server, Channel } = require('../db/models')
 console.log(User)
 
 // fetch all users and print their names
@@ -56,9 +56,28 @@ const testEagerLoadingOfMemberUsesOnServerModel = async () => {
   const members = server.member
   console.log(members.map(member => `${member.id} with owner ${member.username}`))
 }
+const testChannelModel = async () => {
+  const channel = await Channel.findOne({
+    where: { id: 1 },
+    include: {
+      model: Server
+    }
+  })
+  console.log('-----🔥channel -> server 🔥-----')
+  console.log(channel.toJSON())
+  const server = await Server.findOne({
+    where: { id: 1 },
+    include: {
+      model: Channel
+    }
+  })
+  console.log('-----🔥server -> channel🔥-----')
+  console.log(server.toJSON())
+}
 
 testUser()
 testServer()
 testEagerLoadingOfOwnedServersWithUser()
 testEagerLoadingOfServersAsMemberUser()
 testEagerLoadingOfMemberUsesOnServerModel()
+testChannelModel()

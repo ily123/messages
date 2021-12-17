@@ -27,6 +27,8 @@ module.exports = (sequelize, DataTypes) => {
         through: models.UserToServer
       }
     )
+    Server.hasMany(models.Channel, { foreignKey: 'server_id' })
   }
+
   return Server
 }
