@@ -51,6 +51,7 @@ app.use((error, _req, _res, next) => {
 // format all existing errors, if any, and return to client
 app.use((error, _req, res, _next) => {
   console.log('😧' + error.title)
+  console.log(error)
   res.status(error.status || 500)
   res.send({
     title: error.title || 'Server error',

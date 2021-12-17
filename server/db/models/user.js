@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   },
   {
+    tableName: 'user',
     defaultScope: {
       attributes: {
         exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt']
@@ -48,6 +49,23 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   User.associate = function (models) {
+    User.hasMany(models.Message, { foreignKey: 'user_id' })
+    User.hasMany(models.Server, { as: 'owner', foreignKey: 'owner_id' })
+    User.belongsToMany(
+      models.Server,
+      {
+        as: 'member',
+        foreignKey: 'user_id',
+        through: models.UserToServer
+      }
+    )
+    User.belongsToMany(
+      models.Channel,
+      {
+        foreignKey: 'user_id',
+        through: models.UserToChannel
+      }
+    )
   }
 
   User.prototype.toSafeObject = function () {
