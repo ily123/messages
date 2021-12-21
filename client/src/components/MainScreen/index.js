@@ -1,3 +1,9 @@
+import NavBar from '../NavBar'
+
 export default function MainScreen () {
-  return <div>this is the main screen</div>
+  return (
+    <div>
+      <NavBar />
+    </div>
+  )
 }

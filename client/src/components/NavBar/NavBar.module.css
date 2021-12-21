@@ -1,0 +1,6 @@
+header {
+  background-color: yellow;
+  border: 1px red solid;
+  display: flex;
+  flex-direction: row;
+}
