@@ -1,4 +1,5 @@
 import styles from './NavBar.module.css'
+import { useState, useEffect } from 'react'
 
 export default function NavBar () {
   return (
@@ -20,7 +21,15 @@ function SearchBar () {
 }
 
 function Clock () {
+  const [time, setTime] = useState(timeNow())
+  useEffect(() => {
+    const timeHandle = setInterval(() => setTime(timeNow()), 1000)
+    return () => clearInterval(timeHandle)
+  }, [])
+
   return (
-    <div>Clock</div>
+    <div>{time}</div>
   )
 }
+
+const timeNow = () => new Date().toLocaleTimeString()
