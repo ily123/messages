@@ -16,7 +16,7 @@ export default function NavBar () {
 
 function SearchBar () {
   return (
-    <input type='text' placeholder='Search...' />
+    <input className={styles.searchBar} type='text' placeholder='Search...' />
   )
 }
 
@@ -28,7 +28,7 @@ function Clock () {
   }, [])
 
   return (
-    <div>{time}</div>
+    <div className={styles.clock}>{time}</div>
   )
 }
 
