@@ -1,0 +1,4 @@
+.chatWrapper {
+  border: 2px yellow solid;
+  flex-grow: 1;
+}
