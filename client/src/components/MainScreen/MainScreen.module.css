@@ -1,0 +1,4 @@
+.wrapper {
+  border: 3px blue solid;
+  display: flex;
+}

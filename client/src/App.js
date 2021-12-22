@@ -2,11 +2,11 @@ import './App.css'
 
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { restoreUser } from './store/session'
 
-import SignupForm from './components/SignUpForm'
-import LogOutButton from './components/LogOutButton'
-import LoginForm from './components/LoginForm'
+import MainScreen from './components/MainScreen'
+import SplashPage from './components/SplashPage'
 
 function App () {
   // fetch user info (will set user to null if not logged in)
@@ -17,16 +17,12 @@ function App () {
 
   return (
     <div className='App'>
-      <div style={{
-        backgroundColor: 'black',
-        padding: '100px',
-        color: 'white'
-      }}
-      >There is nothing here yet! 🐤
-      </div>
-      <SignupForm />
-      <LoginForm />
-      <LogOutButton />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' exact element={<SplashPage />} />
+          <Route path='/main' exact element={<MainScreen />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
