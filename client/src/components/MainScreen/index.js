@@ -9,21 +9,25 @@ import { csrfFetch } from '../../store/csrf'
 export default function MainScreen () {
   const { serverId } = useParams()
   const [loaded, setLoaded] = useState(false)
+  const [serverData, setServerData] = useState(null)
 
-  useEffect(async () => {
-    const response = await csrfFetch('/api/channel/1')
-    const data = await response.json()
-    setLoaded(true)
-    console.log('😃', data)
+  useEffect(() => {
+    const getServerData = async () => {
+      const response = await csrfFetch(`/api/server/${serverId}`)
+      const data = await response.json()
+      setServerData(data)
+      setLoaded(true)
+    }
+    getServerData()
   }, [serverId])
-  console.log(serverId)
 
   if (!loaded) return <div style={{ backgroundColor: 'blue' }}>...LOADING...</div>
+  console.log('😀', serverData)
   return (
     <div>
       <NavBar />
       <div className={styles.wrapper}>
-        <SideBar />
+        <SideBar serverData={serverData} />
         <Chat />
       </div>
     </div>
