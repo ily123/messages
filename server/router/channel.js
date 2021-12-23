@@ -10,7 +10,9 @@ router.get('/:channelId', asyncHandler(async (req, res) => {
   const channel = await Channel.findByPk(channelId, {
     include: [{ model: Message }, { model: User }]
   })
-  return res.json(channel.toJSON())
+
+  if (channel) return res.json(channel.toJSON())
+  else return res.json({})
 }))
 
 module.exports = router
