@@ -13,6 +13,7 @@ function App () {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(restoreUser())
+    console.log('I rendered!!')
   }, [dispatch])
 
   return (
@@ -20,7 +21,7 @@ function App () {
       <BrowserRouter>
         <Routes>
           <Route path='/' exact element={<SplashPage />} />
-          <Route path='/main' exact element={<MainScreen />} />
+          <Route path='/main/server/:serverId' exact element={<MainScreen />} />
         </Routes>
       </BrowserRouter>
     </div>

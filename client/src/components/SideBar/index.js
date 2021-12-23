@@ -1,15 +1,17 @@
 import styles from './SideBar.module.css'
 
-export default function SideBar () {
+export default function SideBar ({ serverData }) {
+  const { title, Channels: channels } = serverData
   return (
     <aside>
-      <div>CURRENT SERVER</div>
+      <div>{title}</div>
       <div>
         <h3>Channel List</h3>
         <menu>
-          <li>Channel 1</li>
-          <li>Channel 2</li>
-          <li>Channel 3</li>
+          {channels.map(channel => {
+            const { id, title } = channel
+            return <li key={'channel' + id}>{title}</li>
+          })}
         </menu>
       </div>
       <div>

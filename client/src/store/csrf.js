@@ -2,7 +2,7 @@ import Cookies from 'js-cookie'
 
 // helper function to fetch XSRF token when in development
 export function restoreCSRF () {
-  return csrfFetch('api/csrf/restore')
+  return csrfFetch('/api/csrf/restore')
 }
 
 // adds XSRF-Token cookie to header of every non-GET request

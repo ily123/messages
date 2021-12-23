@@ -2,8 +2,12 @@ const express = require('express')
 const router = express.Router()
 
 const authRoutes = require('./auth')
+const channelRoutes = require('./channel')
+const serverRoutes = require('./server')
 
 router.use('/api/auth', authRoutes)
+router.use('/api/channel', channelRoutes)
+router.use('/api/server', serverRoutes)
 
 // This part is a bit tricky
 // If the app is running in production do the following:
