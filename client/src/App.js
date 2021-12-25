@@ -4,6 +4,8 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { restoreUser } from './store/session'
+import LoginForm from './components/LoginForm'
+import SignupForm from './components/SignUpForm'
 
 import MainScreen from './components/MainScreen'
 import SplashPage from './components/SplashPage'
@@ -21,6 +23,9 @@ function App () {
       <BrowserRouter>
         <Routes>
           <Route path='/' exact element={<SplashPage />} />
+          <Route path='/login' exact element={<LoginForm />} />
+          <Route path='/signup' exact element={<SignupForm />} />
+          <Route path='/main/server' exact element={<MainScreen />} />
           <Route path='/main/server/:serverId' exact element={<MainScreen />} />
         </Routes>
       </BrowserRouter>

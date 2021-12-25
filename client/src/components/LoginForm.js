@@ -1,17 +1,22 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../store/session'
+import { Navigate } from 'react-router-dom'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
   const [credential, setCredential] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([])
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  if (loggedIn) return <Navigate to='/main/server/1' />
 
   const submit = async (event) => {
     event.preventDefault()
     try {
       await dispatch(loginUser(credential, password))
+      setLoggedIn(true)
     } catch (response) { // the error object is the response
       const { errors } = await response.json()
       setErrors(errors)
