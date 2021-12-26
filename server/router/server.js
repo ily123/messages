@@ -1,11 +1,34 @@
 const router = require('express').Router()
 const asyncHandler = require('express-async-handler')
-// const { restoreUser } = require('../utils/auth.js')
-const { Channel, Server } = require('../db/models')
+const { requireAuth } = require('../utils/auth.js')
+const { Channel, Server, User } = require('../db/models')
+
+router.use(requireAuth)
+
+function normalize (dataArray) {
+  const dataObj = {}
+  dataArray.forEach(item => {
+    dataObj[item.id] = item
+  })
+  return dataObj
+}
+
+router.get('/', asyncHandler(async (req, res) => {
+  const { user } = req
+  const { member: servers } = await User.findByPk(user.id, {
+    include: {
+      model: Server,
+      as: 'member',
+      include: {
+        model: Channel
+      }
+    }
+  })
+  return res.json(normalize(servers))
+}))
 
 router.get('/:serverId', asyncHandler(async (req, res) => {
-  // const { user } = req
-  // if (!user) return res.json({})
+  const { user } = req
   const { serverId } = req.params
   const server = await Server.findByPk(serverId, {
     include: { model: Channel }

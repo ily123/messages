@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  workspace: workspaceReducer
+  workspaces: workspaceReducer
 })
 
 const configureStore = (preloadedState) => {
