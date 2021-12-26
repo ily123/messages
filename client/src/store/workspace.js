@@ -15,14 +15,11 @@ export const loadWorkspaces = () => async dispatch => {
   dispatch(initialize(data))
 }
 
-const initialState = {
-  workspaces: null
-}
+const initialState = null
 export const workspaceReducer = (state = initialState, action) => {
   switch (action.type) {
     case INITIALIZE: {
-      const { workspaces } = action
-      return { ...state, workspaces }
+      return action.workspaces
     }
     default: {
       return state
