@@ -5,7 +5,7 @@ import Chat from '../Chat'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { csrfFetch } from '../../store/csrf'
-import { useDispatch, useSelector } from 'react-redux'
+// import { useDispatch, useSelector } from 'react-redux'
 
 export default function MainScreen () {
   const { serverId, optionalChannelId } = useParams()
