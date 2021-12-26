@@ -1,7 +1,8 @@
 import styles from './SideBar.module.css'
 
-export default function SideBar ({ serverData }) {
-  const { title, Channels: channels } = serverData
+export default function SideBar ({ workspaces, activeIds }) {
+  const [serverId, channelId] = activeIds
+  const { title, Channels: channels } = workspaces[serverId]
   return (
     <aside>
       <div>{title}</div>
@@ -10,6 +11,9 @@ export default function SideBar ({ serverData }) {
         <menu>
           {channels.map(channel => {
             const { id, title } = channel
+            if (id === channelId) {
+              return <li key={'channel' + id} style={{ color: 'red' }}>{title}</li>
+            }
             return <li key={'channel' + id}>{title}</li>
           })}
         </menu>

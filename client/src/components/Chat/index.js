@@ -1,6 +1,22 @@
-import styles from './Chat.module.css'
+'use strict'
 
-export default function Chat ({ messageData }) {
+import styles from './Chat.module.css'
+import { csrfFetch } from '../../store/csrf'
+import { useState, useEffect } from 'react'
+
+export default function Chat ({ channelId }) {
+  const [messageData, setMessageData] = useState(null)
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => {
+    const getChatMessages = async (channelId) => {
+      const response = await csrfFetch(`/api/channel/${channelId}`)
+      const data = await response.json()
+      setMessageData(data)
+      setLoaded(true)
+    }
+    getChatMessages(channelId)
+  }, [channelId])
+  if (!loaded) return <div style={{ backgroundColor: 'red' }}>Loading chat messages!</div>
   const { Messages: messages, Users: users } = messageData
   return (
     <div className={styles.chatWrapper}>

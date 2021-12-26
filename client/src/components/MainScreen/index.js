@@ -4,56 +4,39 @@ import SideBar from '../SideBar'
 import Chat from '../Chat'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { csrfFetch } from '../../store/csrf'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { loadWorkspaces } from '../../store/workspace'
 
 export default function MainScreen () {
-  const { serverId, optionalChannelId } = useParams()
-  const [loaded, setLoaded] = useState(false)
-  const [serverData, setServerData] = useState(null)
-  const [messages, setMessages] = useState(null)
-  const [channelId, setChannelId] = useState(optionalChannelId)
+  let { serverId, channelId } = useParams()
+  const [isLoaded, setLoaded] = useState(false)
   const dispatch = useDispatch()
+  const workspaces = useSelector(state => state.workspaces)
 
+  // fetch metadata for user's workspaces and channels
   useEffect(() => {
-    dispatch(loadWorkspaces())
+    const loadWorkspaces_ = async () => {
+      const isLoaded = await dispatch(loadWorkspaces())
+      setLoaded(isLoaded)
+    }
+    loadWorkspaces_()
   }, [dispatch])
 
-  useEffect(() => {
-    const getServerData = async () => {
-      const response = await csrfFetch(`/api/server/${serverId}`)
-      const data = await response.json()
-      setServerData(data)
-      if (!channelId) {
-        // if channel id wasn't provided in the URL, set it to 1st channel on the server
-        setChannelId(data.Channels[0].id)
-      }
-      // setLoaded(true)
-    }
-    getServerData()
-  }, [serverId])
+  if (!isLoaded) return <div style={{ backgroundColor: 'blue' }}>...LOADING...</div>
 
-  useEffect(() => {
-    const getChatMessages = async (channelId) => {
-      const response = await csrfFetch(`/api/channel/${channelId}`)
-      const data = await response.json()
-      setMessages(data)
-      setLoaded(true)
-    }
-    if (channelId) getChatMessages(channelId)
-  }, [channelId])
+  // if server & channel ids are not found in the URL, grab the first ones from the store
+  if (!serverId) serverId = Object.values(workspaces)[0].id
+  if (!channelId) channelId = workspaces[serverId].Channels[0].id
+  console.log('🔴', serverId)
+  console.log('🔴', channelId)
 
-  if (!loaded) return <div style={{ backgroundColor: 'blue' }}>...LOADING...</div>
-  console.log('😀', serverData)
-  console.log('this is the channel id', channelId)
-  console.log('these are teh messages in the channel', messages)
   return (
     <div>
       <NavBar />
       <div className={styles.wrapper}>
-        <SideBar serverData={serverData} />
-        <Chat messageData={messages} />
+        <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} />
+        <Chat channelId={channelId} />
       </div>
     </div>
   )
