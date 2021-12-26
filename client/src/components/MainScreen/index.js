@@ -5,6 +5,8 @@ import Chat from '../Chat'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { csrfFetch } from '../../store/csrf'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadWorkspaces } from '../../store/workspace'
 
 export default function MainScreen () {
   const { serverId, optionalChannelId } = useParams()
@@ -12,6 +14,11 @@ export default function MainScreen () {
   const [serverData, setServerData] = useState(null)
   const [messages, setMessages] = useState(null)
   const [channelId, setChannelId] = useState(optionalChannelId)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(loadWorkspaces())
+  }, [dispatch])
 
   useEffect(() => {
     const getServerData = async () => {
