@@ -10,9 +10,14 @@ const initialize = workspaces => {
 }
 
 export const loadWorkspaces = () => async dispatch => {
+  const isLoaded = true
   const response = await csrfFetch('/api/server')
-  const data = await response.json()
-  dispatch(initialize(data))
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(initialize(data))
+    return isLoaded
+  }
+  return !isLoaded
 }
 
 const initialState = null
