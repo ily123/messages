@@ -25,6 +25,7 @@ function App () {
           <Route path='/login' exact element={<LoginForm />} />
           <Route path='/signup' exact element={<SignupForm />} />
           <Route path='/main/server' exact element={<Protected> <MainScreen /> </Protected>} />
+          <Route path='/main/server/:serverId' exact element={<Protected> <MainScreen /> </Protected>} />
           <Route path='/main/server/:serverId/channel/:channelId' exact element={<Protected> <MainScreen /> </Protected>} />
           <Route path='*' element={<div>ERROR 404: PAGE WITH THIS URL DOES NOT EXIST</div>} />
         </Routes>
