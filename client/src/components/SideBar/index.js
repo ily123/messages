@@ -1,5 +1,6 @@
 import styles from './SideBar.module.css'
 import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -9,6 +10,7 @@ export default function SideBar ({ workspaces, activeIds }) {
       <div>
         <h3>Server List</h3>
         <WorkspaceList workspaces={workspaces} serverId={serverId} />
+        <AddServer />
       </div>
       <div>
         <h3>Channel List</h3>
@@ -22,6 +24,20 @@ export default function SideBar ({ workspaces, activeIds }) {
         </menu>
       </div>
     </aside>
+  )
+}
+
+// https://www.digitalocean.com/community/tutorials/react-modal-component
+function AddServer () {
+  const [isHidden, setHidden] = useState(false)
+  return (
+    <>
+      <div className={isHidden ? styles.modalHide : styles.modalShow}>
+        <h3>modal content</h3>
+        <button onClick={(e) => setHidden(false)}>Close Modal</button>
+      </div>
+      <button onClick={(e) => setHidden(true)}>NEW SERVER</button>
+    </>
   )
 }
 

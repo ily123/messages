@@ -38,4 +38,8 @@ router.get('/:serverId', asyncHandler(async (req, res) => {
   else return res.json({})
 }))
 
+router.post('/', asyncHandler(async (req, res) => {
+  console.log('🎀 got post request')
+}))
+
 module.exports = router
