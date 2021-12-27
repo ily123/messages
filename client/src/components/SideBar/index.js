@@ -1,4 +1,5 @@
 import styles from './SideBar.module.css'
+import { NavLink } from 'react-router-dom'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -11,10 +12,7 @@ export default function SideBar ({ workspaces, activeIds }) {
         <menu>
           {channels.map(channel => {
             const { id, title } = channel
-            if (id === channelId) {
-              return <li key={'channel' + id} style={{ color: 'red' }}>{title}</li>
-            }
-            return <li key={'channel' + id}>{title}</li>
+            return <li key={'channel' + id}><NavLink to={`/main/server/${serverId}/channel/${id}`}>{title}</NavLink></li>
           })}
         </menu>
       </div>
