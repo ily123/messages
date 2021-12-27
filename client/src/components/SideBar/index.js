@@ -9,12 +9,7 @@ export default function SideBar ({ workspaces, activeIds }) {
       <div>{title}</div>
       <div>
         <h3>Channel List</h3>
-        <menu>
-          {channels.map(channel => {
-            const { id, title } = channel
-            return <li key={'channel' + id}><NavLink to={`/main/server/${serverId}/channel/${id}`}>{title}</NavLink></li>
-          })}
-        </menu>
+        <ChannelList data={{ channels, serverId, channelId }} />
       </div>
       <div>
         <h3>Direct Messages</h3>
@@ -24,5 +19,23 @@ export default function SideBar ({ workspaces, activeIds }) {
         </menu>
       </div>
     </aside>
+  )
+}
+
+function ChannelList ({ data }) {
+  const { channels, serverId, channelId } = data
+  return (
+    <menu>
+      {channels.map(channel => {
+        const { id, title } = channel
+        return (
+          <li key={'channel' + id}>
+            <NavLink to={`/main/server/${serverId}/channel/${id}`}>
+              {Number(channelId) === id ? '>> ' + title : title}
+            </NavLink>
+          </li>
+        )
+      })}
+    </menu>
   )
 }
