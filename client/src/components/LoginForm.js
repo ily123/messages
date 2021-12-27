@@ -10,7 +10,7 @@ const LoginForm = () => {
   const [errors, setErrors] = useState([])
   const [loggedIn, setLoggedIn] = useState(false)
 
-  if (loggedIn) return <Navigate to='/main/server/1' />
+  if (loggedIn) return <Navigate to='/main/server/' />
 
   const submit = async (event) => {
     event.preventDefault()
