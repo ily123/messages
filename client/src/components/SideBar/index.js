@@ -27,16 +27,20 @@ export default function SideBar ({ workspaces, activeIds }) {
   )
 }
 
-// https://www.digitalocean.com/community/tutorials/react-modal-component
 function AddServer () {
-  const [isHidden, setHidden] = useState(false)
+  return <Modal><h3>modal content</h3></Modal>
+}
+
+// https://www.digitalocean.com/community/tutorials/react-modal-component
+function Modal ({ children }) {
+  const [isHidden, setHidden] = useState(true)
   return (
     <>
       <div className={isHidden ? styles.modalHide : styles.modalShow}>
-        <h3>modal content</h3>
-        <button onClick={(e) => setHidden(false)}>Close Modal</button>
+        {children}
+        <button onClick={(e) => setHidden(true)}>Close Modal</button>
       </div>
-      <button onClick={(e) => setHidden(true)}>NEW SERVER</button>
+      <button onClick={(e) => setHidden(false)}>NEW SERVER</button>
     </>
   )
 }
