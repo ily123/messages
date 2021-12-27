@@ -3,10 +3,13 @@ import { NavLink } from 'react-router-dom'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
-  const { title, Channels: channels } = workspaces[serverId]
+  const { Channels: channels } = workspaces[serverId]
   return (
     <aside>
-      <div>{title}</div>
+      <div>
+        <h3>Server List</h3>
+        <WorkspaceList workspaces={workspaces} serverId={serverId} />
+      </div>
       <div>
         <h3>Channel List</h3>
         <ChannelList data={{ channels, serverId, channelId }} />
@@ -22,6 +25,16 @@ export default function SideBar ({ workspaces, activeIds }) {
   )
 }
 
+function WorkspaceList ({ workspaces, serverId }) {
+  return (
+    <menu>
+      {Object.values(workspaces).map(server => {
+        const { id, title } = server
+        return <li key={id}><NavLink to={`/main/server/${id}`}>{id === Number(serverId) ? '>> ' + title : title}</NavLink></li>
+      })}
+    </menu>
+  )
+}
 function ChannelList ({ data }) {
   const { channels, serverId, channelId } = data
   return (
