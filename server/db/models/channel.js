@@ -8,20 +8,17 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      defaultValue: 'New Channel'
+      defaultValue: 'General'
     }
   }, {
     tableName: 'channel'
   })
   Channel.associate = function (models) {
-    Channel.hasMany(models.Message, { foreignKey: 'channel_id' })
+    Channel.hasMany(models.Message, { foreignKey: 'channel_id', onDelete: 'cascade', hooks: true })
     Channel.belongsTo(models.Server, { foreignKey: 'server_id' })
     Channel.belongsToMany(
       models.User,
-      {
-        foreignKey: 'channel_id',
-        through: models.UserToChannel
-      }
+      { foreignKey: 'channel_id', through: models.UserToChannel }
     )
   }
   return Channel

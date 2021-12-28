@@ -25,9 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         as: 'member',
         foreignKey: 'server_id',
         through: models.UserToServer
+        // This cascade does not work as expected.
+        // It tries to delete from the 'user' table, rather than the 'userToServer' table.
+        // We need to delete the association between users and server, not the users themselves.
+        // onDelete: 'cascade',
+        // hooks: true
       }
     )
-    Server.hasMany(models.Channel, { foreignKey: 'server_id' })
+    Server.hasMany(models.Channel, { foreignKey: 'server_id', onDelete: 'cascade', hooks: true })
   }
 
   return Server
