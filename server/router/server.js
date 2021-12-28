@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const asyncHandler = require('express-async-handler')
 const { requireAuth } = require('../utils/auth.js')
-const { Channel, Server, User, UserToServer } = require('../db/models')
+const { Channel, Server, User, UserToServer, UserToChannel } = require('../db/models')
 
 router.use(requireAuth)
 
@@ -46,14 +46,24 @@ router.post('/', asyncHandler(async (req, res) => {
   // add owner as member
   await UserToServer.create({ user_id: user.id, server_id: server.id })
   // add default starting channel to server
-  await Channel.create({ server_id: server.id })
+  const channel = await Channel.create({ server_id: server.id })
+  // add user to the channel
+  await UserToChannel.create({ channel_id: channel.id, user_id: user.id })
   return res.json({ server })
 }))
 
 router.delete('/:serverId', asyncHandler(async (req, res) => {
+  console.log('❤️ DELETE REQUEST')
   const { user } = req
   const { serverId } = req.params
-  const server = await Server.findByPk(serverId)
+  const server = await Server.findByPk(serverId, { include: { model: Channel } })
+  console.log(server.toJSON())
+  const serverChannels = server.Channels.map(ch => ch.id)
+  // Delete records from the join user-to-XYZ tables.
+  // Couldn't figure out the cascades for this.
+  await UserToServer.destroy({ where: { server_id: serverId } })
+  await UserToChannel.destroy({ where: { channel_id: serverChannels } })
+  console.log('🔥🔥🔥 user to server above ^')
   const success = await server.destroy()
   return res.json({ suceess: !!success })
 }))
