@@ -51,8 +51,8 @@ function AddServer () {
   // if (isPosted) return <Navigate to='/main/server' />
 
   return (
-    <Modal>
-      <h3>modal content</h3>
+    <Modal button={{ text: 'NEW SERVER', style: styles.newServerButton }}>
+      <h3>New Server</h3>
       {isTitleInvalid && <p>Enter server title!</p>}
       {isPosted && <p>Added new server!</p>}
       <form onSubmit={handleSubmit}>
@@ -63,8 +63,43 @@ function AddServer () {
   )
 }
 
+function ServerOptions () {
+  const [title, setTitle] = useState('')
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false)
+  const [isPosted, setIsPosted] = useState(false)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    setIsTitleInvalid(!title.length)
+  }, [title])
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (!isTitleInvalid) {
+      // await dispatch(postServerRequest(title))
+      // await dispatch(loadWorkspaces()) // this needs to be fixed
+      setIsPosted(true)
+    }
+  }
+
+  // if (isPosted) return <Navigate to='/main/server' />
+  return (
+    <Modal button={{ text: 's', style: styles.optionsButton }}>
+      <h3>Server Settings</h3>
+      {isTitleInvalid && <p>Enter new server title!</p>}
+      {isPosted && <p>Added new server!</p>}
+      <form onSubmit={handleSubmit}>
+        <input type='text' placeholder={title} value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button>submit</button>
+      </form>
+      <h3>Delete Server</h3>
+      <button style={{ backgroundColor: 'red' }}>DELETE</button>
+    </Modal>
+  )
+}
+
 // https://www.digitalocean.com/community/tutorials/react-modal-component
-function Modal ({ children }) {
+function Modal ({ children, button }) {
+  console.log(button)
   const [isHidden, setHidden] = useState(true)
   return (
     <>
@@ -72,17 +107,23 @@ function Modal ({ children }) {
         {children}
         <button onClick={(e) => setHidden(true)}>Close Modal</button>
       </div>
-      <button onClick={(e) => setHidden(false)}>NEW SERVER</button>
+      <button className={button.style} onClick={(e) => setHidden(false)}>{button.text}</button>
     </>
   )
 }
 
 function WorkspaceList ({ workspaces, serverId }) {
+  const userId = 1
   return (
     <menu>
       {Object.values(workspaces).map(server => {
-        const { id, title } = server
-        return <li key={id}><NavLink to={`/main/server/${id}`}>{id === Number(serverId) ? '>> ' + title : title}</NavLink></li>
+        const { id, title, owner_id: ownerId } = server
+        return (
+          <li key={id}>
+            <NavLink to={`/main/server/${id}`}>{id === Number(serverId) ? '>> ' + title : title}</NavLink>
+            {ownerId == userId && <ServerOptions serverId={serverId} />}
+          </li>
+        )
       })}
     </menu>
   )
