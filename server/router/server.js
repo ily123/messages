@@ -41,7 +41,6 @@ router.get('/:serverId', asyncHandler(async (req, res) => {
 router.post('/', asyncHandler(async (req, res) => {
   const { title } = req.body
   const { user } = req
-  console.log(req.user)
   // create new server with user as owner
   const server = await Server.create({ owner_id: user.id, title })
   // add owner as member
@@ -49,6 +48,14 @@ router.post('/', asyncHandler(async (req, res) => {
   // add default starting channel to server
   await Channel.create({ server_id: server.id })
   return res.json({ server })
+}))
+
+router.delete('/:serverId', asyncHandler(async (req, res) => {
+  const { user } = req
+  const { serverId } = req.params
+  const server = await Server.findByPk(serverId)
+  const success = await server.destroy()
+  return res.json({ suceess: !!success })
 }))
 
 module.exports = router
