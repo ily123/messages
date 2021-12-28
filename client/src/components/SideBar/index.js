@@ -1,6 +1,8 @@
 import styles from './SideBar.module.css'
 import { NavLink } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { postServerRequest } from '../../store/workspace'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -28,7 +30,34 @@ export default function SideBar ({ workspaces, activeIds }) {
 }
 
 function AddServer () {
-  return <Modal><h3>modal content</h3></Modal>
+  const [title, setTitle] = useState('')
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false)
+  const [isPosted, setIsPosted] = useState(false)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setIsTitleInvalid(!title.length)
+  }, [title])
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (!isTitleInvalid) {
+      await dispatch(postServerRequest(title))
+      setIsPosted(true)
+    }
+  }
+
+  return (
+    <Modal>
+      <h3>modal content</h3>
+      {isTitleInvalid && <p>Enter server title!</p>}
+      {isPosted && <p>Added new server!</p>}
+      <form onSubmit={handleSubmit}>
+        <input type='text' placeholder='enter new server name...' value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button>submit</button>
+      </form>
+    </Modal>
+  )
 }
 
 // https://www.digitalocean.com/community/tutorials/react-modal-component

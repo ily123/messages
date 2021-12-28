@@ -39,7 +39,11 @@ router.get('/:serverId', asyncHandler(async (req, res) => {
 }))
 
 router.post('/', asyncHandler(async (req, res) => {
-  console.log('🎀 got post request')
+  const { title } = req.body
+  const { user } = req
+  console.log(req.user)
+  const server = await Server.create({ owner_id: user.id, title })
+  return res.json({ server })
 }))
 
 module.exports = router
