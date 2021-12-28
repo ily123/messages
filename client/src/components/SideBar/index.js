@@ -2,7 +2,7 @@ import styles from './SideBar.module.css'
 import { NavLink, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { postServerRequest } from '../../store/workspace'
+import { loadWorkspaces, postServerRequest } from '../../store/workspace'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -43,6 +43,7 @@ function AddServer () {
     e.preventDefault()
     if (!isTitleInvalid) {
       await dispatch(postServerRequest(title))
+      await dispatch(loadWorkspaces()) // this needs to be fixed
       setIsPosted(true)
     }
   }
