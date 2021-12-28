@@ -3,6 +3,7 @@ import { NavLink, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { loadWorkspaces, postServerRequest } from '../../store/workspace'
+import Modal from '../Modal'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -97,21 +98,6 @@ function ServerOptions () {
   )
 }
 
-// https://www.digitalocean.com/community/tutorials/react-modal-component
-function Modal ({ children, button }) {
-  console.log(button)
-  const [isHidden, setHidden] = useState(true)
-  return (
-    <>
-      <div className={isHidden ? styles.modalHide : styles.modalShow}>
-        {children}
-        <button onClick={(e) => setHidden(true)}>Close Modal</button>
-      </div>
-      <button className={button.style} onClick={(e) => setHidden(false)}>{button.text}</button>
-    </>
-  )
-}
-
 function WorkspaceList ({ workspaces, serverId }) {
   const userId = 1
   return (
@@ -121,7 +107,7 @@ function WorkspaceList ({ workspaces, serverId }) {
         return (
           <li key={id}>
             <NavLink to={`/main/server/${id}`}>{id === Number(serverId) ? '>> ' + title : title}</NavLink>
-            {ownerId == userId && <ServerOptions serverId={serverId} />}
+            {ownerId === userId && <ServerOptions serverId={serverId} />}
           </li>
         )
       })}

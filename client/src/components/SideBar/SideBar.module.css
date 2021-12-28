@@ -4,19 +4,6 @@ aside {
   border: 1px pink solid;
 }
 
-.modalShow {
-  border: 1px solid red;
-  background: linear-gradient(yellow, orange);
-  position: fixed;
-  top: calc(50% - 15%);
-  left: calc(50% - 15%);
-  width: 30%;
-}
-
-.modalHide {
-  display: none;
-}
-
 .optionsButton {
   background-color: pink;
   border-radius: 0px;
