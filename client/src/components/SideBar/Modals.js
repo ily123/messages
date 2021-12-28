@@ -1,14 +1,14 @@
 import styles from './Modals.module.css'
 import Modal from '../Modal'
 import { useDispatch } from 'react-redux'
-import { loadWorkspaces, postServerRequest } from '../../store/workspace'
+import { loadWorkspaces, postServerRequest, deleteServerRequest, patchServerRequest } from '../../store/workspace'
 import { useState, useEffect } from 'react'
 
 // All these modals look awfully similar, but do NOT try to DRY them!
 // There is enough specific functionality here that a general solution
 // will be hard to implement.
 
-export function ServerOptions () {
+export function ServerOptions ({ serverId }) {
   const [title, setTitle] = useState('')
   const [isTitleInvalid, setIsTitleInvalid] = useState(false)
   const [isPosted, setIsPosted] = useState(false)
@@ -20,10 +20,13 @@ export function ServerOptions () {
   const handleSubmit = async e => {
     e.preventDefault()
     if (!isTitleInvalid) {
-      // await dispatch(postServerRequest(title))
-      // await dispatch(loadWorkspaces()) // this needs to be fixed
+      await dispatch(patchServerRequest(serverId, title))
       setIsPosted(true)
     }
+  }
+
+  const handleDelete = async e => {
+    await dispatch(deleteServerRequest(serverId))
   }
 
   // if (isPosted) return <Navigate to='/main/server' />
@@ -37,7 +40,7 @@ export function ServerOptions () {
         <button>submit</button>
       </form>
       <h3>Delete Server</h3>
-      <button style={{ backgroundColor: 'red' }}>DELETE</button>
+      <button style={{ backgroundColor: 'red' }} onClick={handleDelete}>DELETE</button>
     </Modal>
   )
 }

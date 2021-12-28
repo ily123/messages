@@ -36,7 +36,7 @@ function WorkspaceList ({ workspaces, serverId }) {
         return (
           <li key={id}>
             <NavLink to={`/main/server/${id}`}>{id === Number(serverId) ? '>> ' + title : title}</NavLink>
-            {ownerId === userId && <ServerOptions serverId={serverId} />}
+            {ownerId === userId && <ServerOptions serverId={id} />}
           </li>
         )
       })}

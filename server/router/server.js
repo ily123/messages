@@ -68,4 +68,17 @@ router.delete('/:serverId', asyncHandler(async (req, res) => {
   return res.json({ suceess: !!success })
 }))
 
+router.patch('/:serverId', asyncHandler(async (req, res) => {
+  console.log('❤️ PATCH REQUEST')
+  const { user } = req
+  const { serverId } = req.params
+  const { title } = req.body
+  const server = await Server.findByPk(serverId)
+  server.title = title
+  await server.save()
+  return res.json({ server })
+}))
+
+router.patch('')
+
 module.exports = router
