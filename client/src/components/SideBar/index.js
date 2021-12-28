@@ -1,5 +1,5 @@
 import styles from './SideBar.module.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { postServerRequest } from '../../store/workspace'
@@ -46,6 +46,8 @@ function AddServer () {
       setIsPosted(true)
     }
   }
+
+  // if (isPosted) return <Navigate to='/main/server' />
 
   return (
     <Modal>

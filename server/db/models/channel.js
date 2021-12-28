@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING(50),
       allowNull: false,
-      defaultValue: 'New Channel'
+      defaultValue: 'General'
     }
   }, {
     tableName: 'channel'

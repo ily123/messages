@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const asyncHandler = require('express-async-handler')
 const { requireAuth } = require('../utils/auth.js')
-const { Channel, Server, User } = require('../db/models')
+const { Channel, Server, User, UserToServer } = require('../db/models')
 
 router.use(requireAuth)
 
@@ -42,7 +42,12 @@ router.post('/', asyncHandler(async (req, res) => {
   const { title } = req.body
   const { user } = req
   console.log(req.user)
+  // create new server with user as owner
   const server = await Server.create({ owner_id: user.id, title })
+  // add owner as member
+  await UserToServer.create({ user_id: user.id, server_id: server.id })
+  // add default starting channel to server
+  await Channel.create({ server_id: server.id })
   return res.json({ server })
 }))
 
