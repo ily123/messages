@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const asyncHandler = require('express-async-handler')
-const { User } = require('../db/models')
+const { User, UserToServer } = require('../db/models')
 const { setTokenCookie, restoreUser } = require('../utils/auth.js')
 
 const { check } = require('express-validator')
@@ -61,6 +61,7 @@ router.post('/signup', validateSignup, asyncHandler(async (req, res, next) => {
   let user
   try {
     user = await User.signup({ email, username, password })
+    await UserToServer.create({ user_id: user.id, server_id: 1 })
   } catch {
     const err = new Error('Signup failed')
     err.title = 'Signup failed when inserting into db'

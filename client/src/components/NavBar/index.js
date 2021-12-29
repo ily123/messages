@@ -1,4 +1,5 @@
 import styles from './NavBar.module.css'
+import LogOutButton from '../LogOutButton'
 import { useState, useEffect } from 'react'
 
 export default function NavBar () {
@@ -7,8 +8,7 @@ export default function NavBar () {
       <Clock />
       <SearchBar />
       <div>
-        <button>?</button>
-        <button>P</button>
+        <LogOutButton />
       </div>
     </header>
   )

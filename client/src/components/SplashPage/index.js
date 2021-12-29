@@ -1,5 +1,4 @@
 import SignupForm from '../SignUpForm'
-import LogOutButton from '../LogOutButton'
 import LoginForm from '../LoginForm'
 
 export default function SplashPage () {
@@ -10,11 +9,10 @@ export default function SplashPage () {
         padding: '100px',
         color: 'white'
       }}
-      >There is nothing here yet! 🐤
+      >🐤🐤🐤 There will be a splash page here.
       </div>
       <SignupForm />
       <LoginForm />
-      <LogOutButton />
     </>
   )
 }

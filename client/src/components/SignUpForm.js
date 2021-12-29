@@ -1,5 +1,5 @@
 // import './SignupFormPage.css'
-// import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { signupUser } from '../store/session'
@@ -29,11 +29,7 @@ function SignupFormPage () {
     }))
   }, [email, username, password, confirmPassword])
 
-  if (sessionUser) {
-    // return (
-    //  <Redirect to='/notes' />
-    // )
-  }
+  if (sessionUser) return <Navigate to='/main/server/' />
 
   const submit = async (event) => {
     event.preventDefault()
