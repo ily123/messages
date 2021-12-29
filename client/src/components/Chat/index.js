@@ -49,7 +49,7 @@ function Message ({ content, user }) {
 }
 
 function MessageEntryBox ({ channelId }) {
-  const webSocket = useRef(null)
+  // const webSocket = useRef(null)
   const [message, setMessage] = useState('')
   const dispatch = useDispatch()
 
@@ -63,8 +63,8 @@ function MessageEntryBox ({ channelId }) {
     } else {
       HOST = window.location.origin.replace(/^http/, 'ws')
     }
-    const ws = new window.WebSocket(HOST)// process.env.REACT_APP_WS_URL)
-    webSocket.current = ws
+    const ws = new window.WebSocket(HOST)
+    // const webSocket.current = ws
 
     ws.onopen = (e) => {
       console.log('socket open:', e)
@@ -86,10 +86,15 @@ function MessageEntryBox ({ channelId }) {
     }
 
     return function cleanup () {
-      if (webSocket.current !== null) {
-        webSocket.curent.close()
+      if (ws != null) {
+        ws.close()
       }
     }
+    // return function cleanup () {
+    //  if (webSocket.current != null) {
+    //    webSocket.curent.close()
+    //  }
+    // }
   }, [channelId])
 
   const handleSubmit = async e => {
