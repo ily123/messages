@@ -7,9 +7,32 @@ const helmet = require('helmet')
 const morgan = require('morgan')
 const router = require('./router')
 const { ValidationError } = require('sequelize')
+const WebSocket = require('ws')
+const { createServer } = require('http')
 
 // create app object
 const app = express()
+const server = createServer(app)
+const wss = new WebSocket.Server({ server })
+
+app.wss = wss
+
+wss.on('connection', (ws) => {
+  ws.on('message', (jsonData) => {
+    console.log(`message -> socket -> ${jsonData}`)
+    const { chatId } = JSON.parse(jsonData)
+    ws.chatId = chatId
+
+    // wss.clients.forEach(client => {
+    //  if (client.readyState === WebSocket.OPEN) {
+    //    client.send(JSON.stringify({ type: 'test', msg: 'main app body -> this is a socket test' }))
+    //  }
+    // })
+  })
+  ws.on('close', (e) => {
+    console.log('close -> socket ->', e)
+  })
+})
 
 // apply middle ware
 app.use(cookieParser())
@@ -61,4 +84,4 @@ app.use((error, _req, res, _next) => {
   })
 })
 
-module.exports = app
+module.exports = server
