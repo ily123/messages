@@ -9,6 +9,7 @@ export default function SplashPage () {
     <div className={styles.splashPage}>
       <SplashNavBar />
       <HeroImage />
+      <ProductDetails />
     </div>
   )
 }
@@ -31,6 +32,36 @@ function HeroImage () {
       <div className={styles.centerLogo} />
       <h1>Messages by Ilya</h1>
       <h2>when Telegram, Slack, LINE, Viber, Discord, and ICQ aren't enough </h2>
+    </div>
+  )
+}
+
+function ProductDetails () {
+  const f = {
+    id: 1,
+    title: 'FREE',
+    descripton: 'All features free, and you can invest the extra skrilla into NFTs'
+  }
+  const x = [f, f, f, f, f, f]
+  return (
+    <div className={styles.productDetailsWrapper}>
+      <h2>
+        Messages is a websocket-powered instant chat messenger
+      </h2>
+      <div className={styles.detailCardsGrid}>
+        {x.map(item => <DetailsCard key={`item-${item.id}`} details={item} />)}
+      </div>
+    </div>
+  )
+}
+
+function DetailsCard ({ details }) {
+  const { title, descripton } = details
+  return (
+    <div className={styles.detailsCard}>
+      <h3 className={styles.cardTitle}>{title}</h3>
+      <div className={styles.cardImage} />
+      <div className={styles.cardDescription}>{descripton}</div>
     </div>
   )
 }
