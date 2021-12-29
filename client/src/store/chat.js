@@ -34,7 +34,8 @@ export const postMessageRequest = (channelId, content) => async dispatch => {
   })
   if (response.ok) {
     const { message } = await response.json()
-    dispatch(addMessage(message))
+    // message is added via socket
+    // dispatch(addMessage(message))
     return isLoaded
   }
   return !isLoaded

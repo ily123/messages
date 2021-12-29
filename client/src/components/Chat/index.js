@@ -56,7 +56,14 @@ function MessageEntryBox ({ channelId }) {
   useEffect(() => {
     if (!channelId) return
 
-    const ws = new window.WebSocket('ws://localhost:5000')// process.env.REACT_APP_WS_URL)
+    let HOST
+    console.log('HOST', HOST)
+    if (process.env.NODE_ENV !== 'production') {
+      HOST = 'ws://localhost:5000'
+    } else {
+      HOST = window.location.origin.replace(/^http/, 'ws')
+    }
+    const ws = new window.WebSocket(HOST)// process.env.REACT_APP_WS_URL)
     webSocket.current = ws
 
     ws.onopen = (e) => {
