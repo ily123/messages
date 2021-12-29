@@ -2,7 +2,7 @@
 
 import styles from './Chat.module.css'
 import { csrfFetch } from '../../store/csrf'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMessagesRequest, postMessageRequest } from '../../store/chat'
 
@@ -49,13 +49,37 @@ function Message ({ content, user }) {
 }
 
 function MessageEntryBox ({ channelId }) {
+  const webSocket = useRef(null)
   const [message, setMessage] = useState('')
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!channelId) return
+
+    const ws = new window.WebSocket('ws://localhost:5000')// process.env.REACT_APP_WS_URL)
+    webSocket.current = ws
+
+    ws.onopen = (e) => {
+      console.log('socket open:', e)
+    }
+    ws.onmessage = (e) => {}
+    ws.onerror = (e) => {}
+    ws.onclose = (e) => {
+      console.log('socket closed', e)
+    }
+
+    return function cleanup () {
+      if (webSocket.current !== null) {
+        webSocket.curent.close()
+      }
+    }
+  }, [channelId])
 
   const handleSubmit = async e => {
     e.preventDefault()
     if (message.length) {
-      await dispatch(postMessageRequest(channelId, message))
+      // await dispatch(postMessageRequest(channelId, message))
+      webSocket.current.send(JSON.stringify({ type: 'test-send', message }))
       setMessage('')
     }
   }

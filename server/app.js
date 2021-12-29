@@ -17,6 +17,12 @@ const wss = new WebSocket.Server({ server })
 wss.on('connection', (ws) => {
   ws.on('message', (jsonData) => {
     console.log(`message -> socket -> ${jsonData}`)
+
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({ type: 'test', msg: 'this is a socket test' }))
+      }
+    })
   })
   ws.on('close', (e) => {
     console.log('close -> socket ->', e)
