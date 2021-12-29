@@ -7,16 +7,13 @@
 }
 
 .splashPage nav {
-  border: 1px solid red;
 }
 .navLinks {
-  border: 1px solid green;
 }
 
 
 
 .heroImage {
-  border: 1px solid red;
 }
 .heroImage .centerLogo {
   height: 256px;
@@ -35,22 +32,22 @@
 }
 
 .productDetailsWrapper {
-  border: 1px solid pink;
-  max-width: 66%;
+  padding-top: 30px;
+  max-width: min(66%, 1200px);
 }
 .productDetailsWrapper h2 {
   color: var(--text-gray)
 }
 .detailCardsGrid {
-  border: 1px red solid;
+  padding-top: 30px;
   display: flex;
   flex-direction: row;
   flex-basis: calc(100%/3);
   flex-wrap: wrap;
+  row-gap: 35px;
 }
 .detailsCard {
   width: calc(100%/3);
-  border: 1px green solid;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,12 +58,12 @@
   font-size: 1.25rem;
 }
 .cardImage {
-  height: 150px;
-  width: 150px;
-  background-image: url(undraw_crypto_portfolio_2jy5.svg);
-  background-size: cover;
+  height: 175px;
+  width: 175px;
   align-self: center;
 }
 .cardDescription {
-  color: red;
+  color: var(--text-gray);
+  font-size: 1.1rem;
+  min-height: 1em;
 }
