@@ -14,15 +14,20 @@ const { createServer } = require('http')
 const app = express()
 const server = createServer(app)
 const wss = new WebSocket.Server({ server })
+
+app.wss = wss
+
 wss.on('connection', (ws) => {
   ws.on('message', (jsonData) => {
     console.log(`message -> socket -> ${jsonData}`)
+    const { chatId } = JSON.parse(jsonData)
+    ws.chatId = chatId
 
-    wss.clients.forEach(client => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify({ type: 'test', msg: 'this is a socket test' }))
-      }
-    })
+    // wss.clients.forEach(client => {
+    //  if (client.readyState === WebSocket.OPEN) {
+    //    client.send(JSON.stringify({ type: 'test', msg: 'main app body -> this is a socket test' }))
+    //  }
+    // })
   })
   ws.on('close', (e) => {
     console.log('close -> socket ->', e)

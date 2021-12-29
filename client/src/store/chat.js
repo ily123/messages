@@ -19,7 +19,7 @@ export const getMessagesRequest = channelId => async dispatch => {
   return true
 }
 
-const addMessage = message => {
+export const addMessage = message => {
   return {
     type: ADD_MESSAGE,
     message
@@ -34,7 +34,6 @@ export const postMessageRequest = (channelId, content) => async dispatch => {
   })
   if (response.ok) {
     const { message } = await response.json()
-    console.log('🔥', message)
     dispatch(addMessage(message))
     return isLoaded
   }
@@ -48,8 +47,6 @@ export const chatReducer = (state = initialState, action) => {
       return action.messages
     }
     case ADD_MESSAGE: {
-      console.log('🔥 here -> ', action.message)
-      console.log(state)
       const newState = { ...state }
       newState.Messages.push(action.message)
       return newState

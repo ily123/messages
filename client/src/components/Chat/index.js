@@ -4,7 +4,7 @@ import styles from './Chat.module.css'
 import { csrfFetch } from '../../store/csrf'
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMessagesRequest, postMessageRequest } from '../../store/chat'
+import { getMessagesRequest, postMessageRequest, addMessage } from '../../store/chat'
 
 export default function Chat ({ channelId }) {
   const [loaded, setLoaded] = useState(false)
@@ -61,11 +61,21 @@ function MessageEntryBox ({ channelId }) {
 
     ws.onopen = (e) => {
       console.log('socket open:', e)
+      console.log('time OPEN is', new Date())
+      ws.send(JSON.stringify({ type: 'test-send', chatId: channelId }))
     }
-    ws.onmessage = (e) => {}
+    ws.onmessage = (e) => {
+      console.log('server sent someting over WS', e)
+      const { type, message } = JSON.parse(e.data)
+      if (type === 'test') {
+        dispatch(addMessage(message))
+      }
+      console.log(message)
+    }
     ws.onerror = (e) => {}
     ws.onclose = (e) => {
       console.log('socket closed', e)
+      console.log('time CLOSED is', new Date())
     }
 
     return function cleanup () {
@@ -78,8 +88,8 @@ function MessageEntryBox ({ channelId }) {
   const handleSubmit = async e => {
     e.preventDefault()
     if (message.length) {
-      // await dispatch(postMessageRequest(channelId, message))
-      webSocket.current.send(JSON.stringify({ type: 'test-send', message }))
+      await dispatch(postMessageRequest(channelId, message))
+      // webSocket.current.send(JSON.stringify({ type: 'test-send', chatId: 1 }))
       setMessage('')
     }
   }
