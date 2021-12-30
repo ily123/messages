@@ -10,19 +10,10 @@ export default function SideBar ({ workspaces, activeIds }) {
     <aside>
       <div>
         <WorkSpaceModal />
-        <WorkspaceList workspaces={workspaces} serverId={serverId} />
-        <AddServer />
       </div>
       <div>
         <h3>Channel List</h3>
         <ChannelList data={{ channels, serverId, channelId }} />
-      </div>
-      <div>
-        <h3>Direct Messages</h3>
-        <menu>
-          <li>Bobby Marks</li>
-          <li>Mark Robertson</li>
-        </menu>
       </div>
     </aside>
   )
