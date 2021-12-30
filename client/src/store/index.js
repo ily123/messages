@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { sessionReducer } from './session'
 import { workspaceReducer } from './workspace'
 import { chatReducer } from './chat'
+import { interfaceReducer } from './interface'
 
 let enhancer
 
@@ -18,7 +19,8 @@ if (process.env.NODE_ENV === 'production') {
 const rootReducer = combineReducers({
   session: sessionReducer,
   workspaces: workspaceReducer,
-  chat: chatReducer
+  chat: chatReducer,
+  interface: interfaceReducer
 })
 
 const configureStore = (preloadedState) => {

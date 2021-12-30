@@ -2,6 +2,8 @@ import styles from './SideBar.module.css'
 import { useState, useEffect } from 'react'
 import { NavLink, Navigate } from 'react-router-dom'
 import { AddServer, ServerOptions } from './Modals'
+import { useDispatch, useSelector } from 'react-redux'
+import { setServerSettingsShow } from '../../store/interface'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -76,8 +78,18 @@ function WorkSpaceModal ({ workspaces, serverId }) {
 }
 
 function DeleteServerButton ({ currentWorkspace }) {
+  const dispatch = useDispatch()
+  const { serverSettings } = useSelector(state => state.interface)
+  const openServerSettings = (_) => {
+    dispatch(setServerSettingsShow(true))
+  }
   return (
-    <div className={styles.deleteServerButton}>DELETE WORKSPACE</div>
+    <div
+      className={styles.deleteServerButton}
+      onClick={openServerSettings}
+    >
+      Workspace Settings
+    </div>
   )
 }
 
