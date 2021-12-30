@@ -31,8 +31,9 @@ export default function SideBar ({ workspaces, activeIds }) {
 function WorkSpaceModal () {
   const [isHidden, setHidden] = useState(true)
 
-  const openModal = (_) => {
+  const toggleModal = (_) => {
     if (isHidden) setHidden(false)
+    else setHidden(true)
   }
 
   const closeModal = (e) => {
@@ -55,9 +56,9 @@ function WorkSpaceModal () {
   }, [isHidden])
 
   return (
-    <div className={styles.workSpaceModal} onClick={(e) => openModal(e)}>
-      <div>
-        IT CORP CO <i className='fas fa-chevron-down' />
+    <div className={styles.workSpaceModal}>
+      <div onClick={(e) => toggleModal(e)} className={styles.currentWorkSpace}>
+        <span>IT CORP CO</span> <i className='fas fa-chevron-down' />
       </div>
       <div className={isHidden ? styles.wsmHide : styles.wsmShow}>
         Go to workspace
