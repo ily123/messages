@@ -1,5 +1,3 @@
-import './App.css'
-
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
@@ -9,6 +7,8 @@ import SignupForm from './components/SignUpForm'
 
 import MainScreen from './components/MainScreen'
 import SplashPage from './components/SplashPage'
+import PublicNavBar from './components/PublicNavBar'
+import PublicFooter from './components/PublicFooter'
 
 function App () {
   // fetch user info (will set user to null if not logged in)
@@ -18,29 +18,27 @@ function App () {
   }, [dispatch])
 
   return (
-    <div className='App'>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' exact element={<SplashPage />} />
-          <Route path='/login' exact element={<Public><LoginForm /></Public>} />
-          <Route path='/signup' exact element={<SignupForm />} />
-          <Route path='/main/server' exact element={<Protected> <MainScreen /> </Protected>} />
-          <Route path='/main/server/:serverId' exact element={<Protected> <MainScreen /> </Protected>} />
-          <Route path='/main/server/:serverId/channel/:channelId' exact element={<Protected> <MainScreen /> </Protected>} />
-          <Route path='*' element={<div>ERROR 404: PAGE WITH THIS URL DOES NOT EXIST</div>} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' exact element={<Public> <SplashPage /> </Public>} />
+        <Route path='/login' exact element={<Public> <LoginForm /> </Public>} />
+        <Route path='/signup' exact element={<Public> <SignupForm /> </Public>} />
+        <Route path='/main/server' exact element={<Protected> <MainScreen /> </Protected>} />
+        <Route path='/main/server/:serverId' exact element={<Protected> <MainScreen /> </Protected>} />
+        <Route path='/main/server/:serverId/channel/:channelId' exact element={<Protected> <MainScreen /> </Protected>} />
+        <Route path='*' element={<div>ERROR 404: PAGE WITH THIS URL DOES NOT EXIST</div>} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
 function Public ({ children }) {
   return (
-    <>
-      <div>HELLO</div>
+    <main>
+      <PublicNavBar />
       {children}
-      <div>HELLO</div>
-    </>
+      <PublicFooter />
+    </main>
   )
 }
 // router v6 implementaion gleaned here:

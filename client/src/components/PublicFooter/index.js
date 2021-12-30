@@ -1,13 +1,13 @@
 import styles from './index.module.css'
 
-export default function Footer () {
+export default function PublicFooter () {
   return (
-    <footer>
-      <div className='my-name'>
-        <div className='one'>made by</div> <div className='two'><a href='https://ilyanovikov.io'>ilya novikov</a></div>
+    <footer className={styles.publicFooter}>
+      <div className={styles.myName}>
+        <div className={styles.one}>made by</div> <div className={styles.two}><a href='https://ilyanovikov.io'>Ilya Novikov</a></div>
       </div>
-      <div className='social-media-links'>
-        <a target='_blank' href='https://github.com/ily123/grafnote' rel='noreferrer'>
+      <div className={styles.socialMediaLinks}>
+        <a target='_blank' href='https://github.com/ily123/messages' rel='noreferrer'>
           <i className='fab fa-github-square' />
         </a>
         <a target='_blank' href='https://www.linkedin.com/in/ilyabnovikov' rel='noreferrer'>

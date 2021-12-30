@@ -6,20 +6,6 @@
   text-align: center;
 }
 
-.splashPage nav {
-  padding: 8px calc(33%/2);
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(0,0,0, 0.1);
-  color: var(--darkblue);
-}
-.splashPage a {
-  text-decoration: none;
-  padding-left: 20px;
-  color: var(--darkblue);
-}
-
 .heroImage {
 }
 .heroImage .centerLogo {
