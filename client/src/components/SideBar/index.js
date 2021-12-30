@@ -77,7 +77,7 @@ function WorkSpaceModal ({ workspaces, serverId }) {
 
 function DeleteServerButton ({ currentWorkspace }) {
   return (
-    <div>DELETE WORKSPACE</div>
+    <div className={styles.deleteServerButton}>DELETE WORKSPACE</div>
   )
 }
 

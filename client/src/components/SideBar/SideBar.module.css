@@ -51,6 +51,9 @@ aside {
   padding-left: 10px;
   list-style: none;
 }
+.deleteServerButton:hover {
+  color: red; 
+}
 
 .channelList h3 {
   font-weight: normal; 
