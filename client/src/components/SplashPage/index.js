@@ -1,11 +1,12 @@
 import styles from './index.module.css'
-import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import Image from './ImageLoader'
 import { loginUser } from '../../store/session'
 
 export default function SplashPage () {
-  console.log(styles)
+  const sessionUser = useSelector(state => state.session)
+  if (sessionUser) return <Navigate to='/main/server/' />
   return (
     <div className={styles.splashPage}>
       <HeroImage />
