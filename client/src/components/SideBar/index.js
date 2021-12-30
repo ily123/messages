@@ -1,5 +1,5 @@
 import styles from './SideBar.module.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink, Navigate } from 'react-router-dom'
 import { AddServer, ServerOptions } from './Modals'
 
@@ -30,9 +30,33 @@ export default function SideBar ({ workspaces, activeIds }) {
 
 function WorkSpaceModal () {
   const [isHidden, setHidden] = useState(true)
+
+  const openModal = (_) => {
+    if (isHidden) setHidden(false)
+  }
+
+  const closeModal = (e) => {
+    let elementClickedOn = e.target
+    // block state transition if user is clicking on the modal itself
+    while (elementClickedOn) {
+      if (elementClickedOn.className?.includes(styles.workSpaceModal)) {
+        return
+      }
+      elementClickedOn = elementClickedOn.parentNode
+    }
+    setHidden(true)
+  }
+
+  useEffect(() => {
+    if (!isHidden) {
+      document.addEventListener('click', closeModal)
+      return () => document.removeEventListener('click', closeModal)
+    }
+  }, [isHidden])
+
   return (
-    <div className={styles.workSpaceModal}>
-      <div onClick={(e) => setHidden(false)}>
+    <div className={styles.workSpaceModal} onClick={(e) => openModal(e)}>
+      <div>
         IT CORP CO <i className='fas fa-chevron-down' />
       </div>
       <div className={isHidden ? styles.wsmHide : styles.wsmShow}>
@@ -45,7 +69,6 @@ function WorkSpaceModal () {
           <li> server 2 </li>
           <li> server 2 </li>
         </menu>
-        <button onClick={(e) => setHidden(true)}>Close Modal</button>
         <div>
           <div>Join Workspace</div>
           <div>Create Workspace</div>
