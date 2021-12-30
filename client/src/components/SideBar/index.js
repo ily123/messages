@@ -70,14 +70,14 @@ function WorkSpaceModal ({ workspaces, serverId }) {
         <div>
           <div>Join Workspace</div>
           <div>Create Workspace</div>
-          <DeleteServerButton />
+          <ServerSettingsButton />
         </div>
       </div>
     </div>
   )
 }
 
-function DeleteServerButton ({ currentWorkspace }) {
+function ServerSettingsButton ({ currentWorkspace }) {
   const dispatch = useDispatch()
   const { serverSettings } = useSelector(state => state.interface)
   const openServerSettings = (_) => {

@@ -13,6 +13,7 @@ export default function MainScreen () {
   const [isLoaded, setLoaded] = useState(false)
   const dispatch = useDispatch()
   const workspaces = useSelector(state => state.workspaces)
+  const { serverSettings } = useSelector(state => state.interface)
 
   // fetch metadata for user's workspaces and channels
   useEffect(() => {
@@ -38,6 +39,11 @@ export default function MainScreen () {
         <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} />
         <Chat channelId={channelId} />
       </div>
+      <ServerSettings isShown={serverSettings.isShown} />
     </div>
   )
+}
+
+function ServerSettings ({ isShown }) {
+  return <div className={`${styles.serverSettings} ${isShown ? styles.isShown : styles.isHidden}`}>Hello</div>
 }

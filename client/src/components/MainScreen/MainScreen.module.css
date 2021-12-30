@@ -12,3 +12,22 @@
   height: 100%;
 }
 
+.serverSettings {
+  height: 200px;
+  width: 200px;
+  border: 1px solid red;
+  position: fixed;
+  top: calc(50% - 100px);
+  left: calc(50% - 100px);
+  background-color: var(--bg-gray);
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-elevation-low);
+  border-radius: 5px;
+  padding: 20px;
+}
+.isHidden {
+  display: none;
+}
+.isShown {
+  display: block;
+}
