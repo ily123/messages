@@ -22,7 +22,7 @@ function App () {
       <BrowserRouter>
         <Routes>
           <Route path='/' exact element={<SplashPage />} />
-          <Route path='/login' exact element={<LoginForm />} />
+          <Route path='/login' exact element={<Public><LoginForm /></Public>} />
           <Route path='/signup' exact element={<SignupForm />} />
           <Route path='/main/server' exact element={<Protected> <MainScreen /> </Protected>} />
           <Route path='/main/server/:serverId' exact element={<Protected> <MainScreen /> </Protected>} />
@@ -34,6 +34,15 @@ function App () {
   )
 }
 
+function Public ({ children }) {
+  return (
+    <>
+      <div>HELLO</div>
+      {children}
+      <div>HELLO</div>
+    </>
+  )
+}
 // router v6 implementaion gleaned here:
 // https://dev.to/iamandrewluca/private-route-in-react-router-v6-lg5
 function Protected ({ children }) {

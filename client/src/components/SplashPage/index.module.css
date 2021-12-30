@@ -7,11 +7,18 @@
 }
 
 .splashPage nav {
+  padding: 8px calc(33%/2);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0,0,0, 0.1);
+  color: var(--darkblue);
 }
-.navLinks {
+.splashPage a {
+  text-decoration: none;
+  padding-left: 20px;
+  color: var(--darkblue);
 }
-
-
 
 .heroImage {
 }
@@ -42,12 +49,13 @@
   padding-top: 30px;
   display: flex;
   flex-direction: row;
-  flex-basis: calc(100%/3);
+  flex-basis: calc(96%/3);
   flex-wrap: wrap;
   row-gap: 35px;
+  column-gap: 15px;
 }
 .detailsCard {
-  width: calc(100%/3);
+  width: calc(96%/3);
   display: flex;
   flex-direction: column;
   justify-content: center;

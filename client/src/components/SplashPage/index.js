@@ -16,7 +16,7 @@ export default function SplashPage () {
 function SplashNavBar () {
   return (
     <nav>
-      <div>LOGO?</div>
+      <NavLink to='/'>Home</NavLink>
       <div className={styles.navLinks}>
         <NavLink to='/login'>Log in</NavLink>
         <NavLink to='/signup'>Sign up</NavLink>
@@ -60,7 +60,7 @@ function ProductDetails () {
     }, {
       id: 6,
       title: 'FREE',
-      descripton: 'All features are free, and you can invest the extra skrilla into NFTs'
+      descripton: 'All features are free, and you can invest you skrilla into NFTs'
     }
   ]
   return (
