@@ -73,7 +73,9 @@ router.patch('/:serverId', asyncHandler(async (req, res) => {
   const { user } = req
   const { serverId } = req.params
   const { title } = req.body
-  const server = await Server.findByPk(serverId)
+  const server = await Server.findByPk(serverId, {
+    include: { model: Channel }
+  })
   server.title = title
   await server.save()
   return res.json({ server })
