@@ -6,22 +6,9 @@ export default function SplashPage () {
   console.log(styles)
   return (
     <div className={styles.splashPage}>
-      <SplashNavBar />
       <HeroImage />
       <ProductDetails />
     </div>
-  )
-}
-
-function SplashNavBar () {
-  return (
-    <nav>
-      <NavLink to='/'>Home</NavLink>
-      <div className={styles.navLinks}>
-        <NavLink to='/login'>Log in</NavLink>
-        <NavLink to='/signup'>Sign up</NavLink>
-      </div>
-    </nav>
   )
 }
 
