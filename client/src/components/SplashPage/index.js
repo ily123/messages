@@ -1,12 +1,15 @@
 import styles from './index.module.css'
 import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import Image from './ImageLoader'
+import { loginUser } from '../../store/session'
 
 export default function SplashPage () {
   console.log(styles)
   return (
     <div className={styles.splashPage}>
       <HeroImage />
+      <DemoLoginButton />
       <ProductDetails />
     </div>
   )
@@ -18,6 +21,21 @@ function HeroImage () {
       <div className={styles.centerLogo} />
       <h1>Messages by Ilya</h1>
       <h2>when Telegram, Slack, LINE, Viber, Discord, and ICQ aren't enough </h2>
+    </div>
+  )
+}
+
+function DemoLoginButton () {
+  const dispatch = useDispatch()
+  const loginDemoUser = async () => {
+    await dispatch(loginUser('joseph', '12345'))
+  }
+  return (
+    <div
+      className={styles.demoLoginButton}
+      onClick={loginDemoUser}
+    >
+      Login as Demo User
     </div>
   )
 }
