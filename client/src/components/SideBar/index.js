@@ -9,7 +9,7 @@ export default function SideBar ({ workspaces, activeIds }) {
   return (
     <aside>
       <div>
-        <WorkSpaceModal />
+        <WorkSpaceModal workspaces={workspaces} serverId={serverId} />
       </div>
       <div className={styles.channelList}>
         <h3>Channels</h3>
@@ -19,8 +19,10 @@ export default function SideBar ({ workspaces, activeIds }) {
   )
 }
 
-function WorkSpaceModal () {
+function WorkSpaceModal ({ workspaces, serverId }) {
   const [isHidden, setHidden] = useState(true)
+  const currentWorkspace = workspaces[serverId]
+  console.log(currentWorkspace)
 
   const toggleModal = (_) => {
     if (isHidden) setHidden(false)
@@ -49,42 +51,33 @@ function WorkSpaceModal () {
   return (
     <div className={styles.workSpaceModal}>
       <div onClick={(e) => toggleModal(e)} className={styles.currentWorkSpace}>
-        <span>IT CORP CO</span> <i className='fas fa-chevron-down' />
+        <span>{currentWorkspace.title}</span> <i className='fas fa-chevron-down' />
       </div>
       <div className={isHidden ? styles.wsmHide : styles.wsmShow}>
-        Go to workspace
+        Your workspaces
         <menu>
-          <li> server 1 </li>
-          <li> server 1 </li>
-          <li> server 1 </li>
-          <li> server 2 </li>
-          <li> server 2 </li>
-          <li> server 2 </li>
+          {Object.values(workspaces).map(server => {
+            const { id, title, owner_id: ownerId } = server
+            return (
+              <li key={id}>
+                <NavLink to={`/main/server/${id}`}>{title}</NavLink>
+              </li>
+            )
+          })}
         </menu>
         <div>
           <div>Join Workspace</div>
           <div>Create Workspace</div>
-          <div>Leave IT CORP CO</div>
+          <DeleteServerButton />
         </div>
       </div>
     </div>
   )
 }
 
-function WorkspaceList ({ workspaces, serverId }) {
-  const userId = 1
+function DeleteServerButton ({ currentWorkspace }) {
   return (
-    <menu>
-      {Object.values(workspaces).map(server => {
-        const { id, title, owner_id: ownerId } = server
-        return (
-          <li key={id}>
-            <NavLink to={`/main/server/${id}`}>{id === Number(serverId) ? '>> ' + title : title}</NavLink>
-            {ownerId === userId && <ServerOptions serverId={id} />}
-          </li>
-        )
-      })}
-    </menu>
+    <div>DELETE WORKSPACE</div>
   )
 }
 

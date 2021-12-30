@@ -47,6 +47,10 @@ aside {
   justify-content: center;
   column-gap: 10px;
 }
+.workSpaceModal menu {
+  padding-left: 10px;
+  list-style: none;
+}
 
 .channelList h3 {
   font-weight: normal; 
