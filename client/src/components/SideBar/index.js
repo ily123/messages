@@ -1,4 +1,5 @@
 import styles from './SideBar.module.css'
+import { useState } from 'react'
 import { NavLink, Navigate } from 'react-router-dom'
 import { AddServer, ServerOptions } from './Modals'
 
@@ -8,7 +9,7 @@ export default function SideBar ({ workspaces, activeIds }) {
   return (
     <aside>
       <div>
-        <h3>Server List</h3>
+        <WorkSpaceModal />
         <WorkspaceList workspaces={workspaces} serverId={serverId} />
         <AddServer />
       </div>
@@ -24,6 +25,34 @@ export default function SideBar ({ workspaces, activeIds }) {
         </menu>
       </div>
     </aside>
+  )
+}
+
+function WorkSpaceModal () {
+  const [isHidden, setHidden] = useState(true)
+  return (
+    <div className={styles.workSpaceModal}>
+      <div onClick={(e) => setHidden(false)}>
+        IT CORP CO <i className='fas fa-chevron-down' />
+      </div>
+      <div className={isHidden ? styles.wsmHide : styles.wsmShow}>
+        Go to workspace
+        <menu>
+          <li> server 1 </li>
+          <li> server 1 </li>
+          <li> server 1 </li>
+          <li> server 2 </li>
+          <li> server 2 </li>
+          <li> server 2 </li>
+        </menu>
+        <button onClick={(e) => setHidden(true)}>Close Modal</button>
+        <div>
+          <div>Join Workspace</div>
+          <div>Create Workspace</div>
+          <div>Leave IT CORP CO</div>
+        </div>
+      </div>
+    </div>
   )
 }
 

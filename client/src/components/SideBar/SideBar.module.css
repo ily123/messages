@@ -5,3 +5,34 @@ aside {
   background-color: var(--bg-gray);
 }
 
+.workSpaceModal {
+  height: 50px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.workSpaceModal i {
+  font-size: 0.8rem;
+}
+.workSpaceModal:hover {
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.wsmShow {
+  position: fixed;
+  top: calc(35px + 50px);
+  left: 20px;
+  background-color: var(--bg-gray);
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 5px;
+  width: 250px;
+  padding: 10px 20px;
+  font-weight: normal;
+  box-shadow: var(--shadow-elevation-low);
+}
+.wsmHide {
+  display: none;
+}

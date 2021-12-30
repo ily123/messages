@@ -4,6 +4,14 @@
   --text-gray: #4d4d4d;
   --text-light-gray: #8c8c8c;
   --bg-gray: #f8f8fa;
+
+
+  /* shadow elevation generated with https://www.joshwcomeau.com/shadow-palette/  */
+  --shadow-color: 284deg 55% 25%;
+  --shadow-elevation-low:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.6px 0.9px 1.2px -1.2px hsl(var(--shadow-color) / 0.34),
+    1.3px 2.1px 2.8px -2.5px hsl(var(--shadow-color) / 0.34);
 }
 /*
   Custom reset from https://www.joshwcomeau.com/css/custom-css-reset/
