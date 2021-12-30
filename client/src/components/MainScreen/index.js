@@ -32,7 +32,7 @@ export default function MainScreen () {
   console.log('🔴', channelId)
 
   return (
-    <div>
+    <div className={styles.appWrapper}>
       <NavBar />
       <div className={styles.wrapper}>
         <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} />

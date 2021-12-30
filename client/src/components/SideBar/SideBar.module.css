@@ -2,5 +2,6 @@ aside {
   display: flex;
   flex-direction: column;
   border: 1px pink solid;
+  background-color: var(--bg-gray);
 }
 

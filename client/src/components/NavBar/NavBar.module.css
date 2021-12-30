@@ -1,14 +1,16 @@
 header {
-  background-color: yellow;
-  border: 1px red solid;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 35px;
+  background-color: var(--darkblue);
 }
 
 .clock {
-  border: 1px blue solid;
-  background-color: pink;
+  color: white;
 }
 
 .searchBar {
@@ -16,8 +18,10 @@ header {
   margin: 0px 10px;
 }
 
-button {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+.interactiveButton {
+  color: white;
+}
+.interactiveButton:hover {
+  color: var(--blue);
+  cursor: pointer;
 }

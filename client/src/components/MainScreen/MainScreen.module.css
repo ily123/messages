@@ -1,4 +1,14 @@
+.appWrapper {
+  width: 100%;
+  height: 100%;
+  border: 3px red solid;
+  display: flex;
+  flex-direction: column;
+}
+
 .wrapper {
   border: 3px blue solid;
   display: flex;
+  height: 100%;
 }
+
