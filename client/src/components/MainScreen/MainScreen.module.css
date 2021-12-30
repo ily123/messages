@@ -14,11 +14,11 @@
 
 .serverSettings {
   height: 200px;
-  width: 200px;
+  width: 300px;
   border: 1px solid red;
   position: fixed;
   top: calc(50% - 100px);
-  left: calc(50% - 100px);
+  left: calc(50% - 150px);
   background-color: var(--bg-gray);
   border: 1px solid rgba(0,0,0,0.1);
   box-shadow: var(--shadow-elevation-low);

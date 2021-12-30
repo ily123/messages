@@ -31,7 +31,7 @@ export default function MainScreen () {
   if (!channelId) channelId = workspaces[serverId].Channels[0].id
   console.log('🔴', serverId)
   console.log('🔴', channelId)
-
+  const currentWorkspace = workspaces[serverId]
   return (
     <div className={styles.appWrapper}>
       <NavBar />
@@ -39,11 +39,19 @@ export default function MainScreen () {
         <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} />
         <Chat channelId={channelId} />
       </div>
-      <ServerSettings isShown={serverSettings.isShown} />
+      <ServerSettings
+        isShown={serverSettings.isShown}
+        workspace={currentWorkspace}
+      />
     </div>
   )
 }
 
-function ServerSettings ({ isShown }) {
-  return <div className={`${styles.serverSettings} ${isShown ? styles.isShown : styles.isHidden}`}>Hello</div>
+function ServerSettings ({ isShown, workspace }) {
+  return (
+    <div
+      className={`${styles.serverSettings} ${isShown ? styles.isShown : styles.isHidden}`}
+    >{`Server Settings for ${workspace.title}`}
+    </div>
+  )
 }
