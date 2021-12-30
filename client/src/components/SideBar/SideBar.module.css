@@ -1,8 +1,10 @@
 aside {
   display: flex;
   flex-direction: column;
+  row-gap: 20px;
   border: 1px pink solid;
   background-color: var(--bg-gray);
+  width: 200px;
 }
 
 .workSpaceModal {
@@ -44,4 +46,19 @@ aside {
   align-items: center;
   justify-content: center;
   column-gap: 10px;
+}
+
+.channelList h3 {
+  font-weight: normal; 
+  font-size: 1rem;
+}
+
+.channelList {
+  padding-left: 20px;
+}
+.channelList menu {
+  padding-left: inherit
+}
+.channelList menu li {
+  list-style: none;
 }

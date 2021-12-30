@@ -11,8 +11,8 @@ export default function SideBar ({ workspaces, activeIds }) {
       <div>
         <WorkSpaceModal />
       </div>
-      <div>
-        <h3>Channel List</h3>
+      <div className={styles.channelList}>
+        <h3>Channels</h3>
         <ChannelList data={{ channels, serverId, channelId }} />
       </div>
     </aside>
