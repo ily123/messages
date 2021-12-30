@@ -63,7 +63,7 @@ p, h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
 }

@@ -34,11 +34,11 @@ function App () {
 
 function Public ({ children }) {
   return (
-    <main>
+    <>
       <PublicNavBar />
       {children}
       <PublicFooter />
-    </main>
+    </>
   )
 }
 // router v6 implementaion gleaned here:
