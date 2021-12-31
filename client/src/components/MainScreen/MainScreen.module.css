@@ -1,4 +1,33 @@
+.appWrapper {
+  width: 100%;
+  height: 100%;
+  border: 3px red solid;
+  display: flex;
+  flex-direction: column;
+}
+
 .wrapper {
   border: 3px blue solid;
   display: flex;
+  height: 100%;
+}
+
+.serverSettings {
+  height: 200px;
+  width: 300px;
+  border: 1px solid red;
+  position: fixed;
+  top: calc(50% - 100px);
+  left: calc(50% - 150px);
+  background-color: var(--bg-gray);
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-elevation-low);
+  border-radius: 5px;
+  padding: 20px;
+}
+.isHidden {
+  display: none;
+}
+.isShown {
+  display: block;
 }

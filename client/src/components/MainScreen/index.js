@@ -30,9 +30,9 @@ export default function MainScreen () {
   if (!channelId) channelId = workspaces[serverId].Channels[0].id
   console.log('🔴', serverId)
   console.log('🔴', channelId)
-
+  const currentWorkspace = workspaces[serverId]
   return (
-    <div>
+    <div className={styles.appWrapper}>
       <NavBar />
       <div className={styles.wrapper}>
         <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} />

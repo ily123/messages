@@ -1,16 +1,23 @@
 import styles from './NavBar.module.css'
-import LogOutButton from '../LogOutButton'
 import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '../../store/session'
 
 export default function NavBar () {
   return (
-    <header>
+    <header className={styles.appNavBar}>
       <Clock />
-      <SearchBar />
       <div>
         <LogOutButton />
       </div>
     </header>
+  )
+}
+
+function LogOutButton () {
+  const dispatch = useDispatch()
+  return (
+    <div className={styles.interactiveButton} onClick={() => dispatch(logoutUser())}>Log out</div>
   )
 }
 

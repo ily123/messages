@@ -1,6 +1,71 @@
 aside {
   display: flex;
   flex-direction: column;
+  row-gap: 20px;
   border: 1px pink solid;
+  background-color: var(--bg-gray);
+  width: 200px;
 }
 
+.workSpaceModal {
+  height: 50px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.workSpaceModal i {
+  font-size: 0.8rem;
+}
+.workSpaceModal:hover {
+  background-color: rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.wsmShow {
+  position: fixed;
+  top: calc(35px + 50px);
+  left: 20px;
+  background-color: var(--bg-gray);
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 5px;
+  width: 250px;
+  padding: 10px 20px;
+  font-weight: normal;
+  box-shadow: var(--shadow-elevation-low);
+}
+.wsmHide {
+  display: none;
+}
+.currentWorkSpace {
+  /* make the div occupy the entire space of the box */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+}
+.workSpaceModal menu {
+  padding-left: 10px;
+  list-style: none;
+}
+.deleteServerButton:hover {
+  color: red; 
+}
+
+.channelList h3 {
+  font-weight: normal; 
+  font-size: 1rem;
+}
+
+.channelList {
+  padding-left: 20px;
+}
+.channelList menu {
+  padding-left: inherit
+}
+.channelList menu li {
+  list-style: none;
+}
