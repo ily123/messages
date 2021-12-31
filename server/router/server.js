@@ -81,6 +81,19 @@ router.patch('/:serverId', asyncHandler(async (req, res) => {
   return res.json({ server })
 }))
 
-router.patch('')
+router.put('/:serverId', asyncHandler(async (req, res) => {
+  console.log('❤️ PUT REQUEST')
+  const { user } = req
+  const { serverId } = req.params
+  const server = await Server.findByPk(serverId, {
+    include: { model: Channel }
+  })
+  if (server) {
+    await UserToServer.create({ user_id: user.id, server_id: server.id })
+    return res.json({ server })
+  } else {
+    throw new Error('This server does not exist!')
+  }
+}))
 
 module.exports = router

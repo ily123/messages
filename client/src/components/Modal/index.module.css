@@ -1,12 +1,33 @@
 .modalShow {
-  border: 1px solid red;
-  background: linear-gradient(yellow, orange);
   position: fixed;
-  top: calc(50% - 15%);
-  left: calc(50% - 15%);
-  width: 30%;
+  top: calc(50% - 150px);
+  left: calc(50% - 150px);
+  width: 300px;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--bg-gray);
+  border: var(--border-alpha40); 
+  border-radius: 5px;
+  box-shadow: var(--shadow-elevation-low)
+}
+.modalShow .doneButton {
+  border: var(--border-alpha40); 
+  border-radius: 3px;
+  width: 70px;
+  background-color: var(--darkblue);
+  color: white;
+}
+.doneButton:hover {
+  cursor: pointer;
+  background-color: var(--blue);
 }
 
 .modalHide {
   display: none;
 }
+
+

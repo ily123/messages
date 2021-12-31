@@ -38,7 +38,7 @@ export const postServerRequest = title => async dispatch => {
   if (response.ok) {
     const { server } = await response.json()
     dispatch(addServer(server))
-    return isLoaded
+    return { isLoaded, server }
   }
   return !isLoaded
 }
@@ -76,6 +76,22 @@ export const patchServerRequest = (serverId, title) => async dispatch => {
     return isLoaded
   }
   return !isLoaded
+}
+
+export const putServerRequest = (serverId) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/server/${serverId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ serverId })
+    })
+    if (response.ok) {
+      const { server } = await response.json()
+      dispatch(addServer(server))
+      return { server }
+    }
+  } catch (error) {
+    return { server: null }
+  }
 }
 
 const initialState = null

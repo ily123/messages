@@ -24,11 +24,15 @@ export function ModalBody ({ children, isHidden, setHidden }) {
 }
 
 export function ModalPortal ({ children, isHidden, setHidden }) {
+  // you have 2 onclicks there, refactor
   return ReactDOM.createPortal(
-    <div className={isHidden ? styles.modalHide : styles.modalShow}>
-      {children}
-      <button onClick={(e) => setHidden(true)}>Close Modal</button>
-    </div>,
+    <>
+      <div id='modal-background' style={{ display: isHidden ? 'none' : 'block' }} onClick={(e) => setHidden(true)} />
+      <div className={isHidden ? styles.modalHide : styles.modalShow}>
+        {children}
+        <button className={styles.doneButton} onClick={(e) => setHidden(true)}>Done</button>
+      </div>
+    </>,
     document.getElementById('root')
   )
 }
