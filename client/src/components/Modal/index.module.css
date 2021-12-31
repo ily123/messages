@@ -1,7 +1,7 @@
 .modalShow {
   position: fixed;
-  top: calc(50% - 15%);
-  left: calc(50% - 15%);
+  top: calc(50% - 150px);
+  left: calc(50% - 150px);
   width: 300px;
 
   display: flex;
@@ -14,7 +14,6 @@
   border-radius: 5px;
   box-shadow: var(--shadow-elevation-low)
 }
-
 .modalShow .doneButton {
   border: var(--border-alpha40); 
   border-radius: 3px;

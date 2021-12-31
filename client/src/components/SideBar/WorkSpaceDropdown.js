@@ -104,13 +104,13 @@ function ServerSettingsContent ({ workspace }) {
   // if (isPosted) return <Navigate to='/main/server' />
   return (
     <div className={modalStyles.server}>
-      <h3>Server Settings</h3>
+      <h3>Workspace Settings</h3>
       <p className={isTitleInvalid ? modalStyles.fail : modalStyles.pass}>Edit title: must be at least 1 char</p>
       <form onSubmit={handleSubmit}>
         <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
         <button>submit</button>
       </form>
-      <p className={!deleteTrue ? modalStyles.fail : modalStyles.pass}>Delete server: are you sure?</p>
+      <p className={!deleteTrue ? modalStyles.fail : modalStyles.pass}>Delete workspace: are you sure?</p>
       <form><input checked={deleteTrue} onChange={(_) => setDeleteTrue(!deleteTrue)} type='checkbox' /> Yes</form>
       <button
         className={`${modalStyles.deleteButton} ${(deleteTrue && modalStyles.pass)}`}
