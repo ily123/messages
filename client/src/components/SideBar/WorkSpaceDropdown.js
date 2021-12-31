@@ -49,7 +49,7 @@ export default function WorkSpaceDropDown ({ workspaces, serverId }) {
           })}
         </menu>
         <div>
-          <SidebarModal showParent={setShown} text={`Invite to ${currentWorkspace.title}`}>
+          <SidebarModal showParent={setShown} text={`Invite To ${currentWorkspace.title}`}>
             <InviteToServerContent workspace={currentWorkspace} />
           </SidebarModal>
           <SidebarModal showParent={setShown} text='Join Workspace'>
@@ -217,7 +217,8 @@ function JoinServerContent ({ workspace, setHidden }) {
   const handleSubmit = async e => {
     e.preventDefault()
     if (!isTitleInvalid) {
-      const { server } = await dispatch(putServerRequest(title))
+      const invitedServerId = Number(title.replace('invite/', ''))
+      const { server } = await dispatch(putServerRequest(invitedServerId))
       if (server) {
         await dispatch(loadWorkspaces()) // this needs to be fixed
       } else {
@@ -266,7 +267,7 @@ function InviteToServerContent ({ workspace }) {
       <p
         className={modalStyles.inviteLink}
         onClick={() => navigator.clipboard.writeText(link)}
-      >{link}<i class='fas fa-copy' />
+      >{link}<i className='fas fa-copy' />
       </p>
       <p className={modalStyles.centerText}>Paste link into *Join Workspace* to join the server!</p>
     </div>
