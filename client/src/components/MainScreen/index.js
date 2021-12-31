@@ -25,12 +25,14 @@ export default function MainScreen () {
 
   if (!isLoaded) return <div style={{ backgroundColor: 'blue' }}>...LOADING...</div>
 
-  // if server & channel ids are not found in the URL, grab the first ones from the store
+  // if server & channel ids are not found in the URL,
+  // or if the serverId is not found in workspace store,
+  // grab the first ones from the store
+  // and what if there are no servers in the store?... TODO
   if (!serverId) serverId = Object.values(workspaces)[0].id
+  if (!Object.keys(workspaces).includes(serverId)) serverId = Object.values(workspaces)[0].id
   if (!channelId) channelId = workspaces[serverId].Channels[0].id
-  if (serverId && !workspaces[serverId]) return <div>This server does not exist!</div>
-  console.log('🔴', serverId)
-  console.log('🔴', channelId)
+
   const currentWorkspace = workspaces[serverId]
   return (
     <div className={styles.appWrapper}>

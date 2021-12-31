@@ -1,7 +1,7 @@
 import styles from './SideBar.module.css'
 import modalStyles from './Modals.module.css'
 import React, { useState, useEffect } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { Navigate, NavLink, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { ModalPortal } from '../Modal'
 import {
@@ -113,7 +113,7 @@ function ServerSettingsContent ({ workspace }) {
 
   const handleDelete = async e => {
     await dispatch(deleteServerRequest(serverId))
-    // setIsPosted(true)
+    setIsPosted(true)
   }
 
   // if (isPosted) return <Navigate to='/main/server' />

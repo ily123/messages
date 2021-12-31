@@ -58,6 +58,7 @@ export const deleteServerRequest = serverId => async dispatch => {
   if (response.ok) {
     const { success } = await response.json()
     console.log(success)
+    console.log('SERVER DELETE')
     dispatch(removeServer(serverId))
     return isLoaded
   }
