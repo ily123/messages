@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { NavLink, Navigate } from 'react-router-dom'
 import { AddServer, ServerOptions } from './Modals'
 import { useDispatch, useSelector } from 'react-redux'
-import { setServerSettingsShow } from '../../store/interface'
+import { setServerSettingsShow, setWorkSpaceModalVisibility } from '../../store/interface'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -22,13 +22,13 @@ export default function SideBar ({ workspaces, activeIds }) {
 }
 
 function WorkSpaceModal ({ workspaces, serverId }) {
-  const [isHidden, setHidden] = useState(true)
+  const dispatch = useDispatch()
+  const { isShown } = useSelector(state => state.interface.workSpaceModal)
   const currentWorkspace = workspaces[serverId]
   console.log(currentWorkspace)
-
+  console.log('CURRENT TOGGLE WSM', isShown)
   const toggleModal = (_) => {
-    if (isHidden) setHidden(false)
-    else setHidden(true)
+    dispatch(setWorkSpaceModalVisibility(!isShown))
   }
 
   const closeModal = (e) => {
@@ -40,34 +40,34 @@ function WorkSpaceModal ({ workspaces, serverId }) {
       }
       elementClickedOn = elementClickedOn.parentNode
     }
-    setHidden(true)
+    dispatch(setWorkSpaceModalVisibility(false))
   }
 
   useEffect(() => {
-    if (!isHidden) {
+    if (isShown) {
       document.addEventListener('click', closeModal)
       return () => document.removeEventListener('click', closeModal)
     }
-  }, [isHidden])
+  }, [isShown])
 
   return (
     <div className={styles.workSpaceModal}>
       <div onClick={(e) => toggleModal(e)} className={styles.currentWorkSpace}>
         <span>{currentWorkspace.title}</span> <i className='fas fa-chevron-down' />
       </div>
-      <div className={isHidden ? styles.wsmHide : styles.wsmShow}>
+      <div className={isShown ? styles.wsmShow : styles.wsmHide}>
         Your workspaces
         <menu>
           {Object.values(workspaces).map(server => {
             const { id, title, owner_id: ownerId } = server
             return (
-              <li key={id}>
+              <li key={id} onClick={(e) => toggleModal(e)}>
                 <NavLink to={`/main/server/${id}`}>{title}</NavLink>
               </li>
             )
           })}
         </menu>
-        <div>
+        <div onClick={(e) => toggleModal(e)}>
           <div>Join Workspace</div>
           <div>Create Workspace</div>
           <ServerSettingsButton />
@@ -79,7 +79,6 @@ function WorkSpaceModal ({ workspaces, serverId }) {
 
 function ServerSettingsButton ({ currentWorkspace }) {
   const dispatch = useDispatch()
-  const { serverSettings } = useSelector(state => state.interface)
   const openServerSettings = (_) => {
     dispatch(setServerSettingsShow(true))
   }

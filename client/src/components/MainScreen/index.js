@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { loadWorkspaces } from '../../store/workspace'
+import { closeAllModals } from '../../store/interface'
 
 export default function MainScreen () {
   let { serverId, channelId } = useParams()
@@ -48,6 +49,11 @@ export default function MainScreen () {
 }
 
 function ServerSettings ({ isShown, workspace }) {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(closeAllModals())
+  }, [])
+  isShown = false
   return (
     <div
       className={`${styles.serverSettings} ${isShown ? styles.isShown : styles.isHidden}`}
