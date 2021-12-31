@@ -88,12 +88,11 @@ function SidebarModal ({ showParent, text, children }) {
   )
 }
 
-function ServerSettingsContent ({ workspace }) {
+function ServerSettingsContent ({ workspace, setHidden }) {
   const { id: serverId, title: serverTitle } = workspace
   const [title, setTitle] = useState('')
   const [isTitleInvalid, setIsTitleInvalid] = useState(false)
   const [deleteTrue, setDeleteTrue] = useState(false)
-  const [isPosted, setIsPosted] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -113,10 +112,9 @@ function ServerSettingsContent ({ workspace }) {
 
   const handleDelete = async e => {
     await dispatch(deleteServerRequest(serverId))
-    setIsPosted(true)
+    setHidden(true)
   }
 
-  // if (isPosted) return <Navigate to='/main/server' />
   return (
     <div className={modalStyles.server}>
       <h3>Workspace Settings</h3>
