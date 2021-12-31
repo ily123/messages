@@ -4,6 +4,7 @@ import { NavLink, Navigate } from 'react-router-dom'
 import { AddServer, ServerOptions } from './Modals'
 import { useDispatch, useSelector } from 'react-redux'
 import { setServerSettingsShow, setWorkSpaceModalVisibility } from '../../store/interface'
+import { ModalPortal } from '../Modal'
 
 export default function SideBar ({ workspaces, activeIds }) {
   const [serverId, channelId] = activeIds
@@ -20,6 +21,9 @@ export default function SideBar ({ workspaces, activeIds }) {
     </aside>
   )
 }
+// <div>
+//  <AddServer />
+// </div>
 
 function WorkSpaceModal ({ workspaces, serverId }) {
   const dispatch = useDispatch()
@@ -29,6 +33,11 @@ function WorkSpaceModal ({ workspaces, serverId }) {
   console.log('CURRENT TOGGLE WSM', isShown)
   const toggleModal = (_) => {
     dispatch(setWorkSpaceModalVisibility(!isShown))
+  }
+
+  const hardClose = (_) => {
+    console.log('trying to close')
+    dispatch(setWorkSpaceModalVisibility(false))
   }
 
   const closeModal = (e) => {
@@ -67,28 +76,32 @@ function WorkSpaceModal ({ workspaces, serverId }) {
             )
           })}
         </menu>
-        <div onClick={(e) => toggleModal(e)}>
+        <div>
           <div>Join Workspace</div>
           <div>Create Workspace</div>
-          <ServerSettingsButton />
+          <ServerSettingsButton hideParent={hardClose} />
         </div>
       </div>
     </div>
   )
 }
 
-function ServerSettingsButton ({ currentWorkspace }) {
-  const dispatch = useDispatch()
-  const openServerSettings = (_) => {
-    dispatch(setServerSettingsShow(true))
+function ServerSettingsButton ({ currentWorkspace, hideParent }) {
+  const [isHidden, setHidden] = useState(true)
+  const handleModals = (_) => {
+    hideParent(true)
+    setHidden(false)
   }
   return (
-    <div
-      className={styles.deleteServerButton}
-      onClick={openServerSettings}
-    >
-      Workspace Settings
-    </div>
+    <>
+      <div
+        className={styles.deleteServerButton}
+        onClick={(e) => handleModals(e)}
+      >
+        Workspace Settings
+      </div>
+      <ModalPortal isHidden={isHidden} setHidden={setHidden}>SHOW THIS</ModalPortal>
+    </>
   )
 }
 
