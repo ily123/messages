@@ -44,7 +44,7 @@ export default function WorkSpaceDropDown ({ workspaces, serverId }) {
         </menu>
         <div>
           <SidebarModal showParent={setShown} text='Join Workspace'>
-            <ServerSettingsContent workspace={currentWorkspace} />
+            <JoinServerContent workspace={currentWorkspace} />
           </SidebarModal>
           <SidebarModal showParent={setShown} text='Create Workspace'>
             <CreateServerContent workspace={currentWorkspace} />
@@ -172,6 +172,57 @@ function CreateServerContent ({ workspace, setHidden }) {
       </form>
       <p className={isPosted ? modalStyles.reveal : modalStyles.hidden}>
         Added new workspace!<br />
+        <span>
+          <Link
+            to={newServerId ? `/main/server/${newServerId}` : '/main/server/'}
+            onClick={() => setHidden(true)}
+          >Navigate there!
+          </Link>
+        </span>
+      </p>
+    </div>
+  )
+}
+
+function JoinServerContent ({ workspace, setHidden }) {
+  const { id: serverId } = workspace
+  const [title, setTitle] = useState('')
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false)
+  const [isPosted, setIsPosted] = useState(false)
+  const [newServerId, setNewServerId] = useState(null)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    setTitle('')
+    setIsPosted(false)
+    setIsTitleInvalid(false)
+  }, [serverId])
+
+  useEffect(() => {
+    setIsTitleInvalid(!title.length)
+    setIsPosted(false)
+  }, [title])
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (!isTitleInvalid) {
+      const { server } = await dispatch(postServerRequest(title))
+      await dispatch(loadWorkspaces()) // this needs to be fixed
+      setNewServerId(server.id)
+      setIsPosted(true)
+      // setTitle('')
+    }
+  }
+
+  return (
+    <div className={modalStyles.server}>
+      <h3>Join New Workspace</h3>
+      <p>Enter the invite link below</p>
+      <form onSubmit={handleSubmit}>
+        <input type='text' placeholder='invite/1' value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button>submit</button>
+      </form>
+      <p className={isPosted ? modalStyles.reveal : modalStyles.hidden}>
+        Joined new workspace!<br />
         <span>
           <Link
             to={newServerId ? `/main/server/${newServerId}` : '/main/server/'}
