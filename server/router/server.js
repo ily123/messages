@@ -91,8 +91,9 @@ router.put('/:serverId', asyncHandler(async (req, res) => {
   if (server) {
     await UserToServer.create({ user_id: user.id, server_id: server.id })
     return res.json({ server })
+  } else {
+    throw new Error('This server does not exist!')
   }
-  return res.json({})
 }))
 
 module.exports = router

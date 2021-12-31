@@ -3,8 +3,14 @@ import modalStyles from './Modals.module.css'
 import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { loadWorkspaces, postServerRequest, deleteServerRequest, patchServerRequest } from '../../store/workspace'
 import { ModalPortal } from '../Modal'
+import {
+  loadWorkspaces,
+  postServerRequest,
+  deleteServerRequest,
+  patchServerRequest,
+  putServerRequest
+} from '../../store/workspace'
 
 export default function WorkSpaceDropDown ({ workspaces, serverId }) {
   const [isShown, setShown] = useState(false)
@@ -190,26 +196,34 @@ function JoinServerContent ({ workspace, setHidden }) {
   const [isTitleInvalid, setIsTitleInvalid] = useState(false)
   const [isPosted, setIsPosted] = useState(false)
   const [newServerId, setNewServerId] = useState(null)
+  const [isBadRequest, setIsBadRequest] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
     setTitle('')
     setIsPosted(false)
     setIsTitleInvalid(false)
+    setIsBadRequest(false)
   }, [serverId])
 
   useEffect(() => {
     setIsTitleInvalid(!title.length)
     setIsPosted(false)
+    setIsBadRequest(false)
   }, [title])
 
   const handleSubmit = async e => {
     e.preventDefault()
     if (!isTitleInvalid) {
-      const { server } = await dispatch(postServerRequest(title))
-      await dispatch(loadWorkspaces()) // this needs to be fixed
+      const { server } = await dispatch(putServerRequest(title))
+      if (server) {
+        await dispatch(loadWorkspaces()) // this needs to be fixed
+      } else {
+        setIsBadRequest(true)
+        return
+      }
       setNewServerId(server.id)
       setIsPosted(true)
-      // setTitle('')
+      setIsBadRequest(false)
     }
   }
 
@@ -221,16 +235,21 @@ function JoinServerContent ({ workspace, setHidden }) {
         <input type='text' placeholder='invite/1' value={title} onChange={(e) => setTitle(e.target.value)} />
         <button>submit</button>
       </form>
-      <p className={isPosted ? modalStyles.reveal : modalStyles.hidden}>
-        Joined new workspace!<br />
-        <span>
-          <Link
-            to={newServerId ? `/main/server/${newServerId}` : '/main/server/'}
-            onClick={() => setHidden(true)}
-          >Navigate there!
-          </Link>
-        </span>
-      </p>
+      {isBadRequest
+        ? <p>
+          This server does not exist!<br />
+          Or you are already a member!<br />
+          </p>
+        : <p className={isPosted ? modalStyles.reveal : modalStyles.hidden}>
+          Joined new workspace!<br />
+          <span>
+            <Link
+              to={newServerId ? `/main/server/${newServerId}` : '/main/server/'}
+              onClick={() => setHidden(true)}
+            >Navigate there!
+            </Link>
+          </span>
+          </p>}
     </div>
   )
 }
