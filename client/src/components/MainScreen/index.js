@@ -7,14 +7,12 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { loadWorkspaces } from '../../store/workspace'
-import { closeAllModals } from '../../store/interface'
 
 export default function MainScreen () {
   let { serverId, channelId } = useParams()
   const [isLoaded, setLoaded] = useState(false)
   const dispatch = useDispatch()
   const workspaces = useSelector(state => state.workspaces)
-  const { serverSettings } = useSelector(state => state.interface)
 
   // fetch metadata for user's workspaces and channels
   useEffect(() => {
@@ -40,24 +38,6 @@ export default function MainScreen () {
         <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} />
         <Chat channelId={channelId} />
       </div>
-      <ServerSettings
-        isShown={serverSettings.isShown}
-        workspace={currentWorkspace}
-      />
-    </div>
-  )
-}
-
-function ServerSettings ({ isShown, workspace }) {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(closeAllModals())
-  }, [])
-  isShown = false
-  return (
-    <div
-      className={`${styles.serverSettings} ${isShown ? styles.isShown : styles.isHidden}`}
-    >{`Server Settings for ${workspace.title}`}
     </div>
   )
 }
