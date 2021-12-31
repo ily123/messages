@@ -35,6 +35,31 @@
 .hidden {
   visibility: hidden;
 }
+.centerText {
+  text-align: center;
+}
+p.inviteLink {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+
+  margin-top: 20px;
+  padding: 10px;
+  align-self: center;
+  text-align: center;
+  font-style: normal;
+  background-color: lavender;
+}
+p.inviteLink:hover {
+  cursor: pointer; 
+}
+
+p.inviteLink:active{
+  background-color: var(--blue);
+  color: white;
+}
+
+
 #modal {
   position: fixed;
   top: 0;

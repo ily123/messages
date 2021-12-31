@@ -37,7 +37,7 @@ export default function WorkSpaceDropDown ({ workspaces, serverId }) {
         <span>{currentWorkspace.title}</span> <i className='fas fa-chevron-down' />
       </div>
       <div className={isShown ? styles.wsmShow : styles.wsmHide}>
-        Your workspaces
+        <div>Your workspaces</div>
         <menu>
           {Object.values(workspaces).map(server => {
             const { id, title, owner_id: ownerId } = server
@@ -49,6 +49,9 @@ export default function WorkSpaceDropDown ({ workspaces, serverId }) {
           })}
         </menu>
         <div>
+          <SidebarModal showParent={setShown} text={`Invite to ${currentWorkspace.title}`}>
+            <InviteToServerContent workspace={currentWorkspace} />
+          </SidebarModal>
           <SidebarModal showParent={setShown} text='Join Workspace'>
             <JoinServerContent workspace={currentWorkspace} />
           </SidebarModal>
@@ -250,6 +253,22 @@ function JoinServerContent ({ workspace, setHidden }) {
             </Link>
           </span>
           </p>}
+    </div>
+  )
+}
+
+function InviteToServerContent ({ workspace }) {
+  const { id: serverId } = workspace
+  const link = `invite/${serverId}`
+  return (
+    <div className={modalStyles.server}>
+      <h3>{`Invite users to ${workspace.title}`}</h3>
+      <p
+        className={modalStyles.inviteLink}
+        onClick={() => navigator.clipboard.writeText(link)}
+      >{link}<i class='fas fa-copy' />
+      </p>
+      <p className={modalStyles.centerText}>Paste link into *Join Workspace* to join the server!</p>
     </div>
   )
 }
