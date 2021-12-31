@@ -52,7 +52,7 @@ aside {
   list-style: none;
 }
 .deleteServerButton:hover {
-  color: red; 
+  color: var(--blue); 
 }
 
 .channelList h3 {

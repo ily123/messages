@@ -1,7 +1,7 @@
 import styles from './SideBar.module.css'
 import modalStyles from './Modals.module.css'
-import { NavLink, Navigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { NavLink, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { loadWorkspaces, postServerRequest, deleteServerRequest, patchServerRequest } from '../../store/workspace'
 import { ModalPortal } from '../Modal'
@@ -43,16 +43,22 @@ export default function WorkSpaceDropDown ({ workspaces, serverId }) {
           })}
         </menu>
         <div>
-          <div>Join Workspace</div>
-          <div>Create Workspace</div>
-          <ServerSettings workspace={currentWorkspace} showParent={setShown} />
+          <SidebarModal showParent={setShown} text='Join Workspace'>
+            <ServerSettingsContent workspace={currentWorkspace} />
+          </SidebarModal>
+          <SidebarModal showParent={setShown} text='Create Workspace'>
+            <CreateServerContent workspace={currentWorkspace} />
+          </SidebarModal>
+          <SidebarModal showParent={setShown} text='Workspace Settings'>
+            <ServerSettingsContent workspace={currentWorkspace} />
+          </SidebarModal>
         </div>
       </div>
     </div>
   )
 }
 
-function ServerSettings ({ workspace, showParent }) {
+function SidebarModal ({ showParent, text, children }) {
   const [isHidden, setHidden] = useState(true)
   const handleModals = (_) => {
     showParent(false)
@@ -64,10 +70,10 @@ function ServerSettings ({ workspace, showParent }) {
         className={styles.deleteServerButton}
         onClick={(e) => handleModals(e)}
       >
-        Workspace Settings
+        {text}
       </div>
       <ModalPortal isHidden={isHidden} setHidden={setHidden}>
-        <ServerSettingsContent workspace={workspace} />
+        {React.cloneElement(children, { setHidden })} {/* the clone is to pass setHidden to children */}
       </ModalPortal>
     </>
   )
@@ -93,12 +99,12 @@ function ServerSettingsContent ({ workspace }) {
     e.preventDefault()
     if (!isTitleInvalid) {
       await dispatch(patchServerRequest(serverId, title))
-      setIsPosted(true)
     }
   }
 
   const handleDelete = async e => {
     await dispatch(deleteServerRequest(serverId))
+    // setIsPosted(true)
   }
 
   // if (isPosted) return <Navigate to='/main/server' />
@@ -118,6 +124,62 @@ function ServerSettingsContent ({ workspace }) {
         disabled={!deleteTrue}
       >DELETE
       </button>
+    </div>
+  )
+}
+
+// Note on the setHidden:
+// The portal wrapper gets setHidden and attaches it to "Done" button.
+// Here, I am passing setHidden to the child directly too (via clone),
+// so I can close the portal by clicking on the "Go There" Link inside
+// the child.
+function CreateServerContent ({ workspace, setHidden }) {
+  const { id: serverId } = workspace
+  const [title, setTitle] = useState('')
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false)
+  const [isPosted, setIsPosted] = useState(false)
+  const [newServerId, setNewServerId] = useState(null)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    setTitle('')
+    setIsPosted(false)
+    setIsTitleInvalid(false)
+  }, [serverId])
+
+  useEffect(() => {
+    setIsTitleInvalid(!title.length)
+    setIsPosted(false)
+  }, [title])
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (!isTitleInvalid) {
+      const { server } = await dispatch(postServerRequest(title))
+      await dispatch(loadWorkspaces()) // this needs to be fixed
+      setNewServerId(server.id)
+      setIsPosted(true)
+      // setTitle('')
+    }
+  }
+
+  return (
+    <div className={modalStyles.server}>
+      <h3>Create New Workspace</h3>
+      <p className={isTitleInvalid ? modalStyles.fail : modalStyles.pass}>Server title: must be at least 1 char</p>
+      <form onSubmit={handleSubmit}>
+        <input type='text' placeholder='enter new server name...' value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button>submit</button>
+      </form>
+      <p className={isPosted ? modalStyles.reveal : modalStyles.hidden}>
+        Added new workspace!<br />
+        <span>
+          <Link
+            to={newServerId ? `/main/server/${newServerId}` : '/main/server/'}
+            onClick={() => setHidden(true)}
+          >Navigate there!
+          </Link>
+        </span>
+      </p>
     </div>
   )
 }

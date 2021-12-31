@@ -32,7 +32,9 @@
 .fail {
   color: red;
 }
-
+.hidden {
+  visibility: hidden;
+}
 #modal {
   position: fixed;
   top: 0;

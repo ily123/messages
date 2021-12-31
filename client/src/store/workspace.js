@@ -38,7 +38,7 @@ export const postServerRequest = title => async dispatch => {
   if (response.ok) {
     const { server } = await response.json()
     dispatch(addServer(server))
-    return isLoaded
+    return { isLoaded, server }
   }
   return !isLoaded
 }
