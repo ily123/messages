@@ -1,6 +1,9 @@
 import styles from './SideBar.module.css'
+import modalStyles from './Modals.module.css'
 import { NavLink, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { loadWorkspaces, postServerRequest, deleteServerRequest, patchServerRequest } from '../../store/workspace'
 import { ModalPortal } from '../Modal'
 
 export default function WorkSpaceDropDown ({ workspaces, serverId }) {
@@ -42,14 +45,14 @@ export default function WorkSpaceDropDown ({ workspaces, serverId }) {
         <div>
           <div>Join Workspace</div>
           <div>Create Workspace</div>
-          <ServerSettings showParent={setShown} />
+          <ServerSettings workspace={currentWorkspace} showParent={setShown} />
         </div>
       </div>
     </div>
   )
 }
 
-function ServerSettings ({ currentWorkspace, showParent }) {
+function ServerSettings ({ workspace, showParent }) {
   const [isHidden, setHidden] = useState(true)
   const handleModals = (_) => {
     showParent(false)
@@ -63,7 +66,58 @@ function ServerSettings ({ currentWorkspace, showParent }) {
       >
         Workspace Settings
       </div>
-      <ModalPortal isHidden={isHidden} setHidden={setHidden}>SHOW THIS</ModalPortal>
+      <ModalPortal isHidden={isHidden} setHidden={setHidden}>
+        <ServerSettingsContent workspace={workspace} />
+      </ModalPortal>
     </>
+  )
+}
+
+function ServerSettingsContent ({ workspace }) {
+  const { id: serverId, title: serverTitle } = workspace
+  const [title, setTitle] = useState('')
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false)
+  const [deleteTrue, setDeleteTrue] = useState(false)
+  const [isPosted, setIsPosted] = useState(false)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setTitle(serverTitle)
+    setDeleteTrue(false)
+  }, [serverTitle])
+  useEffect(() => {
+    setIsTitleInvalid(!title.length)
+  }, [title])
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (!isTitleInvalid) {
+      await dispatch(patchServerRequest(serverId, title))
+      setIsPosted(true)
+    }
+  }
+
+  const handleDelete = async e => {
+    await dispatch(deleteServerRequest(serverId))
+  }
+
+  // if (isPosted) return <Navigate to='/main/server' />
+  return (
+    <div className={modalStyles.server}>
+      <h3>Server Settings</h3>
+      <p className={isTitleInvalid ? modalStyles.fail : modalStyles.pass}>Edit title: must be at least 1 char</p>
+      <form onSubmit={handleSubmit}>
+        <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button>submit</button>
+      </form>
+      <p className={!deleteTrue ? modalStyles.fail : modalStyles.pass}>Delete server: are you sure?</p>
+      <form><input checked={deleteTrue} onChange={(_) => setDeleteTrue(!deleteTrue)} type='checkbox' /> Yes</form>
+      <button
+        className={`${modalStyles.deleteButton} ${(deleteTrue && modalStyles.pass)}`}
+        onClick={handleDelete}
+        disabled={!deleteTrue}
+      >DELETE
+      </button>
+    </div>
   )
 }

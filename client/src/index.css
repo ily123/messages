@@ -12,6 +12,9 @@
     0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
     0.6px 0.9px 1.2px -1.2px hsl(var(--shadow-color) / 0.34),
     1.3px 2.1px 2.8px -2.5px hsl(var(--shadow-color) / 0.34);
+
+
+  --border-alpha40: 1px solid rgba(0,0,0,0.4);
 }
 /*
   Custom reset from https://www.joshwcomeau.com/css/custom-css-reset/
@@ -83,4 +86,14 @@ a {
 }
 a:hover {
   color: var(--blue);
+}
+
+button {
+  background-color: var(--darkblue);
+  color: white;
+  border-radius: 3px;
+}
+button:hover {
+  background-color: var(--blue);
+  cursor: pointer;
 }

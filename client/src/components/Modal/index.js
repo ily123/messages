@@ -27,7 +27,7 @@ export function ModalPortal ({ children, isHidden, setHidden }) {
   return ReactDOM.createPortal(
     <div className={isHidden ? styles.modalHide : styles.modalShow}>
       {children}
-      <button onClick={(e) => setHidden(true)}>Close Modal</button>
+      <button className={styles.doneButton} onClick={(e) => setHidden(true)}>Done</button>
     </div>,
     document.getElementById('root')
   )
