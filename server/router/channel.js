@@ -39,10 +39,10 @@ router.post('/:channelId/message', asyncHandler(async (req, res) => {
   req.app.wss.clients.forEach(client => {
     console.log('broadcasting to client with id of ❤️ ' + client.chatId)
     if (client.readyState === WebSocket.OPEN && client.chatId == channelId) {
-      client.send(JSON.stringify({ type: 'test', message }))
+      client.send(JSON.stringify({ type: 'test', message, user }))
     }
   })
-  return res.json({ message })
+  return res.json({ message, user })
 }))
 
 module.exports = router

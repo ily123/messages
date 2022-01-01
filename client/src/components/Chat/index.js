@@ -73,9 +73,9 @@ function MessageEntryBox ({ channelId }) {
     }
     ws.onmessage = (e) => {
       console.log('server sent someting over WS', e)
-      const { type, message } = JSON.parse(e.data)
+      const { type, message, user } = JSON.parse(e.data)
       if (type === 'test') {
-        dispatch(addMessage(message))
+        dispatch(addMessage(message, user))
       }
       console.log(message)
     }

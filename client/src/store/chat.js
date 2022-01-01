@@ -19,10 +19,11 @@ export const getMessagesRequest = channelId => async dispatch => {
   return true
 }
 
-export const addMessage = message => {
+export const addMessage = (message, user) => {
   return {
     type: ADD_MESSAGE,
-    message
+    message,
+    user
   }
 }
 export const postMessageRequest = (channelId, content) => async dispatch => {
@@ -33,9 +34,9 @@ export const postMessageRequest = (channelId, content) => async dispatch => {
     body: JSON.stringify({ content })
   })
   if (response.ok) {
-    const { message } = await response.json()
+    const { message, user } = await response.json()
     // message is added via socket
-    // dispatch(addMessage(message))
+    // dispatch(addMessage(message, user))
     return isLoaded
   }
   return !isLoaded
@@ -50,6 +51,10 @@ export const chatReducer = (state = initialState, action) => {
     case ADD_MESSAGE: {
       const newState = { ...state }
       newState.Messages.push(action.message)
+      const userIds = newState.Users.map(user => user.id)
+      if (!userIds.includes(action.user.id)) {
+        newState.Users.push(action.user)
+      }
       return newState
     }
     case REMOVE_MESSAGE: {
