@@ -24,9 +24,11 @@ export default function ChannelList ({ data }) {
               <div className={chatModalStyles.channelNameWrap}>
                 <div style={{ visibility: channelId == id ? '' : 'hidden' }}><i className='fas fa-eye' /></div>
                 <NavLink to={`/main/server/${serverId}/channel/${id}`}>{title}</NavLink>
-                <ChannelSettingsModal>
-                  <ChannelSettingsContent channel={channel} />
-                </ChannelSettingsModal>
+                {title != 'General' && (
+                  <ChannelSettingsModal>
+                    <ChannelSettingsContent channel={channel} />
+                  </ChannelSettingsModal>
+                )}
               </div>
             </li>
           )
