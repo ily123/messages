@@ -64,7 +64,7 @@ aside {
   padding-left: 20px;
 }
 .channelList menu {
-  padding-left: inherit
+  padding-left: 0; 
 }
 .channelList menu li {
   list-style: none;

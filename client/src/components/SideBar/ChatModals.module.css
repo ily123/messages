@@ -7,3 +7,23 @@ p.addChannel {
 p.addChannel:hover {
   cursor: pointer; 
 }
+
+.channelNameWrap {
+  display: flex;
+  padding-right: 20px;
+  justify-content: flex-start;
+  column-gap: 10px;
+}
+
+.channelNameWrap > div:nth-child(1) > i{
+  color: var(--darkblue);
+}
+
+.cogWheel{
+  margin-left: auto;
+}
+.cogWheel:hover {
+  color: var(--darkblue);
+  cursor: pointer;
+}
+

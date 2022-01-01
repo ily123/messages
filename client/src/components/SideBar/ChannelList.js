@@ -6,7 +6,9 @@ import { Navigate, NavLink, Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { ModalPortal } from '../Modal'
 import {
-  postChannelRequest
+  postChannelRequest,
+  patchChannelRequest,
+  deleteChannelRequest
 } from '../../store/workspace'
 
 export default function ChannelList ({ data }) {
@@ -19,9 +21,13 @@ export default function ChannelList ({ data }) {
           const { id, title } = channel
           return (
             <li key={'channel' + id}>
-              <NavLink to={`/main/server/${serverId}/channel/${id}`}>
-                {Number(channelId) === id ? '>> ' + title : title}
-              </NavLink>
+              <div className={chatModalStyles.channelNameWrap}>
+                <div style={{ visibility: channelId == id ? '' : 'hidden' }}><i className='fas fa-eye' /></div>
+                <NavLink to={`/main/server/${serverId}/channel/${id}`}>{title}</NavLink>
+                <ChannelSettingsModal>
+                  <ChannelSettingsContent channel={channel} />
+                </ChannelSettingsModal>
+              </div>
             </li>
           )
         })}
@@ -90,6 +96,73 @@ function AddNewChannelContent ({ serverId, isHidden }) {
       <p className={isPosted ? modalStyles.reveal : modalStyles.hidden}>
         Added new channel!<br />
       </p>
+    </div>
+  )
+}
+
+function ChannelSettingsModal ({ children }) {
+  const [isHidden, setHidden] = useState(true)
+  const handleModals = (_) => {
+    setHidden(false)
+  }
+  return (
+    <>
+      <div
+        className={chatModalStyles.cogWheel}
+        onClick={(e) => handleModals(e)}
+      >
+        <i className='fas fa-cog' />
+      </div>
+      <ModalPortal isHidden={isHidden} setHidden={setHidden}>
+        {React.cloneElement(children, { setHidden, isHidden })} {/* the clone is to pass setHidden to children */}
+      </ModalPortal>
+    </>
+  )
+}
+
+function ChannelSettingsContent ({ channel, setHidden }) {
+  const { id: channelId, title: channelTitle } = channel
+  const [title, setTitle] = useState('')
+  const [isTitleInvalid, setIsTitleInvalid] = useState(false)
+  const [deleteTrue, setDeleteTrue] = useState(false)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setTitle(channelTitle)
+    setDeleteTrue(false)
+  }, [setHidden])
+  useEffect(() => {
+    setIsTitleInvalid(!title.length)
+  }, [title])
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if (!isTitleInvalid) {
+      await dispatch(patchChannelRequest(channelId, title))
+    }
+  }
+
+  const handleDelete = async e => {
+    await dispatch(deleteChannelRequest(channelId))
+    setHidden(true)
+  }
+
+  return (
+    <div className={modalStyles.server}>
+      <h3>Channel Settings</h3>
+      <p className={isTitleInvalid ? modalStyles.fail : modalStyles.pass}>Edit title: must be at least 1 char</p>
+      <form onSubmit={handleSubmit}>
+        <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
+        <button>submit</button>
+      </form>
+      <p className={!deleteTrue ? modalStyles.fail : modalStyles.pass}>Delete workspace: are you sure?</p>
+      <form><input checked={deleteTrue} onChange={(_) => setDeleteTrue(!deleteTrue)} type='checkbox' /> Yes</form>
+      <button
+        className={`${modalStyles.deleteButton} ${(deleteTrue && modalStyles.pass)}`}
+        onClick={handleDelete}
+        disabled={!deleteTrue}
+      >DELETE
+      </button>
     </div>
   )
 }

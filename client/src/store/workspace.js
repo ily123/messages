@@ -4,6 +4,8 @@ const INITIALIZE = 'server/initialize'
 const ADD_SERVER = 'server/add'
 const REMOVE_SERVER = 'server/delete'
 const ADD_CHANNEL = 'channel/add'
+const PATCH_CHANNEL = 'channel/patch'
+const DELETE_CHANNEL = 'channel/delete'
 
 const initialize = workspaces => {
   return {
@@ -119,6 +121,51 @@ export const postChannelRequest = (serverId, title) => async dispatch => {
   }
 }
 
+const patchChannel = (channel) => {
+  return {
+    type: PATCH_CHANNEL,
+    channel
+  }
+}
+
+export const patchChannelRequest = (channelId, title) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/channel/${channelId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ title })
+    })
+    if (response.ok) {
+      const { channel } = await response.json()
+      dispatch(patchChannel(channel))
+      return { channel }
+    }
+  } catch (error) {
+    return { channel: null }
+  }
+}
+
+const deleteChannel = (channel) => {
+  return {
+    type: DELETE_CHANNEL,
+    channel
+  }
+}
+
+export const deleteChannelRequest = (channelId) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/channel/${channelId}`, {
+      method: 'DELETE'
+    })
+    if (response.ok) {
+      const { channel } = await response.json()
+      dispatch(deleteChannel(channel))
+      return { channel }
+    }
+  } catch (error) {
+    return { channel: null }
+  }
+}
+
 const initialState = null
 export const workspaceReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -142,6 +189,26 @@ export const workspaceReducer = (state = initialState, action) => {
       if (Object.keys(newState).includes(serverId)) {
         newState[serverId].Channels?.push(action.channel)
       }
+      return newState
+    }
+    case PATCH_CHANNEL: {
+      // this is a bit convoluted
+      // the channels are stored in an array, not an object
+      // and at this point, I am wary of rewriting it
+      // so then, here, we find the relevant channl in the array
+      // and replace it with the new version sent by the backend
+      const { id, server_id: serverId } = action.channel
+      const newState = { ...state }
+      const channelIndex = newState[String(serverId)].Channels.map(ch => ch.id).indexOf(id)
+      newState[serverId].Channels[channelIndex] = action.channel
+      return newState
+    }
+    case DELETE_CHANNEL: {
+      const { id, server_id: serverId } = action.channel
+      console.log(action.channel)
+      const newState = { ...state }
+      const channelIndex = newState[String(serverId)].Channels.map(ch => ch.id).indexOf(id)
+      delete newState[serverId].Channels[channelIndex]
       return newState
     }
     default: {
