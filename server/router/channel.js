@@ -18,6 +18,19 @@ router.get('/:channelId', asyncHandler(async (req, res) => {
   else return res.json({})
 }))
 
+router.post('/', asyncHandler(async (req, res) => {
+  const { user } = req
+  const { title, serverId } = req.body
+  const channel = await Channel.create({ server_id: serverId, title })
+  // req.app.wss.clients.forEach(client => {
+  //  console.log('broadcasting to client with id of ❤️ ' + client.chatId)
+  //  if (client.readyState === WebSocket.OPEN && client.chatId == channelId) {
+  //    client.send(JSON.stringify({ type: 'test', message }))
+  //  }
+  // })
+  return res.json({ channel })
+}))
+
 router.post('/:channelId/message', asyncHandler(async (req, res) => {
   const { user } = req
   const { content } = req.body

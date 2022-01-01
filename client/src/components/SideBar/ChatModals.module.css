@@ -1,0 +1,9 @@
+p.addChannel {
+  margin-top: 20px;
+  width:fit-content; 
+  align-self: center;
+}
+
+p.addChannel:hover {
+  cursor: pointer; 
+}

@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf'
 const INITIALIZE = 'server/initialize'
 const ADD_SERVER = 'server/add'
 const REMOVE_SERVER = 'server/delete'
+const ADD_CHANNEL = 'channel/add'
 
 const initialize = workspaces => {
   return {
@@ -95,6 +96,29 @@ export const putServerRequest = (serverId) => async dispatch => {
   }
 }
 
+const addChannel = (channel) => {
+  return {
+    type: ADD_CHANNEL,
+    channel
+  }
+}
+
+export const postChannelRequest = (serverId, title) => async dispatch => {
+  try {
+    const response = await csrfFetch('/api/channel', {
+      method: 'POST',
+      body: JSON.stringify({ serverId, title })
+    })
+    if (response.ok) {
+      const { channel } = await response.json()
+      dispatch(addChannel(channel))
+      return { channel }
+    }
+  } catch (error) {
+    return { channel: null }
+  }
+}
+
 const initialState = null
 export const workspaceReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -109,6 +133,15 @@ export const workspaceReducer = (state = initialState, action) => {
     case REMOVE_SERVER: {
       const newState = { ...state }
       delete newState[action.serverId]
+      return newState
+    }
+    case ADD_CHANNEL: {
+      let { server_id: serverId } = action.channel
+      serverId = String(serverId)
+      const newState = { ...state }
+      if (Object.keys(newState).includes(serverId)) {
+        newState[serverId].Channels?.push(action.channel)
+      }
       return newState
     }
     default: {
