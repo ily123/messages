@@ -2,7 +2,7 @@ const router = require('express').Router()
 const WebSocket = require('ws')
 const asyncHandler = require('express-async-handler')
 const { requireAuth } = require('../utils/auth.js')
-const { Channel, Message, User } = require('../db/models')
+const { Channel, Message, User, Server } = require('../db/models')
 
 router.use(requireAuth)
 
@@ -11,10 +11,15 @@ router.get('/:channelId', asyncHandler(async (req, res) => {
   // if (!user) return res.json({})
   const { channelId } = req.params
   const channel = await Channel.findByPk(channelId, {
-    include: [{ model: Message }, { model: User }]
+    include: [{ model: Message }]
   })
 
-  if (channel) return res.json(channel.toJSON())
+  const { server_id } = channel
+  const server = await Server.findByPk(server_id, { include: { model: User, as: 'member' } })
+  // trying to attach users to channel object
+  const channelJson = channel.toJSON()
+  channelJson.Users = server.member.map(member => member.toJSON())
+  if (channelJson) return res.json(channelJson)
   else return res.json({})
 }))
 
