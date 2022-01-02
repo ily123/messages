@@ -70,7 +70,11 @@ router.patch('/message/:messageId', asyncHandler(async (req, res) => {
   return res.json({ message })
 }))
 
-router.delete('/:channelId/message/:messageId', asyncHandler(async (req, res) => {
+router.delete('/message/:messageId', asyncHandler(async (req, res) => {
+  const { messageId } = req.params
+  const message = await Message.findByPk(messageId)
+  await message.destroy()
+  return res.json({ message })
 }))
 
 module.exports = router

@@ -8,7 +8,8 @@ import {
   getMessagesRequest,
   postMessageRequest,
   addMessage,
-  patchMessageRequest
+  patchMessageRequest,
+  deleteMessageRequest
 } from '../../store/chat'
 
 export default function Chat ({ channelId }) {
@@ -63,7 +64,7 @@ function Message ({ messageId, content, user }) {
   }
 
   const deleteMessage = async () => {
-    window.alert('Message deleted!')
+    await dispatch(deleteMessageRequest(messageId))
   }
 
   useEffect(() => {

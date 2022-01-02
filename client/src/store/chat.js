@@ -43,11 +43,10 @@ export const postMessageRequest = (channelId, content) => async dispatch => {
   return !isLoaded
 }
 
-const updateMessage = (message, user) => {
+const updateMessage = (message) => {
   return {
     type: UPDATE_MESSAGE,
-    message,
-    user
+    message
   }
 }
 export const patchMessageRequest = (messageId, content) => async dispatch => {
@@ -58,9 +57,31 @@ export const patchMessageRequest = (messageId, content) => async dispatch => {
     body: JSON.stringify({ content })
   })
   if (response.ok) {
-    const { message, user } = await response.json()
+    const { message } = await response.json()
     // message is added via socket
-    dispatch(updateMessage(message, user))
+    dispatch(updateMessage(message))
+    return isLoaded
+  }
+  return !isLoaded
+}
+
+const deleteMessage = (message) => {
+  return {
+    type: REMOVE_MESSAGE,
+    message
+  }
+}
+export const deleteMessageRequest = (messageId) => async dispatch => {
+  console.log('HELLLLLLLLLLLLLLLLLLLLLO')
+  const isLoaded = true
+  const response = await csrfFetch(`/api/channel/message/${messageId}`, {
+    method: 'DELETE'
+  })
+  if (response.ok) {
+    const { message } = await response.json()
+    console.log(message)
+    // message is added via socket
+    dispatch(deleteMessage(message))
     return isLoaded
   }
   return !isLoaded
@@ -82,15 +103,16 @@ export const chatReducer = (state = initialState, action) => {
       return newState
     }
     case REMOVE_MESSAGE: {
-      const newState = [...state]
-      // delete newState[action.serverId]
+      const newState = { ...state }
+      const messageIndex = newState.Messages.map(msg => msg.id).indexOf(action.message.id)
+      delete newState.Messages[messageIndex]
       return newState
     }
     case UPDATE_MESSAGE: {
       const newState = { ...state }
       const messageIndex = newState.Messages.map(msg => msg.id).indexOf(action.message.id)
       newState.Messages[messageIndex] = action.message
-      return state
+      return newState
     }
     default: {
       return state
