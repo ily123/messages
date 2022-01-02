@@ -43,10 +43,14 @@ function Header ({ title }) {
 }
 
 function MessageLog ({ messages, users }) {
+  const usersDict = {}
+  users.forEach(user => {
+    usersDict[user.id] = user
+  })
   return (
     <div id='messageLog' className={styles.messageLog}>
       {messages.map(msg => {
-        return <Message key={'message' + msg.id} messageId={msg.id} content={msg.content} user={users[0]} />
+        return <Message key={'message' + msg.id} messageId={msg.id} content={msg.content} user={usersDict[msg.user_id]} />
       })}
     </div>
   )
