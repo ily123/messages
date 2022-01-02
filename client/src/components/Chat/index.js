@@ -36,7 +36,7 @@ function Header ({ title }) {
 
 function MessageLog ({ messages, users }) {
   return (
-    <div className={styles.messageLog}>
+    <div id='messageLog' className={styles.messageLog}>
       {messages.map(msg => {
         return <Message key={'message' + msg.id} content={msg.content} user={users[0]} />
       })}
@@ -103,12 +103,15 @@ function MessageEntryBox ({ channelId }) {
       await dispatch(postMessageRequest(channelId, message))
       // webSocket.current.send(JSON.stringify({ type: 'test-send', chatId: 1 }))
       setMessage('')
+      // this scrolls to the bottom of the chat log when new msg is added
+      const chatlog = document.getElementById('messageLog')
+      chatlog.scrollTop = chatlog.scrollHeight
     }
   }
 
   return (
     <form className={styles.messageEntryForm} onSubmit={handleSubmit}>
-      <input type='textarea' value={message} onChange={(e) => setMessage(e.target.value)} />
+      <textarea type='text' value={message} onChange={(e) => setMessage(e.target.value)} />
       <button>Submit message</button>
     </form>
   )

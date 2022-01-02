@@ -1,10 +1,13 @@
 .chatWrapper {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 200px);
 }
 
 .channelTitle {
   border-bottom: var(--border-alpha10);
-  height: 50px;
+  min-height: 50px;
   display:flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +20,6 @@
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: 50%;
 }
 .messageLog::-webkit-scrollbar {
   width: 3px;
@@ -27,6 +29,9 @@
   outline: 1px solid slategrey;
 }
 
+.message {
+  max-width: 100%;
+}
 .message:hover {
   background-color: var(--bg-gray); 
 }
@@ -36,6 +41,7 @@
   border-top: var(--border-alpha10);
   display: flex;
   flex-direction: column;
+  margin-top: auto;
 }
 .messageEntryForm button {
   width: 150px;
@@ -43,8 +49,16 @@
   align-self: flex-end;
 }
 
-.messageEntryForm input {
-  align-items: flex-end;
-  justify-self: flex-end;
+.messageEntryForm textarea {
   height: 150px;
+  padding: 20px;
 }
+
+textarea::-webkit-scrollbar {
+  width: 3px;
+}
+textarea::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  outline: 1px solid slategrey;
+}
+
