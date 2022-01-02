@@ -39,10 +39,9 @@ export default function MainScreen () {
   // and what if there are no servers in the store?... TODO
   if (!serverId) serverId = Object.values(workspaces)[0].id
   if (!Object.keys(workspaces).includes(serverId)) serverId = Object.values(workspaces)[0].id
-  if (!Object.keys(workspaces[serverId].Channels).includes(channelId)) {
-    console.log('X.X>XXXDFS', channelId)
+  // if channel id that is being requested does NOT exist, reroute to first channel on server
+  if (!workspaces[serverId].Channels.map(ch => Number(ch.id)).includes(+channelId)) {
     channelId = workspaces[serverId].Channels[0].id
-    console.log('X.X>XXXDFS', channelId)
   }
   if (!channelId) channelId = workspaces[serverId].Channels[0].id
 
