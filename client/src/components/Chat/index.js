@@ -1,5 +1,4 @@
 'use strict'
-
 import styles from './Chat.module.css'
 import { csrfFetch } from '../../store/csrf'
 import { useState, useEffect, useRef } from 'react'
@@ -11,6 +10,7 @@ import {
   patchMessageRequest,
   deleteMessageRequest
 } from '../../store/chat'
+import TextareaAutosize from 'react-textarea-autosize'
 
 export default function Chat ({ channelId }) {
   const [loaded, setLoaded] = useState(false)
@@ -55,7 +55,7 @@ function Message ({ messageId, content, user }) {
   const [content_, setContent] = useState(content)
   const dispatch = useDispatch()
 
-  const enableEdit = () => setEditable(true)
+  const toggleEdit = () => setEditable(state => !state)
   const disableEdit = () => setEditable(false)
 
   const saveEdit = async (_) => {
@@ -74,13 +74,14 @@ function Message ({ messageId, content, user }) {
   return (
     <div className={styles.messageWrapper}>
       <div className={styles.messageControls}>
-        <i class='fas fa-pen' onClick={(_) => enableEdit()} />
+        <i class='fas fa-pen' onClick={(_) => toggleEdit()} />
         <i class='fas fa-trash' onClick={(_) => deleteMessage()} />
       </div>
       <div className={styles.message}>
         <span><b>{user.username} said:</b></span>
-        <textarea
+        <TextareaAutosize
           className={`${styles.messageContent} ${editable && styles.bgTan}`}
+          disabled={!editable}
           onChange={(e) => setContent(e.target.value)}
           value={content_}
         />
