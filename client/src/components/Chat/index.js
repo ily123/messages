@@ -47,7 +47,10 @@ function MessageLog ({ messages, users }) {
 function Message ({ content, user }) {
   return (
     <div className={styles.messageWrapper}>
-      <div className={styles.messageControls}>CONTROL</div>
+      <div className={styles.messageControls}>
+        <i class='fas fa-pen' />
+        <i class='fas fa-trash' />
+      </div>
       <p className={styles.message}><b>{user.username} said</b>: {content}</p>
     </div>
   )

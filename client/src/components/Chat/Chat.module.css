@@ -72,6 +72,13 @@ textarea::-webkit-scrollbar-thumb {
   visibility: hidden;
   background-color: white;
   padding: 0 5px;
+  display: flex;
+  column-gap: 10px;
+  color: var(--text-gray);
+}
+.messageControls i:hover {
+  cursor: pointer;
+  color: var(--blue);
 }
 .messageWrapper:hover .messageControls {
   visibility: visible;
