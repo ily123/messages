@@ -107,7 +107,7 @@ function MessageEntryBox ({ channelId }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.messageEntryForm} onSubmit={handleSubmit}>
       <input type='textarea' value={message} onChange={(e) => setMessage(e.target.value)} />
       <button>Submit message</button>
     </form>

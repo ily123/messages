@@ -13,6 +13,7 @@
 
 .messageLog {
   padding: 20px;
+  padding-bottom: 0;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -29,3 +30,18 @@
 .message:hover {
   background-color: var(--bg-gray); 
 }
+
+.messageEntryForm {
+  padding: 20px;
+  border: 1px solid red;
+  border-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+}
+.messageEntryForm button {
+  width: 150px;
+  margin-top: 5px;
+  align-self: flex-end;
+}
+
+
