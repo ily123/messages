@@ -4,7 +4,12 @@ import styles from './Chat.module.css'
 import { csrfFetch } from '../../store/csrf'
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMessagesRequest, postMessageRequest, addMessage } from '../../store/chat'
+import {
+  getMessagesRequest,
+  postMessageRequest,
+  addMessage,
+  patchMessageRequest
+} from '../../store/chat'
 
 export default function Chat ({ channelId }) {
   const [loaded, setLoaded] = useState(false)
@@ -38,25 +43,32 @@ function MessageLog ({ messages, users }) {
   return (
     <div id='messageLog' className={styles.messageLog}>
       {messages.map(msg => {
-        return <Message key={'message' + msg.id} content={msg.content} user={users[0]} />
+        return <Message key={'message' + msg.id} messageId={msg.id} content={msg.content} user={users[0]} />
       })}
     </div>
   )
 }
 
-function Message ({ content, user }) {
+function Message ({ messageId, content, user }) {
   const [editable, setEditable] = useState(false)
+  const [content_, setContent] = useState(content)
+  const dispatch = useDispatch()
 
   const enableEdit = () => setEditable(true)
   const disableEdit = () => setEditable(false)
 
-  const saveEdit = async () => {
+  const saveEdit = async (_) => {
+    await dispatch(patchMessageRequest(messageId, content))
     disableEdit()
   }
 
   const deleteMessage = async () => {
     window.alert('Message deleted!')
   }
+
+  useEffect(() => {
+    console.log(content_)
+  }, [content_])
 
   return (
     <div className={styles.messageWrapper}>
@@ -66,16 +78,15 @@ function Message ({ content, user }) {
       </div>
       <div className={styles.message}>
         <span><b>{user.username} said:</b></span>
-        <div
+        <textarea
           className={`${styles.messageContent} ${editable && styles.bgTan}`}
-          contentEditable={editable}
-        >
-          {content}
-        </div>
+          onChange={(e) => setContent(e.target.value)}
+          value={content_}
+        />
       </div>
       <button
         className={`${styles.saveEdits} ${editable && styles.visible}`}
-        onClick={(_) => saveEdit()}
+        onClick={saveEdit}
       >save edits
       </button>
     </div>

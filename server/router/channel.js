@@ -61,7 +61,13 @@ router.post('/:channelId/message', asyncHandler(async (req, res) => {
   return res.json({ message, user })
 }))
 
-router.patch('/:channelId/message/:messageId', asyncHandler(async (req, res) => {
+router.patch('/message/:messageId', asyncHandler(async (req, res) => {
+  const { messageId } = req.params
+  const { content } = req.body
+  const message = await Message.findByPk(messageId)
+  message.content = content
+  message.save()
+  return res.json({ message })
 }))
 
 router.delete('/:channelId/message/:messageId', asyncHandler(async (req, res) => {
