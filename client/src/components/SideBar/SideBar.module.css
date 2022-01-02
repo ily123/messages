@@ -34,6 +34,7 @@ aside {
   padding: 10px 20px;
   font-weight: normal;
   box-shadow: var(--shadow-elevation-low);
+  z-index: 10;
 }
 .wsmHide {
   display: none;
