@@ -283,6 +283,6 @@ function LeaveServer ({ workspace }) {
     await dispatch(deleteUserFromServerRequest(serverId))
   }
   return (
-    <div onClick={(_) => leaveServer()}>Leave Workspace</div>
+    <div className={styles.hoverRed} onClick={(_) => leaveServer()}>Leave Workspace</div>
   )
 }
