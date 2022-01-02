@@ -39,6 +39,11 @@ export default function MainScreen () {
   // and what if there are no servers in the store?... TODO
   if (!serverId) serverId = Object.values(workspaces)[0].id
   if (!Object.keys(workspaces).includes(serverId)) serverId = Object.values(workspaces)[0].id
+  if (!Object.keys(workspaces[serverId].Channels).includes(channelId)) {
+    console.log('X.X>XXXDFS', channelId)
+    channelId = workspaces[serverId].Channels[0].id
+    console.log('X.X>XXXDFS', channelId)
+  }
   if (!channelId) channelId = workspaces[serverId].Channels[0].id
 
   const currentWorkspace = workspaces[serverId]

@@ -2,18 +2,20 @@ import styles from './SideBar.module.css'
 import modalStyles from './Modals.module.css'
 import React, { useState, useEffect } from 'react'
 import { Navigate, NavLink, Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ModalPortal } from '../Modal'
 import {
   loadWorkspaces,
   postServerRequest,
   deleteServerRequest,
   patchServerRequest,
-  putServerRequest
+  putServerRequest,
+  deleteUserFromServerRequest
 } from '../../store/workspace'
 
 export default function WorkSpaceDropDown ({ workspaces, serverId }) {
   const [isShown, setShown] = useState(false)
+  const user = useSelector(state => state.session)
   const currentWorkspace = workspaces[serverId]
 
   const toggleShown = (_) => {
@@ -58,9 +60,11 @@ export default function WorkSpaceDropDown ({ workspaces, serverId }) {
           <SidebarModal showParent={setShown} text='Create Workspace'>
             <CreateServerContent workspace={currentWorkspace} />
           </SidebarModal>
-          <SidebarModal showParent={setShown} text='Workspace Settings'>
-            <ServerSettingsContent workspace={currentWorkspace} />
-          </SidebarModal>
+          {user.id == currentWorkspace.owner_id
+            ? <SidebarModal showParent={setShown} text='Workspace Settings'>
+              <ServerSettingsContent workspace={currentWorkspace} />
+            </SidebarModal>
+            : <LeaveServer workspace={currentWorkspace} />}
         </div>
       </div>
     </div>
@@ -269,5 +273,16 @@ function InviteToServerContent ({ workspace }) {
       </p>
       <p className={modalStyles.centerText}>Paste link into *Join Workspace* to join the server!</p>
     </div>
+  )
+}
+
+function LeaveServer ({ workspace }) {
+  const { id: serverId } = workspace
+  const dispatch = useDispatch()
+  const leaveServer = async () => {
+    await dispatch(deleteUserFromServerRequest(serverId))
+  }
+  return (
+    <div onClick={(_) => leaveServer()}>Leave Workspace</div>
   )
 }

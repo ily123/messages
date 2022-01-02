@@ -166,6 +166,21 @@ export const deleteChannelRequest = (channelId) => async dispatch => {
   }
 }
 
+export const deleteUserFromServerRequest = (serverId) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/server/${serverId}/user`, {
+      method: 'DELETE'
+    })
+    if (response.ok) {
+      const { server } = await response.json()
+      dispatch(removeServer(serverId))
+      return { server }
+    }
+  } catch (error) {
+    return { server: null }
+  }
+}
+
 const initialState = null
 export const workspaceReducer = (state = initialState, action) => {
   switch (action.type) {
