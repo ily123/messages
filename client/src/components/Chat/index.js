@@ -8,7 +8,9 @@ import {
   postMessageRequest,
   addMessage,
   patchMessageRequest,
-  deleteMessageRequest
+  updateMessage,
+  deleteMessageRequest,
+  deleteMessage
 } from '../../store/chat'
 import TextareaAutosize from 'react-textarea-autosize'
 
@@ -52,24 +54,24 @@ function MessageLog ({ messages, users }) {
 
 function Message ({ messageId, content, user }) {
   const [editable, setEditable] = useState(false)
-  const [content_, setContent] = useState(content)
+  const [content_, setContent] = useState('')
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    setContent(content)
+  }, [content])
 
   const toggleEdit = () => setEditable(state => !state)
   const disableEdit = () => setEditable(false)
 
   const saveEdit = async (_) => {
-    await dispatch(patchMessageRequest(messageId, content))
+    await dispatch(patchMessageRequest(messageId, content_))
     disableEdit()
   }
 
   const deleteMessage = async () => {
     await dispatch(deleteMessageRequest(messageId))
   }
-
-  useEffect(() => {
-    console.log(content_)
-  }, [content_])
 
   return (
     <div className={styles.messageWrapper}>
@@ -121,27 +123,26 @@ function MessageEntryBox ({ channelId }) {
     ws.onmessage = (e) => {
       console.log('server sent someting over WS', e)
       const { type, message, user } = JSON.parse(e.data)
-      if (type === 'test') {
+      if (type === 'addMessage') {
         dispatch(addMessage(message, user))
+      } else if (type == 'updateMessage') {
+        console.log('serving is asking us to update a message.')
+        dispatch(updateMessage(message))
+      } else if (type == 'deleteMessage') {
+        console.log('server is asking us to delete a message')
+        dispatch(deleteMessage(message))
       }
-      console.log(message)
     }
     ws.onerror = (e) => {}
     ws.onclose = (e) => {
       console.log('socket closed', e)
       console.log('time CLOSED is', new Date())
     }
-
     return function cleanup () {
       if (ws != null) {
         ws.close()
       }
     }
-    // return function cleanup () {
-    //  if (webSocket.current != null) {
-    //    webSocket.curent.close()
-    //  }
-    // }
   }, [channelId])
 
   const handleSubmit = async e => {

@@ -43,14 +43,14 @@ export const postMessageRequest = (channelId, content) => async dispatch => {
   return !isLoaded
 }
 
-const updateMessage = (message) => {
+export const updateMessage = (message) => {
   return {
     type: UPDATE_MESSAGE,
     message
   }
 }
 export const patchMessageRequest = (messageId, content) => async dispatch => {
-  console.log('got thuink')
+  console.log('got thuink', content)
   const isLoaded = true
   const response = await csrfFetch(`/api/channel/message/${messageId}`, {
     method: 'PATCH',
@@ -59,20 +59,19 @@ export const patchMessageRequest = (messageId, content) => async dispatch => {
   if (response.ok) {
     const { message } = await response.json()
     // message is added via socket
-    dispatch(updateMessage(message))
+    // dispatch(updateMessage(message))
     return isLoaded
   }
   return !isLoaded
 }
 
-const deleteMessage = (message) => {
+export const deleteMessage = (message) => {
   return {
     type: REMOVE_MESSAGE,
     message
   }
 }
 export const deleteMessageRequest = (messageId) => async dispatch => {
-  console.log('HELLLLLLLLLLLLLLLLLLLLLO')
   const isLoaded = true
   const response = await csrfFetch(`/api/channel/message/${messageId}`, {
     method: 'DELETE'
@@ -80,8 +79,8 @@ export const deleteMessageRequest = (messageId) => async dispatch => {
   if (response.ok) {
     const { message } = await response.json()
     console.log(message)
-    // message is added via socket
-    dispatch(deleteMessage(message))
+    // message is handled via socket
+    // dispatch(deleteMessage(message))
     return isLoaded
   }
   return !isLoaded
