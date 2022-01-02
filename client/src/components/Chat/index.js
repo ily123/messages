@@ -31,12 +31,12 @@ export default function Chat ({ channelId }) {
 }
 
 function Header ({ title }) {
-  return <h2>{title}</h2>
+  return <h2 className={styles.channelTitle}>{title}</h2>
 }
 
 function MessageLog ({ messages, users }) {
   return (
-    <div>
+    <div className={styles.messageLog}>
       {messages.map(msg => {
         return <Message key={'message' + msg.id} content={msg.content} user={users[0]} />
       })}
@@ -45,7 +45,7 @@ function MessageLog ({ messages, users }) {
 }
 
 function Message ({ content, user }) {
-  return <p><b>{user.username} said</b>: {content}</p>
+  return <p className={styles.message}><b>{user.username} said</b>: {content}</p>
 }
 
 function MessageEntryBox ({ channelId }) {

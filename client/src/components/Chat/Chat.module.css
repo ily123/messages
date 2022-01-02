@@ -1,4 +1,31 @@
 .chatWrapper {
-  border: 2px yellow solid;
   flex-grow: 1;
+}
+
+.channelTitle {
+  border-bottom: var(--border-alpha10);
+  height: 50px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-gray);
+}
+
+.messageLog {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  max-height: 50%;
+}
+.messageLog::-webkit-scrollbar {
+  width: 3px;
+}
+.messageLog::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  outline: 1px solid slategrey;
+}
+
+.message:hover {
+  background-color: var(--bg-gray); 
 }
