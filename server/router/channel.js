@@ -61,4 +61,10 @@ router.post('/:channelId/message', asyncHandler(async (req, res) => {
   return res.json({ message, user })
 }))
 
+router.patch('/:channelId/message/:messageId', asyncHandler(async (req, res) => {
+}))
+
+router.delete('/:channelId/message/:messageId', asyncHandler(async (req, res) => {
+}))
+
 module.exports = router
