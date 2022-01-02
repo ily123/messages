@@ -9,6 +9,7 @@
 .wrapper {
   border: 3px blue solid;
   display: flex;
+  justify-content: center;
   height: 100%;
 }
 
@@ -30,4 +31,22 @@
 }
 .isShown {
   display: block;
+}
+
+.TEST {
+  height: 200px;
+  align-self: center;
+}
+
+.createNewServerwrapper {
+  border: 3px blue solid;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.createNewServerwrapper h3 {
+  margin-bottom: 30px;
+  color: var(--text-gray);
 }

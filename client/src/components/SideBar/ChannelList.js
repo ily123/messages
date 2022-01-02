@@ -3,7 +3,7 @@ import modalStyles from './Modals.module.css'
 import chatModalStyles from './ChatModals.module.css'
 import React, { useState, useEffect } from 'react'
 import { Navigate, NavLink, Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ModalPortal } from '../Modal'
 import {
   postChannelRequest,
@@ -12,7 +12,8 @@ import {
 } from '../../store/workspace'
 
 export default function ChannelList ({ data }) {
-  const { channels, serverId, channelId } = data
+  const { channels, serverId, channelId, workspaces } = data
+  const user = useSelector(state => state.session)
   console.log('serverId -> ', serverId)
   return (
     <>
@@ -24,17 +25,21 @@ export default function ChannelList ({ data }) {
               <div className={chatModalStyles.channelNameWrap}>
                 <div style={{ visibility: channelId == id ? '' : 'hidden' }}><i className='fas fa-eye' /></div>
                 <NavLink to={`/main/server/${serverId}/channel/${id}`}>{title}</NavLink>
-                <ChannelSettingsModal>
-                  <ChannelSettingsContent channel={channel} />
-                </ChannelSettingsModal>
+                {title != 'General' && (
+                  <ChannelSettingsModal>
+                    <ChannelSettingsContent channel={channel} />
+                  </ChannelSettingsModal>
+                )}
               </div>
             </li>
           )
         })}
       </menu>
-      <AddNewChannelModal>
-        <AddNewChannelContent serverId={serverId} />
-      </AddNewChannelModal>
+      {user.id == workspaces[serverId].owner_id && (
+        <AddNewChannelModal>
+          <AddNewChannelContent serverId={serverId} />
+        </AddNewChannelModal>
+      )}
     </>
   )
 }

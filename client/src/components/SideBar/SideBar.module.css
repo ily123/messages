@@ -69,3 +69,7 @@ aside {
 .channelList menu li {
   list-style: none;
 }
+
+.hoverRed:hover {
+  color: red;
+}

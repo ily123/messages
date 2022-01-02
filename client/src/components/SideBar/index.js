@@ -12,7 +12,7 @@ export default function SideBar ({ workspaces, activeIds }) {
       </div>
       <div className={styles.channelList}>
         <h3>Channels</h3>
-        <ChannelList data={{ channels, serverId, channelId }} />
+        <ChannelList data={{ channels, serverId, channelId, workspaces }} />
       </div>
     </aside>
   )

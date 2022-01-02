@@ -40,7 +40,7 @@ export const postServerRequest = title => async dispatch => {
   })
   if (response.ok) {
     const { server } = await response.json()
-    dispatch(addServer(server))
+    // dispatch(addServer(server))
     return { isLoaded, server }
   }
   return !isLoaded
@@ -163,6 +163,21 @@ export const deleteChannelRequest = (channelId) => async dispatch => {
     }
   } catch (error) {
     return { channel: null }
+  }
+}
+
+export const deleteUserFromServerRequest = (serverId) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/server/${serverId}/user`, {
+      method: 'DELETE'
+    })
+    if (response.ok) {
+      const { server } = await response.json()
+      dispatch(removeServer(serverId))
+      return { server }
+    }
+  } catch (error) {
+    return { server: null }
   }
 }
 
