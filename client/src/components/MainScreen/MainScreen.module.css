@@ -1,13 +1,11 @@
 .appWrapper {
   width: 100%;
   height: 100%;
-  border: 3px red solid;
   display: flex;
   flex-direction: column;
 }
 
 .wrapper {
-  border: 3px blue solid;
   display: flex;
   justify-content: center;
   height: 100%;
@@ -16,7 +14,6 @@
 .serverSettings {
   height: 200px;
   width: 300px;
-  border: 1px solid red;
   position: fixed;
   top: calc(50% - 100px);
   left: calc(50% - 150px);
@@ -39,7 +36,6 @@
 }
 
 .createNewServerwrapper {
-  border: 3px blue solid;
   display: flex;
   flex-direction: column; 
   align-items: center;
