@@ -62,3 +62,17 @@ textarea::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
 }
 
+.messageWrapper{
+  position: relative;
+}
+.messageControls {
+  width: fit-content;
+  position: absolute;
+  right: 0px;
+  visibility: hidden;
+  background-color: white;
+  padding: 0 5px;
+}
+.messageWrapper:hover .messageControls {
+  visibility: visible;
+}

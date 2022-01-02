@@ -45,7 +45,12 @@ function MessageLog ({ messages, users }) {
 }
 
 function Message ({ content, user }) {
-  return <p className={styles.message}><b>{user.username} said</b>: {content}</p>
+  return (
+    <div className={styles.messageWrapper}>
+      <div className={styles.messageControls}>CONTROL</div>
+      <p className={styles.message}><b>{user.username} said</b>: {content}</p>
+    </div>
+  )
 }
 
 function MessageEntryBox ({ channelId }) {
