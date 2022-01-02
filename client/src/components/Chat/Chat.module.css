@@ -29,9 +29,6 @@
   outline: 1px solid slategrey;
 }
 
-.message {
-  max-width: 100%;
-}
 .message:hover {
   background-color: var(--bg-gray); 
 }
@@ -64,6 +61,15 @@ textarea::-webkit-scrollbar-thumb {
 
 .messageWrapper{
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.message {
+  max-width: 100%;
+}
+.messageContent {
+  padding-left: 10px;
+  overflow-wrap: break-word;
 }
 .messageControls {
   width: fit-content;
@@ -82,4 +88,20 @@ textarea::-webkit-scrollbar-thumb {
 }
 .messageWrapper:hover .messageControls {
   visibility: visible;
+}
+.saveEdits {
+  align-self: flex-end;
+  display: none;
+  margin-bottom: 20px;
+}
+.visible {
+  display: block;
+}
+.bgTan {
+  background-color: lavender;
+  border: 1px solid var(--darkblue);
+  border-radius: 5px;
+  padding: 40px;
+  margin-bottom: 5px;
+  outline: 1px solid var(--blue);
 }

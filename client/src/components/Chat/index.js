@@ -45,13 +45,39 @@ function MessageLog ({ messages, users }) {
 }
 
 function Message ({ content, user }) {
+  const [editable, setEditable] = useState(false)
+
+  const enableEdit = () => setEditable(true)
+  const disableEdit = () => setEditable(false)
+
+  const saveEdit = async () => {
+    disableEdit()
+  }
+
+  const deleteMessage = async () => {
+    window.alert('Message deleted!')
+  }
+
   return (
     <div className={styles.messageWrapper}>
       <div className={styles.messageControls}>
-        <i class='fas fa-pen' />
-        <i class='fas fa-trash' />
+        <i class='fas fa-pen' onClick={(_) => enableEdit()} />
+        <i class='fas fa-trash' onClick={(_) => deleteMessage()} />
       </div>
-      <p className={styles.message}><b>{user.username} said</b>: {content}</p>
+      <div className={styles.message}>
+        <span><b>{user.username} said:</b></span>
+        <div
+          className={`${styles.messageContent} ${editable && styles.bgTan}`}
+          contentEditable={editable}
+        >
+          {content}
+        </div>
+      </div>
+      <button
+        className={`${styles.saveEdits} ${editable && styles.visible}`}
+        onClick={(_) => saveEdit()}
+      >save edits
+      </button>
     </div>
   )
 }
