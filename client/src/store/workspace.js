@@ -60,8 +60,6 @@ export const deleteServerRequest = serverId => async dispatch => {
   })
   if (response.ok) {
     const { success } = await response.json()
-    console.log(success)
-    console.log('SERVER DELETE')
     dispatch(removeServer(serverId))
     return isLoaded
   }
@@ -220,7 +218,6 @@ export const workspaceReducer = (state = initialState, action) => {
     }
     case DELETE_CHANNEL: {
       const { id, server_id: serverId } = action.channel
-      console.log(action.channel)
       const newState = { ...state }
       const channelIndex = newState[String(serverId)].Channels.map(ch => ch.id).indexOf(id)
       delete newState[serverId].Channels[channelIndex]

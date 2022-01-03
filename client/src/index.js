@@ -13,7 +13,6 @@ import configureStore from './store'
 // need to do a few things to make dev server/client work
 const store = configureStore()
 if (process.env.NODE_ENV !== 'production') {
-  console.log("requesting XSRF token")
   restoreCSRF() // get the XSRF token on every client start
   window.store = store // add store to window for Redux dev tools
 }
@@ -28,6 +27,4 @@ ReactDOM.render(
 )
 
 // If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log)

@@ -14,7 +14,6 @@ import {
 export default function ChannelList ({ data }) {
   const { channels, serverId, channelId, workspaces } = data
   const user = useSelector(state => state.session)
-  console.log('serverId -> ', serverId)
   return (
     <>
       <menu>
@@ -65,7 +64,6 @@ function AddNewChannelModal ({ children }) {
 }
 
 function AddNewChannelContent ({ serverId, isHidden }) {
-  console.log('sup', serverId)
   const [title, setTitle] = useState('')
   const [isTitleInvalid, setIsTitleInvalid] = useState(false)
   const [isPosted, setIsPosted] = useState(false)
