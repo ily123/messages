@@ -1,6 +1,6 @@
 import styles from './NavBar.module.css'
 import { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../store/session'
 
 export default function NavBar () {
@@ -15,9 +15,10 @@ export default function NavBar () {
 }
 
 function LogOutButton () {
+  const auth = useSelector(state => state.session)
   const dispatch = useDispatch()
   return (
-    <div className={styles.interactiveButton} onClick={() => dispatch(logoutUser())}>Log out</div>
+    <div className={styles.interactiveButton} onClick={() => dispatch(logoutUser())}>Log out ({auth.username})</div>
   )
 }
 
