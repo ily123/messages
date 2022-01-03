@@ -1,14 +1,24 @@
-import { useState } from 'react'
+import './SignupFormPage.css'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { loginUser } from '../store/session'
+import { loginUser } from '../../store/session'
 import { Navigate } from 'react-router-dom'
 
-const LoginForm = () => {
+export default function LoginForm () {
   const dispatch = useDispatch()
   const [credential, setCredential] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([])
   const [loggedIn, setLoggedIn] = useState(false)
+  const [valid, setValid] = useState({
+    credential: false,
+    password: false
+  })
+
+  useEffect(() => {
+    setValid(state => ({ ...state, credential: !!credential.length }))
+    setValid(state => ({ ...state, password: !!password.length }))
+  }, [credential, password])
 
   if (loggedIn) return <Navigate to='/main/server/' />
 
@@ -23,8 +33,16 @@ const LoginForm = () => {
     }
   }
 
+  const check = (input) => input ? 'input valid' : 'input invalid'
+
   return (
-    <div className='user-login-form'>
+    <div className='user-signup-form'>
+      <div className='signup-validation more-padding'>
+        <ul>
+          <li className={check(valid.credential)}><CheckMark bool={valid.credential} />Enter user name</li>
+          <li className={check(valid.password)}><CheckMark bool={valid.password} />Ener password</li>
+        </ul>
+      </div>
       <form onSubmit={submit}>
         <label>
           Username or email
@@ -48,11 +66,13 @@ const LoginForm = () => {
         </label>
         <button type='submit'>Log In</button>
       </form>
-      <ul className='user-login-errors'>
+      <ul className='user-signup-errors'>
         {errors.map(errorMsg => <li key={errorMsg}>{errorMsg}</li>)}
       </ul>
     </div>
   )
 }
 
-export default LoginForm
+function CheckMark ({ bool }) {
+  return <span>{bool ? <i className='fas fa-check' /> : <i className='fas fa-times' />}</span>
+}

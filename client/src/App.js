@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { restoreUser } from './store/session'
-import LoginForm from './components/LoginForm'
+import LoginForm from './components/AuthForms/LoginForm'
 import SignupForm from './components/AuthForms/SignUpForm'
 
 import MainScreen from './components/MainScreen'
