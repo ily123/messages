@@ -26,7 +26,10 @@ export default function Chat ({ channelId }) {
     }
     getChatMessages(channelId)
   }, [channelId])
+  console.log('sup2 -> channel id ->', channelId)
 
+  // next line is a fix for
+  if (messageData.id != channelId) return <div style={{ backgroundColor: 'green' }}>Loading chat messages!</div>
   if (!loaded) return <div style={{ backgroundColor: 'red' }}>Loading chat messages!</div>
   const { Messages: messages, Users: users } = messageData
   return (
@@ -71,7 +74,6 @@ function Message ({ messageId, content, user, channelId }) {
   // fetch owner id & logged in user to enable edit controls
   const { session: loggedInUser, workspaces, chat } = useSelector(state => state)
   const serverId = chat.server_id
-  const { owner_id: serverOwnerId } = workspaces[+serverId]
 
   useEffect(() => {
     setContent(content)
@@ -87,6 +89,13 @@ function Message ({ messageId, content, user, channelId }) {
 
   const deleteMessage = async () => {
     await dispatch(deleteMessageRequest(messageId))
+  }
+
+  // if (!Object.keys(workspaces).includes(serverId)) return null
+  const { owner_id: serverOwnerId } = workspaces[+serverId]
+
+  if (!user) {
+    user = { id: -1, username: '[user_does_not_exist]' }
   }
   const enableMessageEditControls = loggedInUser.id == user.id || loggedInUser.id == serverOwnerId
   return (
