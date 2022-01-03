@@ -15,6 +15,7 @@
 
 
   --border-alpha40: 1px solid rgba(0,0,0,0.4);
+  --border-alpha10: 1px solid rgba(0,0,0,0.1);
 }
 /*
   Custom reset from https://www.joshwcomeau.com/css/custom-css-reset/
@@ -106,3 +107,4 @@ button:hover {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
 }
+

@@ -1,4 +1,113 @@
 .chatWrapper {
-  border: 2px yellow solid;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 200px);
+}
+
+.channelTitle {
+  border-bottom: var(--border-alpha10);
+  min-height: 50px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-gray);
+}
+
+.messageLog {
+  padding: 20px;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+.messageLog::-webkit-scrollbar {
+  width: 3px;
+}
+.messageLog::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  outline: 1px solid slategrey;
+}
+
+.message:hover {
+  background-color: var(--bg-gray); 
+}
+
+.messageEntryForm {
+  padding: 20px;
+  border-top: var(--border-alpha10);
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+}
+.messageEntryForm button {
+  width: 150px;
+  margin-top: 5px;
+  align-self: flex-end;
+}
+
+.messageEntryForm textarea {
+  height: 150px;
+  padding: 20px;
+}
+
+textarea::-webkit-scrollbar {
+  width: 3px;
+}
+textarea::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  outline: 1px solid slategrey;
+}
+
+.messageWrapper{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.message {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+textarea.messageContent {
+  padding-left: 10px;
+  overflow-wrap: break-word;
+  height: fit-content;
+  resize: none;
+  background-color: white;
+  border: none;
+  color: black;
+}
+textarea.bgTan {
+  border-radius: 5px;
+  padding: 40px;
+  margin-bottom: 5px;
+  outline: 1px solid var(--blue);
+}
+.messageControls {
+  width: fit-content;
+  position: absolute;
+  right: 0px;
+  visibility: hidden;
+  background-color: white;
+  padding: 0 5px;
+  display: flex;
+  column-gap: 10px;
+  color: var(--text-gray);
+}
+.messageControls i:hover {
+  cursor: pointer;
+  color: var(--blue);
+}
+.messageWrapper:hover .messageControls {
+  visibility: visible;
+}
+.saveEdits {
+  align-self: flex-end;
+  display: none;
+  margin-bottom: 20px;
+}
+.visible {
+  display: block;
 }

@@ -1,10 +1,18 @@
 'use strict'
-
 import styles from './Chat.module.css'
 import { csrfFetch } from '../../store/csrf'
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMessagesRequest, postMessageRequest, addMessage } from '../../store/chat'
+import {
+  getMessagesRequest,
+  postMessageRequest,
+  addMessage,
+  patchMessageRequest,
+  updateMessage,
+  deleteMessageRequest,
+  deleteMessage
+} from '../../store/chat'
+import TextareaAutosize from 'react-textarea-autosize'
 
 export default function Chat ({ channelId }) {
   const [loaded, setLoaded] = useState(false)
@@ -24,28 +32,87 @@ export default function Chat ({ channelId }) {
   return (
     <div className={styles.chatWrapper}>
       <Header title={messageData.title} />
-      <MessageLog messages={messages} users={users} />
+      <MessageLog messages={messages} users={users} channelId={channelId} />
       <MessageEntryBox channelId={channelId} />
     </div>
   )
 }
 
 function Header ({ title }) {
-  return <h2>{title}</h2>
+  return <h2 className={styles.channelTitle}>{title}</h2>
 }
 
-function MessageLog ({ messages, users }) {
+function MessageLog ({ messages, users, channelId }) {
+  const usersDict = {}
+  users.forEach(user => {
+    usersDict[user.id] = user
+  })
   return (
-    <div>
+    <div id='messageLog' className={styles.messageLog}>
       {messages.map(msg => {
-        return <Message key={'message' + msg.id} content={msg.content} user={users[0]} />
+        return (
+          <Message
+            key={'message' + msg.id}
+            messageId={msg.id}
+            content={msg.content}
+            user={usersDict[msg.user_id]}
+            channelId={channelId}
+          />
+        )
       })}
     </div>
   )
 }
 
-function Message ({ content, user }) {
-  return <p><b>{user.username} said</b>: {content}</p>
+function Message ({ messageId, content, user, channelId }) {
+  const [editable, setEditable] = useState(false)
+  const [content_, setContent] = useState('')
+  const dispatch = useDispatch()
+  // fetch owner id & logged in user to enable edit controls
+  const { session: loggedInUser, workspaces, chat } = useSelector(state => state)
+  const serverId = chat.server_id
+  const { owner_id: serverOwnerId } = workspaces[+serverId]
+
+  useEffect(() => {
+    setContent(content)
+  }, [content])
+
+  const toggleEdit = () => setEditable(state => !state)
+  const disableEdit = () => setEditable(false)
+
+  const saveEdit = async (_) => {
+    await dispatch(patchMessageRequest(messageId, content_))
+    disableEdit()
+  }
+
+  const deleteMessage = async () => {
+    await dispatch(deleteMessageRequest(messageId))
+  }
+  const enableMessageEditControls = loggedInUser.id == user.id || loggedInUser.id == serverOwnerId
+  return (
+    <div className={styles.messageWrapper}>
+      {enableMessageEditControls && (
+        <div className={styles.messageControls}>
+          <i class='fas fa-pen' onClick={(_) => toggleEdit()} />
+          <i class='fas fa-trash' onClick={(_) => deleteMessage()} />
+        </div>
+      )}
+      <div className={styles.message}>
+        <span><b>{user.username} said:</b></span>
+        <TextareaAutosize
+          className={`${styles.messageContent} ${editable && styles.bgTan}`}
+          disabled={!editable}
+          onChange={(e) => setContent(e.target.value)}
+          value={content_}
+        />
+      </div>
+      <button
+        className={`${styles.saveEdits} ${editable && styles.visible}`}
+        onClick={saveEdit}
+      >save edits
+      </button>
+    </div>
+  )
 }
 
 function MessageEntryBox ({ channelId }) {
@@ -74,27 +141,26 @@ function MessageEntryBox ({ channelId }) {
     ws.onmessage = (e) => {
       console.log('server sent someting over WS', e)
       const { type, message, user } = JSON.parse(e.data)
-      if (type === 'test') {
+      if (type === 'addMessage') {
         dispatch(addMessage(message, user))
+      } else if (type == 'updateMessage') {
+        console.log('serving is asking us to update a message.')
+        dispatch(updateMessage(message))
+      } else if (type == 'deleteMessage') {
+        console.log('server is asking us to delete a message')
+        dispatch(deleteMessage(message))
       }
-      console.log(message)
     }
     ws.onerror = (e) => {}
     ws.onclose = (e) => {
       console.log('socket closed', e)
       console.log('time CLOSED is', new Date())
     }
-
     return function cleanup () {
       if (ws != null) {
         ws.close()
       }
     }
-    // return function cleanup () {
-    //  if (webSocket.current != null) {
-    //    webSocket.curent.close()
-    //  }
-    // }
   }, [channelId])
 
   const handleSubmit = async e => {
@@ -103,12 +169,15 @@ function MessageEntryBox ({ channelId }) {
       await dispatch(postMessageRequest(channelId, message))
       // webSocket.current.send(JSON.stringify({ type: 'test-send', chatId: 1 }))
       setMessage('')
+      // this scrolls to the bottom of the chat log when new msg is added
+      const chatlog = document.getElementById('messageLog')
+      chatlog.scrollTop = chatlog.scrollHeight
     }
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type='textarea' value={message} onChange={(e) => setMessage(e.target.value)} />
+    <form className={styles.messageEntryForm} onSubmit={handleSubmit}>
+      <textarea type='text' value={message} onChange={(e) => setMessage(e.target.value)} />
       <button>Submit message</button>
     </form>
   )
