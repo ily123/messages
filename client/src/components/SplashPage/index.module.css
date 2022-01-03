@@ -8,11 +8,13 @@
 }
 
 .heroImage {
+  padding-top: 50px;
 }
 .heroImage .centerLogo {
-  height: 256px;
-  width: 256px;
-  background-image: url(icons8-message-256.svg);
+  height: 220px;
+  width: 220px;
+  background-image: url(icons8-letter-256.svg);
+  background-size:contain;
   margin: auto;
   align-self: center;
 }
