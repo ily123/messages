@@ -28,8 +28,8 @@ export default function Chat ({ channelId }) {
   }, [channelId])
 
   // next line is a fix for
-  if (messageData.id != channelId) return <div style={{ backgroundColor: 'green' }}>Loading chat messages!</div>
-  if (!loaded) return <div style={{ backgroundColor: 'red' }}>Loading chat messages!</div>
+  if (messageData.id != channelId) return <div>Loading chat messages!</div>
+  if (!loaded) return <div>Loading chat messages!</div>
   const { Messages: messages, Users: users } = messageData
   return (
     <div className={styles.chatWrapper}>
