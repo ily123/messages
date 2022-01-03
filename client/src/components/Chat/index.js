@@ -32,7 +32,7 @@ export default function Chat ({ channelId }) {
   return (
     <div className={styles.chatWrapper}>
       <Header title={messageData.title} />
-      <MessageLog messages={messages} users={users} />
+      <MessageLog messages={messages} users={users} channelId={channelId} />
       <MessageEntryBox channelId={channelId} />
     </div>
   )
@@ -42,7 +42,7 @@ function Header ({ title }) {
   return <h2 className={styles.channelTitle}>{title}</h2>
 }
 
-function MessageLog ({ messages, users }) {
+function MessageLog ({ messages, users, channelId }) {
   const usersDict = {}
   users.forEach(user => {
     usersDict[user.id] = user
@@ -50,16 +50,28 @@ function MessageLog ({ messages, users }) {
   return (
     <div id='messageLog' className={styles.messageLog}>
       {messages.map(msg => {
-        return <Message key={'message' + msg.id} messageId={msg.id} content={msg.content} user={usersDict[msg.user_id]} />
+        return (
+          <Message
+            key={'message' + msg.id}
+            messageId={msg.id}
+            content={msg.content}
+            user={usersDict[msg.user_id]}
+            channelId={channelId}
+          />
+        )
       })}
     </div>
   )
 }
 
-function Message ({ messageId, content, user }) {
+function Message ({ messageId, content, user, channelId }) {
   const [editable, setEditable] = useState(false)
   const [content_, setContent] = useState('')
   const dispatch = useDispatch()
+  // fetch owner id & logged in user to enable edit controls
+  const { session: loggedInUser, workspaces, chat } = useSelector(state => state)
+  const serverId = chat.server_id
+  const { owner_id: serverOwnerId } = workspaces[+serverId]
 
   useEffect(() => {
     setContent(content)
@@ -76,13 +88,15 @@ function Message ({ messageId, content, user }) {
   const deleteMessage = async () => {
     await dispatch(deleteMessageRequest(messageId))
   }
-
+  const enableMessageEditControls = loggedInUser.id == user.id || loggedInUser.id == serverOwnerId
   return (
     <div className={styles.messageWrapper}>
-      <div className={styles.messageControls}>
-        <i class='fas fa-pen' onClick={(_) => toggleEdit()} />
-        <i class='fas fa-trash' onClick={(_) => deleteMessage()} />
-      </div>
+      {enableMessageEditControls && (
+        <div className={styles.messageControls}>
+          <i class='fas fa-pen' onClick={(_) => toggleEdit()} />
+          <i class='fas fa-trash' onClick={(_) => deleteMessage()} />
+        </div>
+      )}
       <div className={styles.message}>
         <span><b>{user.username} said:</b></span>
         <TextareaAutosize
