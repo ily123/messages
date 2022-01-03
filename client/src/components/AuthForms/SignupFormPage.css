@@ -1,0 +1,63 @@
+.user-signup-errors li{
+  color: red;
+  list-style: none;
+}
+
+.user-signup-form {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  padding: 30px;
+  border: var(--border-alpha10);
+  border-radius: 5px;
+  box-shadow: var(--shadow-elevation-low);
+}
+
+.user-signup-form input {
+  background-color: var(--bg-gray);
+}
+
+.user-signup-form button {
+  background-color: var(--darkblue);
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  width: 100px;
+  align-self: center;
+  margin-top: 10px;
+}
+.user-signup-form button:hover {
+  cursor: pointer;
+  background-color: var(--blue);
+}
+
+.user-signup-form .invalid{
+  list-style: none;
+  color: red;
+}
+.user-signup-form .valid{
+  list-style: none;
+  color: var(--darkblue);
+}
+
+.user-signup-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.user-signup-form label {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+.user-signup-form form input {
+  border: none;
+}
+
+.signup-validation i {
+  margin-right: 5px;
+  min-width: 16px;
+}

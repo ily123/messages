@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { restoreUser } from './store/session'
 import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignUpForm'
+import SignupForm from './components/AuthForms/SignUpForm'
 
 import MainScreen from './components/MainScreen'
 import SplashPage from './components/SplashPage'

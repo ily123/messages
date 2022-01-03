@@ -1,8 +1,8 @@
-// import './SignupFormPage.css'
+import './SignupFormPage.css'
 import { Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { signupUser } from '../store/session'
+import { signupUser } from '../../store/session'
 
 function SignupFormPage () {
   const sessionUser = useSelector(state => state.session)
@@ -46,10 +46,10 @@ function SignupFormPage () {
     <div className='user-signup-form'>
       <div className='signup-validation'>
         <ul>
-          <li className={check(valid.email)}>Enter valid email</li>
-          <li className={check(valid.username)}>Enter user name with at least 4 characters</li>
-          <li className={check(valid.password)}>Password has at least 6 characters</li>
-          <li className={check(valid.passwordMatch)}>Passwords must match</li>
+          <li className={check(valid.email)}><CheckMark bool={valid.email} />Enter valid email</li>
+          <li className={check(valid.username)}><CheckMark bool={valid.username} />Enter user name with at least 4 characters</li>
+          <li className={check(valid.password)}><CheckMark bool={valid.password} />Password has at least 6 characters</li>
+          <li className={check(valid.passwordMatch)}><CheckMark bool={valid.passwordMatch} />Passwords must match</li>
         </ul>
       </div>
       <form onSubmit={submit}>
@@ -97,5 +97,9 @@ function SignupFormPage () {
     </div>
   )
 };
+
+function CheckMark ({ bool }) {
+  return <span>{bool ? <i className='fas fa-check' /> : <i className='fas fa-times' />}</span>
+}
 
 export default SignupFormPage
