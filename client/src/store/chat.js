@@ -28,7 +28,6 @@ export const addMessage = (message, user) => {
   }
 }
 export const postMessageRequest = (channelId, content) => async dispatch => {
-  console.log('got thuink')
   const isLoaded = true
   const response = await csrfFetch(`/api/channel/${channelId}/message`, {
     method: 'POST',
@@ -50,7 +49,6 @@ export const updateMessage = (message) => {
   }
 }
 export const patchMessageRequest = (messageId, content) => async dispatch => {
-  console.log('got thuink', content)
   const isLoaded = true
   const response = await csrfFetch(`/api/channel/message/${messageId}`, {
     method: 'PATCH',
@@ -78,7 +76,6 @@ export const deleteMessageRequest = (messageId) => async dispatch => {
   })
   if (response.ok) {
     const { message } = await response.json()
-    console.log(message)
     // message is handled via socket
     // dispatch(deleteMessage(message))
     return isLoaded

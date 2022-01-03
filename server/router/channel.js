@@ -53,7 +53,6 @@ router.post('/:channelId/message', asyncHandler(async (req, res) => {
   const { channelId } = req.params
   const message = await Message.create({ user_id: user.id, content, channel_id: channelId })
   req.app.wss.clients.forEach(client => {
-    console.log('broadcasting to client with id of ❤️ ' + client.chatId)
     if (client.readyState === WebSocket.OPEN && client.chatId == channelId) {
       client.send(JSON.stringify({ type: 'addMessage', message, user }))
     }
@@ -65,11 +64,9 @@ router.patch('/message/:messageId', asyncHandler(async (req, res) => {
   const { messageId } = req.params
   const { content } = req.body
   const message = await Message.findByPk(messageId)
-  console.log('changing content to', content)
   message.content = content
   await message.save()
   req.app.wss.clients.forEach(client => {
-    console.log('broadcasting to client with id of ❤️ ' + client.chatId)
     if (client.readyState === WebSocket.OPEN && client.chatId == message.channel_id) {
       client.send(JSON.stringify({ type: 'updateMessage', message }))
     }
@@ -82,7 +79,6 @@ router.delete('/message/:messageId', asyncHandler(async (req, res) => {
   const message = await Message.findByPk(messageId)
   await message.destroy()
   req.app.wss.clients.forEach(client => {
-    console.log('broadcasting to client with id of ❤️ ' + client.chatId)
     if (client.readyState === WebSocket.OPEN && client.chatId == message.channel_id) {
       client.send(JSON.stringify({ type: 'deleteMessage', message }))
     }

@@ -53,23 +53,19 @@ router.post('/', asyncHandler(async (req, res) => {
 }))
 
 router.delete('/:serverId', asyncHandler(async (req, res) => {
-  console.log('❤️ DELETE REQUEST')
   const { user } = req
   const { serverId } = req.params
   const server = await Server.findByPk(serverId, { include: { model: Channel } })
-  console.log(server.toJSON())
   const serverChannels = server.Channels.map(ch => ch.id)
   // Delete records from the join user-to-XYZ tables.
   // Couldn't figure out the cascades for this.
   await UserToServer.destroy({ where: { server_id: serverId } })
   await UserToChannel.destroy({ where: { channel_id: serverChannels } })
-  console.log('🔥🔥🔥 user to server above ^')
   const success = await server.destroy()
   return res.json({ suceess: !!success })
 }))
 
 router.patch('/:serverId', asyncHandler(async (req, res) => {
-  console.log('❤️ PATCH REQUEST')
   const { user } = req
   const { serverId } = req.params
   const { title } = req.body
@@ -82,7 +78,6 @@ router.patch('/:serverId', asyncHandler(async (req, res) => {
 }))
 
 router.put('/:serverId', asyncHandler(async (req, res) => {
-  console.log('❤️ PUT REQUEST')
   const { user } = req
   const { serverId } = req.params
   const server = await Server.findByPk(serverId, {
@@ -97,17 +92,14 @@ router.put('/:serverId', asyncHandler(async (req, res) => {
 }))
 
 router.delete('/:serverId/user', asyncHandler(async (req, res) => {
-  console.log('❤️ DELETE REQUEST')
   const { user } = req
   const { serverId } = req.params
   const server = await Server.findByPk(serverId, { include: { model: Channel } })
-  console.log(server.toJSON())
   const serverChannels = server.Channels.map(ch => ch.id)
   // Delete records from the join user-to-XYZ tables.
   // Couldn't figure out the cascades for this.
   await UserToServer.destroy({ where: { server_id: serverId, user_id: user.id } })
   await UserToChannel.destroy({ where: { channel_id: serverChannels, user_id: user.id } })
-  console.log('🔥🔥🔥 user to server above ^')
   return res.json({ server })
 }))
 

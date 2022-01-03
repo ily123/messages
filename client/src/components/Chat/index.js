@@ -26,7 +26,6 @@ export default function Chat ({ channelId }) {
     }
     getChatMessages(channelId)
   }, [channelId])
-  console.log('sup2 -> channel id ->', channelId)
 
   // next line is a fix for
   if (messageData.id != channelId) return <div style={{ backgroundColor: 'green' }}>Loading chat messages!</div>
@@ -133,7 +132,6 @@ function MessageEntryBox ({ channelId }) {
     if (!channelId) return
 
     let HOST
-    console.log('HOST', HOST)
     if (process.env.NODE_ENV !== 'production') {
       HOST = 'ws://localhost:5000'
     } else {
@@ -143,27 +141,20 @@ function MessageEntryBox ({ channelId }) {
     // const webSocket.current = ws
 
     ws.onopen = (e) => {
-      console.log('socket open:', e)
-      console.log('time OPEN is', new Date())
       ws.send(JSON.stringify({ type: 'test-send', chatId: channelId }))
     }
     ws.onmessage = (e) => {
-      console.log('server sent someting over WS', e)
       const { type, message, user } = JSON.parse(e.data)
       if (type === 'addMessage') {
         dispatch(addMessage(message, user))
       } else if (type == 'updateMessage') {
-        console.log('serving is asking us to update a message.')
         dispatch(updateMessage(message))
       } else if (type == 'deleteMessage') {
-        console.log('server is asking us to delete a message')
         dispatch(deleteMessage(message))
       }
     }
     ws.onerror = (e) => {}
     ws.onclose = (e) => {
-      console.log('socket closed', e)
-      console.log('time CLOSED is', new Date())
     }
     return function cleanup () {
       if (ws != null) {
