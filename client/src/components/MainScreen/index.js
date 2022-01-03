@@ -38,7 +38,7 @@ export default function MainScreen () {
   // grab the first ones from the store
   // and what if there are no servers in the store?... TODO
   if (!serverId) serverId = Object.values(workspaces)[0].id
-  if (!Object.keys(workspaces).includes(+serverId)) serverId = Object.values(workspaces)[0].id
+  if (!Object.keys(workspaces).includes(serverId)) serverId = Object.values(workspaces)[0].id
   // if channel id that is being requested does NOT exist, reroute to first channel on server
   if (!workspaces[serverId].Channels.map(ch => Number(ch.id)).includes(+channelId)) {
     channelId = workspaces[serverId].Channels[0].id
