@@ -31,7 +31,7 @@
 
 ## Summary of the main features
 
-[Oney](https://messages-io.herokuapp.com/) includes MVP functionality for the following features:
+[Messages](https://messages-io.herokuapp.com/) includes MVP functionality for the following features:
 - Workspaces (or Servers)
 	- _Summary_: users can create workspaces and invite their friends there
 	- CREATE: users can POST new workspaces
