@@ -1,10 +1,72 @@
-.optionsButton {
-  background-color: pink;
-  border-radius: 0px;
-  height: 20px;
-  width: 20px;
+.server {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.server .submitButton {
+  border-radius: 3px;
+  background-color: var(--darkblue);
+}
+.server h3 {
+  align-self: flex-start;
+}
+.server p {
+  padding-top: 15px;
+  font-style: italic;
+}
+.server .deleteButton {
+  align-self: center;
+  width: 150px;
+  color: black;
+  background-color: var(--bg-gray);
+  cursor: not-allowed;
+}
+.server .deleteButton.pass {
+  background-color: red;
+  cursor: pointer;
+}
+.pass {
+ color: green;
+}
+.fail {
+  color: red;
+}
+.hidden {
+  visibility: hidden;
+}
+.centerText {
+  text-align: center;
+}
+p.inviteLink {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+
+  margin-top: 20px;
+  padding: 10px;
+  align-self: center;
+  text-align: center;
+  font-style: normal;
+  background-color: lavender;
+}
+p.inviteLink:hover {
+  cursor: pointer; 
 }
 
-.newServerButton {
-  background-color: lavender;
+p.inviteLink:active{
+  background-color: var(--blue);
+  color: white;
+}
+
+
+#modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

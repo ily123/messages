@@ -73,12 +73,42 @@ router.patch('/:serverId', asyncHandler(async (req, res) => {
   const { user } = req
   const { serverId } = req.params
   const { title } = req.body
-  const server = await Server.findByPk(serverId)
+  const server = await Server.findByPk(serverId, {
+    include: { model: Channel }
+  })
   server.title = title
   await server.save()
   return res.json({ server })
 }))
 
-router.patch('')
+router.put('/:serverId', asyncHandler(async (req, res) => {
+  console.log('❤️ PUT REQUEST')
+  const { user } = req
+  const { serverId } = req.params
+  const server = await Server.findByPk(serverId, {
+    include: { model: Channel }
+  })
+  if (server) {
+    await UserToServer.create({ user_id: user.id, server_id: server.id })
+    return res.json({ server })
+  } else {
+    throw new Error('This server does not exist!')
+  }
+}))
+
+router.delete('/:serverId/user', asyncHandler(async (req, res) => {
+  console.log('❤️ DELETE REQUEST')
+  const { user } = req
+  const { serverId } = req.params
+  const server = await Server.findByPk(serverId, { include: { model: Channel } })
+  console.log(server.toJSON())
+  const serverChannels = server.Channels.map(ch => ch.id)
+  // Delete records from the join user-to-XYZ tables.
+  // Couldn't figure out the cascades for this.
+  await UserToServer.destroy({ where: { server_id: serverId, user_id: user.id } })
+  await UserToChannel.destroy({ where: { channel_id: serverChannels, user_id: user.id } })
+  console.log('🔥🔥🔥 user to server above ^')
+  return res.json({ server })
+}))
 
 module.exports = router

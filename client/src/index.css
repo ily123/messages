@@ -3,6 +3,19 @@
   --blue: #26A5E4;
   --text-gray: #4d4d4d;
   --text-light-gray: #8c8c8c;
+  --bg-gray: #f8f8fa;
+
+
+  /* shadow elevation generated with https://www.joshwcomeau.com/shadow-palette/  */
+  --shadow-color: 284deg 55% 25%;
+  --shadow-elevation-low:
+    0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.6px 0.9px 1.2px -1.2px hsl(var(--shadow-color) / 0.34),
+    1.3px 2.1px 2.8px -2.5px hsl(var(--shadow-color) / 0.34);
+
+
+  --border-alpha40: 1px solid rgba(0,0,0,0.4);
+  --border-alpha10: 1px solid rgba(0,0,0,0.1);
 }
 /*
   Custom reset from https://www.joshwcomeau.com/css/custom-css-reset/
@@ -67,3 +80,31 @@ p, h1, h2, h3, h4, h5, h6 {
   align-items: center;
   height: 100%;
 }
+
+a {
+  text-decoration: none;
+  color: var(--darkblue);
+}
+a:hover {
+  color: var(--blue);
+}
+
+button {
+  background-color: var(--darkblue);
+  color: white;
+  border-radius: 3px;
+}
+button:hover {
+  background-color: var(--blue);
+  cursor: pointer;
+}
+
+#modal-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+

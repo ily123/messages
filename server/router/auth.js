@@ -61,7 +61,7 @@ router.post('/signup', validateSignup, asyncHandler(async (req, res, next) => {
   let user
   try {
     user = await User.signup({ email, username, password })
-    await UserToServer.create({ user_id: user.id, server_id: 1 })
+    // await UserToServer.create({ user_id: user.id, server_id: 1 })
   } catch {
     const err = new Error('Signup failed')
     err.title = 'Signup failed when inserting into db'
