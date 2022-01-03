@@ -14,13 +14,16 @@
 
 ![image](https://user-images.githubusercontent.com/44654658/147894640-e4109030-0a13-4941-9c3f-45db23fe6941.png)
 
+---
 🔥Control menu for the Workspace where the user edit/delete their workspace, or join other workspaces🔥
 ![image](https://user-images.githubusercontent.com/44654658/147894694-1dfdf344-c3f4-4ecc-817b-a77a6e1e3fc5.png)
 
+---
 
 🔥One of many modals that allow user to interact with the app. Here the user is adding a new channel to their workspace🔥
 ![image](https://user-images.githubusercontent.com/44654658/147894729-bcac2d0a-5bee-4059-9f78-b4b2ee3ec057.png)
 
+---
 🔥The real-time chat!🔥
 ![image](https://user-images.githubusercontent.com/44654658/147894806-485c0a32-07dd-4a45-ac3f-d1b6b3fcb58f.png)
 
