@@ -40,7 +40,7 @@ export default function LoginForm () {
       <div className='signup-validation more-padding'>
         <ul>
           <li className={check(valid.credential)}><CheckMark bool={valid.credential} />Enter user name</li>
-          <li className={check(valid.password)}><CheckMark bool={valid.password} />Ener password</li>
+          <li className={check(valid.password)}><CheckMark bool={valid.password} />Enter password</li>
         </ul>
       </div>
       <form onSubmit={submit}>
