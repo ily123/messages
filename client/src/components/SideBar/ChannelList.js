@@ -160,7 +160,7 @@ function ChannelSettingsContent ({ channel, setHidden }) {
         <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} />
         <button>submit</button>
       </form>
-      <p className={!deleteTrue ? modalStyles.fail : modalStyles.pass}>Delete workspace: are you sure?</p>
+      <p className={!deleteTrue ? modalStyles.fail : modalStyles.pass}>Delete channel: are you sure?</p>
       <form><input checked={deleteTrue} onChange={(_) => setDeleteTrue(!deleteTrue)} type='checkbox' /> Yes</form>
       <button
         className={`${modalStyles.deleteButton} ${(deleteTrue && modalStyles.pass)}`}
