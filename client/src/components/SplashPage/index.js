@@ -66,7 +66,7 @@ function ProductDetails () {
     }, {
       id: 6,
       title: 'FREE',
-      descripton: ['All features are free, and you can', 'invest you skrilla into NFTs']
+      descripton: ['All features are free, and you can', 'invest your $$ into NFTs']
     }
   ]
   return (
