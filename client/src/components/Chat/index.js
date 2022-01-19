@@ -41,7 +41,13 @@ export default function Chat ({ channelId }) {
 }
 
 function Header ({ title }) {
-  return <h2 className={styles.channelTitle}>{title}</h2>
+  return (
+    <div className={styles.headerWrapper}>
+      <i className='fas fa-compass' />
+      <h2 className={styles.channelTitle}>{title}</h2>
+      <button>[_test_]</button>
+    </div>
+  )
 }
 
 function MessageLog ({ messages, users, channelId }) {

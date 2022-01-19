@@ -5,13 +5,28 @@
   width: calc(100% - 200px);
 }
 
-.channelTitle {
+.headerWrapper {
+  display: flex;
   border-bottom: var(--border-alpha10);
+  background-color: var(--bg-gray);
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.headerWrapper i {
+  font-size: 1.65rem;
+  color: var(--darkblue);
+  visibility: hidden;
+  cursor: pointer;
+}
+.headerWrapper i:hover {
+  color: var(--blue);
+}
+
+.channelTitle {
   min-height: 50px;
   display:flex;
-  justify-content: center;
   align-items: center;
-  background-color: var(--bg-gray);
 }
 
 .messageLog {
@@ -110,4 +125,10 @@ textarea.bgTan {
 }
 .visible {
   display: block;
+}
+
+@media (max-width: 600px) {
+  .headerWrapper i {
+    visibility: visible;
+  }
 }
