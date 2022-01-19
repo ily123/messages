@@ -21,6 +21,7 @@ footer.publicFooter {
 }
 
 .socialMediaLinks {
+  padding-bottom: 10px;
 }
 .myName {
   display: flex;
