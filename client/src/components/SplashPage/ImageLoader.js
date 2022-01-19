@@ -1,10 +1,10 @@
 // this is a bit dorky, but it works
-import { ReactComponent as LiveChatImg } from './undraw_chatting_re_j55r.svg'
-import { ReactComponent as WorkSpacesImg } from './undraw_duplicate_re_d39g.svg'
-import { ReactComponent as ChannelsImg } from './undraw_group_chat_re_frmo.svg'
-import { ReactComponent as DMImg } from './undraw_team_chat_re_vbq1.svg'
-import { ReactComponent as HistoryImage } from './undraw_file_searching_re_3evy.svg'
-import { ReactComponent as FreeImage } from './undraw_crypto_portfolio_2jy5.svg'
+import { ReactComponent as LiveChatImg } from './images/undraw_chatting_re_j55r.svg'
+import { ReactComponent as WorkSpacesImg } from './images/undraw_duplicate_re_d39g.svg'
+import { ReactComponent as ChannelsImg } from './images/undraw_group_chat_re_frmo.svg'
+import { ReactComponent as DMImg } from './images/undraw_team_chat_re_vbq1.svg'
+import { ReactComponent as HistoryImage } from './images/undraw_file_searching_re_3evy.svg'
+import { ReactComponent as FreeImage } from './images/undraw_crypto_portfolio_2jy5.svg'
 
 export default function Image ({ id, className }) {
   switch (id) {
