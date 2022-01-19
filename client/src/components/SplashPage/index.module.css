@@ -38,14 +38,14 @@
   padding-top: 30px;
   display: flex;
   flex-direction: row;
-  flex-basis: calc(96%/3);
+  justify-content: center;
   flex-wrap: wrap;
   row-gap: 35px;
   column-gap: 15px;
 }
 .detailsCard {
-  width: calc(96%/3);
   display: flex;
+  flex-basis: calc(90%/3);
   flex-direction: column;
   justify-content: center;
   align-content: center;
@@ -84,4 +84,22 @@
   margin-top: 40px;
   color: white;
   font-size: 1.15rem;
+}
+
+@media (max-width: 1350px) {
+  .detailsCard {
+    flex-basis: 45%;
+  }
+  .cardDescription {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 830px) {
+  .detailsCard {
+    flex-basis: 100%;
+  }
+  .cardDescription {
+    font-size: 1rem;
+  }
 }

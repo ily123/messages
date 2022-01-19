@@ -62,7 +62,7 @@ function ProductDetails () {
     }, {
       id: 5,
       title: 'HISTORY',
-      descripton: ['All message history is accessible in perpetuity without a paywall']
+      descripton: ['All message history is accessible', 'in perpetuity without a paywall']
     }, {
       id: 6,
       title: 'FREE',
