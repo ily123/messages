@@ -11,3 +11,10 @@ nav.publicNav {
   padding-left: 20px;
   color: var(--darkblue);
 }
+
+@media (max-width: 820px) {
+  nav.publicNav {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
