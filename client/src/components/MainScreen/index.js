@@ -7,6 +7,7 @@ import SideBar from '../SideBar'
 import Chat from '../Chat'
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import SidebarToggleContextProvider from '../../context/SideBarToggle'
 
 import {
   postServerRequest,
@@ -54,13 +55,15 @@ export default function MainScreen () {
 
   const currentWorkspace = workspaces[serverId]
   return (
-    <div className={styles.appWrapper}>
-      <NavBar />
-      <div className={styles.wrapper}>
-        <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} windowSize={windowSize} />
-        <Chat channelId={channelId} />
+    <SidebarToggleContextProvider>
+      <div className={styles.appWrapper}>
+        <NavBar />
+        <div className={styles.wrapper}>
+          <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} windowSize={windowSize} />
+          <Chat channelId={channelId} />
+        </div>
       </div>
-    </div>
+    </SidebarToggleContextProvider>
   )
 }
 
