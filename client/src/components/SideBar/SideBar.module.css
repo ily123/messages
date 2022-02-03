@@ -79,4 +79,13 @@ aside {
   aside {
     display: none;
   }
+  aside.sideBarToggledOpen {
+    border: 1px red solid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    z-index: 10;
+    height: 100%;
+  }
 }

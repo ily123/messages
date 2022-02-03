@@ -55,15 +55,15 @@ export default function MainScreen () {
 
   const currentWorkspace = workspaces[serverId]
   return (
-    <SidebarToggleContextProvider>
-      <div className={styles.appWrapper}>
-        <NavBar />
-        <div className={styles.wrapper}>
+    <div className={styles.appWrapper}>
+      <NavBar />
+      <div className={styles.wrapper}>
+        <SidebarToggleContextProvider>
           <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} windowSize={windowSize} />
           <Chat channelId={channelId} />
-        </div>
+        </SidebarToggleContextProvider>
       </div>
-    </SidebarToggleContextProvider>
+    </div>
   )
 }
 

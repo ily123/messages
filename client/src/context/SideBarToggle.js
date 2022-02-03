@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
-const SideBarToggleContext = React.createContext()
+export const SideBarToggleContext = React.createContext()
 
 const SideBarToggleContextProvider = ({ children }) => {
-  const [sideBarToggle, setSideBarToggle] = useState(false)
+  const [isSideBarToggled, toggleSideBar] = useState(false)
   return (
     <SideBarToggleContext.Provider
-      value={{ sideBarToggle, setSideBarToggle }}
+      value={{ isSideBarToggled, toggleSideBar }}
     >
       {children}
     </SideBarToggleContext.Provider>
