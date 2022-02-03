@@ -41,9 +41,10 @@ export default function Chat ({ channelId }) {
 }
 
 function Header ({ title }) {
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false)
   return (
     <div className={styles.headerWrapper}>
-      <i className='fas fa-compass' />
+      <i className='fas fa-compass' onClick={e => window.alert(e)} />
       <h2 className={styles.channelTitle}>{title}</h2>
       <button>[_test_]</button>
     </div>
@@ -107,8 +108,8 @@ function Message ({ messageId, content, user, channelId }) {
     <div className={styles.messageWrapper}>
       {enableMessageEditControls && (
         <div className={styles.messageControls}>
-          <i class='fas fa-pen' onClick={(_) => toggleEdit()} />
-          <i class='fas fa-trash' onClick={(_) => deleteMessage()} />
+          <i className='fas fa-pen' onClick={(_) => toggleEdit()} />
+          <i className='fas fa-trash' onClick={(_) => deleteMessage()} />
         </div>
       )}
       <div className={styles.message}>
