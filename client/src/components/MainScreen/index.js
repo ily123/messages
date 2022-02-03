@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import NavBar from '../NavBar'
 import SideBar from '../SideBar'
 import Chat from '../Chat'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -16,8 +16,15 @@ import {
 export default function MainScreen () {
   let { serverId, channelId } = useParams()
   const [isLoaded, setLoaded] = useState(false)
+  const [windowSize, setWindowSize] = useState(window.innerWidth)
   const dispatch = useDispatch()
   const workspaces = useSelector(state => state.workspaces)
+  console.log(windowSize)
+  useLayoutEffect(() => {
+    const updateWindowSize = (_) => setWindowSize(window.innerWidth)
+    window.addEventListener('resize', updateWindowSize)
+    return () => window.removeEventListener('resize', updateWindowSize)
+  }, [dispatch])
 
   // fetch metadata for user's workspaces and channels
   useEffect(() => {
@@ -50,7 +57,7 @@ export default function MainScreen () {
     <div className={styles.appWrapper}>
       <NavBar />
       <div className={styles.wrapper}>
-        <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} />
+        <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} windowSize={windowSize} />
         <Chat channelId={channelId} />
       </div>
     </div>
