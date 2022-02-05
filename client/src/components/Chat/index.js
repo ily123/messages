@@ -1,7 +1,8 @@
 'use strict'
+import { useContext, useState, useEffect, useRef } from 'react'
+import { SideBarToggleContext } from '../../context/SideBarToggle'
 import styles from './Chat.module.css'
 import { csrfFetch } from '../../store/csrf'
-import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getMessagesRequest,
@@ -41,7 +42,14 @@ export default function Chat ({ channelId }) {
 }
 
 function Header ({ title }) {
-  return <h2 className={styles.channelTitle}>{title}</h2>
+  const { toggleSideBar } = useContext(SideBarToggleContext)
+  return (
+    <div className={styles.headerWrapper}>
+      <i className='fas fa-compass' onClick={e => toggleSideBar(current => !current)} />
+      <h2 className={styles.channelTitle}>{title}</h2>
+      <button onClick={e => window.alert('This feature is not implemented yet.')}>Users</button>
+    </div>
+  )
 }
 
 function MessageLog ({ messages, users, channelId }) {
@@ -101,8 +109,8 @@ function Message ({ messageId, content, user, channelId }) {
     <div className={styles.messageWrapper}>
       {enableMessageEditControls && (
         <div className={styles.messageControls}>
-          <i class='fas fa-pen' onClick={(_) => toggleEdit()} />
-          <i class='fas fa-trash' onClick={(_) => deleteMessage()} />
+          <i className='fas fa-pen' onClick={(_) => toggleEdit()} />
+          <i className='fas fa-trash' onClick={(_) => deleteMessage()} />
         </div>
       )}
       <div className={styles.message}>

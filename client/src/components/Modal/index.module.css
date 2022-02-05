@@ -12,7 +12,8 @@
   background-color: var(--bg-gray);
   border: var(--border-alpha40); 
   border-radius: 5px;
-  box-shadow: var(--shadow-elevation-low)
+  box-shadow: var(--shadow-elevation-low);
+  z-index: 11;
 }
 .modalShow .doneButton {
   border: var(--border-alpha40); 
