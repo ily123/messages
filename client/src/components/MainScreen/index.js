@@ -5,9 +5,9 @@ import { Link, useParams } from 'react-router-dom'
 import NavBar from '../NavBar'
 import SideBar from '../SideBar'
 import Chat from '../Chat'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState, useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import SidebarToggleContextProvider from '../../context/SideBarToggle'
+import SidebarToggleContextProvider, { SideBarToggleContext } from '../../context/SideBarToggle'
 
 import {
   postServerRequest,
@@ -55,15 +55,26 @@ export default function MainScreen () {
 
   const currentWorkspace = workspaces[serverId]
   return (
-    <div className={styles.appWrapper}>
-      <NavBar />
-      <div className={styles.wrapper}>
-        <SidebarToggleContextProvider>
-          <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} windowSize={windowSize} />
-          <Chat channelId={channelId} />
-        </SidebarToggleContextProvider>
+    <>
+      <div className={styles.appWrapper}>
+        <NavBar />
+        <div className={styles.wrapper}>
+          <SidebarToggleContextProvider>
+            <SideBar workspaces={workspaces} activeIds={[serverId, channelId]} windowSize={windowSize} />
+            <Chat channelId={channelId} />
+            <MainScreenBlur />
+          </SidebarToggleContextProvider>
+        </div>
       </div>
-    </div>
+    </>
+  )
+}
+
+// blurs screen in mobile mode, when sidebar is toggled
+function MainScreenBlur () {
+  const { isSideBarToggled, toggleSideBar } = useContext(SideBarToggleContext)
+  return (
+    <div className={`${styles.blurBackground} ${isSideBarToggled ? styles.isShown : styles.isHidden}`} />
   )
 }
 
