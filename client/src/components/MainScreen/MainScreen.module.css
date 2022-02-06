@@ -24,6 +24,17 @@
   border-radius: 5px;
   padding: 20px;
 }
+
+.blurBackground {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  backdrop-filter: blur(1px);
+  z-index: 5;
+}
+
 .isHidden {
   display: none;
 }

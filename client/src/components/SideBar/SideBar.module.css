@@ -77,15 +77,16 @@ aside {
 
 @media (max-width: 600px) {
   aside {
-    display: none;
-  }
-  aside.sideBarToggledOpen {
     position: absolute;
     top: 0;
-    left: 0;
+    left: -200px;
     display: flex;
     z-index: 10;
     height: 100%;
     box-shadow: var(--shadow-elevation-medium);
+  }
+  aside.sideBarToggledOpen {
+    left: 0;
+    transition: left 0.5s;
   }
 }
