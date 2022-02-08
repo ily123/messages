@@ -33,6 +33,7 @@
   bottom: 0;
   backdrop-filter: blur(1px);
   z-index: 5;
+  cursor: pointer;
 }
 
 .isHidden {

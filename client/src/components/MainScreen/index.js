@@ -74,7 +74,10 @@ export default function MainScreen () {
 function MainScreenBlur () {
   const { isSideBarToggled, toggleSideBar } = useContext(SideBarToggleContext)
   return (
-    <div className={`${styles.blurBackground} ${isSideBarToggled ? styles.isShown : styles.isHidden}`} />
+    <div
+      className={`${styles.blurBackground} ${isSideBarToggled ? styles.isShown : styles.isHidden}`}
+      onClick={(_) => toggleSideBar(prev => !prev)}
+    />
   )
 }
 

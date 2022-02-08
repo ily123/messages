@@ -45,7 +45,7 @@ function Header ({ title }) {
   const { toggleSideBar } = useContext(SideBarToggleContext)
   return (
     <div className={styles.headerWrapper}>
-      <i className='fas fa-compass' onClick={e => toggleSideBar(current => !current)} />
+      <i className='fas fa-bars' onClick={e => toggleSideBar(current => !current)} />
       <h2 className={styles.channelTitle}>{title}</h2>
       <button onClick={e => window.alert('This feature is not implemented yet.')}>Users</button>
     </div>
