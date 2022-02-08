@@ -84,6 +84,7 @@ aside {
     z-index: 10;
     height: 100%;
     box-shadow: var(--shadow-elevation-medium);
+    transition: left 0.5s;
   }
   aside.sideBarToggledOpen {
     left: 0;
