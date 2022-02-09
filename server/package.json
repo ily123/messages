@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/.bin/jest --bail",
+    "test": "DOTENV_CONFIG_NODE_ENV=test node -r dotenv/config node_modules/.bin/jest --bail",
     "test:cov": "node node_modules/.bin/jest --coverage",
     "sequelize": "sequelize",
     "sequelize-cli": "sequelize-cli",

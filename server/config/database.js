@@ -19,5 +19,13 @@ module.exports = {
         rejectUnauthorized: false
       }
     }
+  },
+  test: {
+    username: config.test_db.username,
+    password: config.test_db.password,
+    database: config.test_db.database,
+    host: config.db.host,
+    dialect: 'postgres',
+    seederStorage: 'sequelize'
   }
 }
