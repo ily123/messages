@@ -1,13 +1,19 @@
-const db_config = require('../config/database')
-const config = require('../config')
-console.log(config)
-console.log(db_config)
+const db = require('../db/models')
+const { User } = db
 
-describe('This is a dummy test', function () {
-  test('test 1', () => {
-    expect(1).toEqual(1)
+describe('Test database exists', function () {
+  test('Connects to test database', async () => {
+    let connected = true
+    try {
+      await db.sequelize.authenticate()
+    } catch (e) {
+      connected = false
+    }
+    expect(connected).toBe(true)
   })
   test('test 2', () => {
     expect(1).toEqual(1)
   })
 })
+
+afterAll(async () => await db.sequelize.close())
