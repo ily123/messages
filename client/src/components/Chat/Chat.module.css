@@ -23,6 +23,11 @@
 .headerWrapper i:hover {
   color: var(--blue);
 }
+/* remove this later */
+.headerWrapper button {
+  visibility: hidden;
+  max-width: 1px;
+}
 
 .channelTitle {
   min-height: 50px;
